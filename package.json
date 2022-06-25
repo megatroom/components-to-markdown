@@ -1,0 +1,36 @@
+{
+  "name": "components-to-markdown",
+  "version": "0.0.0",
+  "license": "MIT",
+  "scripts": {},
+  "private": true,
+  "dependencies": {
+    "commander": "^9.3.0",
+    "picomatch": "^2.3.1",
+    "react-docgen": "^5.4.2",
+    "tslib": "^2.3.0"
+  },
+  "devDependencies": {
+    "@nrwl/cli": "14.3.6",
+    "@nrwl/eslint-plugin-nx": "14.3.6",
+    "@nrwl/jest": "14.3.6",
+    "@nrwl/js": "14.3.6",
+    "@nrwl/linter": "14.3.6",
+    "@nrwl/workspace": "14.3.6",
+    "@types/jest": "27.4.1",
+    "@types/node": "^18.0.0",
+    "@types/picomatch": "^2.3.0",
+    "@typescript-eslint/eslint-plugin": "~5.24.0",
+    "@typescript-eslint/parser": "~5.24.0",
+    "ast-types": "^0.14.2",
+    "doctrine": "^3.0.0",
+    "eslint": "~8.15.0",
+    "eslint-config-prettier": "8.1.0",
+    "jest": "27.5.1",
+    "nx": "14.3.6",
+    "prettier": "^2.6.2",
+    "ts-jest": "27.1.4",
+    "ts-node": "~10.8.0",
+    "typescript": "~4.7.2"
+  }
+}
