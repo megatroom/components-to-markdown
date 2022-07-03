@@ -23,7 +23,8 @@ export default function verifyDirectoryExists(path: string, key: string) {
       );
     }
 
-    // Not sure in which cases `statSync` can throw, so let's just show the underlying error to the user
+    // Not sure in which cases `statSync` can throw,
+    // so let's just show the underlying error to the user
     throw createConfigError(
       `Got an error trying to find ${bold(path)} in the ${bold(
         key

@@ -2,9 +2,9 @@ export interface ConfigOptions {
   /**
    * List of directories with components files.
    */
-  source: string[];
+  sources: string[];
   /**
-   * File pattern to filter.
+   * File patterns to filter.
    */
-  pattern: string[];
+  patterns: string[];
 }
