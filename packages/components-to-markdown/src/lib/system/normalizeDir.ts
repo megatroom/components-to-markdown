@@ -13,6 +13,11 @@ function tryRealpath(path: string): string {
   return path;
 }
 
+/**
+ * Normalizes a directory path.
+ * @param strDir The directory path to normalize
+ * @returns The normalized directory path
+ */
 const normalizeDir = (strDir: string): string => {
   let result = path.normalize(strDir);
 

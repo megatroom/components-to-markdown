@@ -1,8 +1,13 @@
 import { statSync } from 'graceful-fs';
 
 import ValidationError from '../errors/ValidationError';
-import { createConfigError, bold } from './stdout';
+import { createConfigError, bold } from './_stdout';
 
+/**
+ * Verifies that a directory exists.
+ * @param path The path to the directory to verify
+ * @param key The key to use in the error message
+ */
 export default function verifyDirectoryExists(path: string, key: string) {
   try {
     const rootStat = statSync(path);

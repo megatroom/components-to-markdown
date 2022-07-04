@@ -19,6 +19,12 @@ async function* getFilesRecursively(
   }
 }
 
+/**
+ * Get all files in a directory and subdirectories.
+ * @param basePath The base path to search for files
+ * @param pattern The pattern to search for
+ * @returns An array of files that match the pattern
+ */
 const getFiles = async (
   basePath: string,
   pattern: string[]
