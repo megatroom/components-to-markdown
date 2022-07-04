@@ -2,6 +2,7 @@ import { program } from 'commander';
 import getFiles from './system/getFiles';
 import normalizeDir from './system/normalizeDir';
 import verifyDirectoryExists from './system/verifyDirectoryExists';
+import { createConfigError } from './system/_stdout';
 import type { ConfigOptions } from './typings/ConfigOptions';
 
 async function getAllFiles(
@@ -18,6 +19,10 @@ async function getAllFiles(
 export async function componentsToMarkdown(options: ConfigOptions) {
   let files: string[] = [];
 
+  if (!options.sources || options.sources.length === 0) {
+    throw createConfigError(`You must specify at least one source directory.`);
+  }
+
   for (let i = 0; i < options.sources.length; i++) {
     files = files.concat(
       await getAllFiles(options.sources[i], options.patterns)
@@ -27,21 +32,21 @@ export async function componentsToMarkdown(options: ConfigOptions) {
   console.log('bacon files', files);
 }
 
-export function cli(argv: string[]) {
+export function cli(argv: string[], version: string) {
   program
-    .option(
-      '-s, --sources <directories...>',
-      'Source directories for the React components'
-    )
-    .option(
-      '-p, --patterns <pattern...>',
-      'File patterns to filter',
-      '**/*.{js,jsx,ts,tsx}'
-    );
+    .name('components-to-markdown')
+    .description('Convert React components to markdown.')
+    .version(version)
+    .argument('<sources...>', 'source directories for the React components')
+    .option('-p, --patterns <patterns...>', 'file patterns to filter', [
+      '**/*.{js,jsx,ts,tsx}',
+    ])
+    .action((sources, options) => {
+      componentsToMarkdown({
+        ...options,
+        sources,
+      } as ConfigOptions);
+    });
 
-  program.parse(argv);
-
-  const options = program.opts();
-
-  componentsToMarkdown(options as ConfigOptions);
+  program.parse();
 }
