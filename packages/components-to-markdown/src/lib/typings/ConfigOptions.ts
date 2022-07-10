@@ -1,3 +1,5 @@
+export type LogLevel = 'silent' | 'error' | 'warn' | 'info' | 'debug' | 'trace';
+
 export interface ConfigOptions {
   /**
    * List of directories with components files.
@@ -7,4 +9,8 @@ export interface ConfigOptions {
    * File patterns to filter.
    */
   patterns: string[];
+  /**
+   * Change the level of logging.
+   */
+  loglevel: LogLevel;
 }

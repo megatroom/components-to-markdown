@@ -83,3 +83,19 @@ describe('When config level is "trace"', () => {
     }
   );
 });
+
+describe.each([
+  ['error', false],
+  ['warn', false],
+  ['info', false],
+  ['debug', false],
+  ['trace', true],
+])('When level is "%s"', (level, isEqualValue) => {
+  it(`isTrace() should be ${isEqualValue}`, () => {
+    const logger = buildLogger({
+      loglevel: level as LogLevel,
+    });
+
+    expect(logger.isTrace()).toBe(isEqualValue);
+  });
+});

@@ -1,12 +1,5 @@
 import { ConfigOptions, LogLevel } from '../typings/ConfigOptions';
-
-interface Logger {
-  logError: (message: string) => void;
-  logWarning: (message: string) => void;
-  logInfo: (message: string) => void;
-  logDebug: (message: string) => void;
-  logTrace: (message: string) => void;
-}
+import type { Logger } from '../typings/Logger';
 
 const LogLevelNumber: Record<LogLevel, number> = {
   silent: 0,
@@ -23,30 +16,31 @@ export const buildLogger = (
   const configLevelNumber = LogLevelNumber[options.loglevel];
 
   return {
-    logError: (message: string) => {
+    logError: (message, ...optionalParams) => {
       if (configLevelNumber >= LogLevelNumber.error) {
-        console.error(message);
+        console.error(message, ...optionalParams);
       }
     },
-    logWarning: (message: string) => {
+    logWarning: (message, ...optionalParams) => {
       if (configLevelNumber >= LogLevelNumber.warn) {
-        console.log(message);
+        console.log(message, ...optionalParams);
       }
     },
-    logInfo: (message: string) => {
+    logInfo: (message, ...optionalParams) => {
       if (configLevelNumber >= LogLevelNumber.info) {
-        console.log(message);
+        console.log(message, ...optionalParams);
       }
     },
-    logDebug: (message: string) => {
+    logDebug: (message, ...optionalParams) => {
       if (configLevelNumber >= LogLevelNumber.debug) {
-        console.log(message);
+        console.log(message, ...optionalParams);
       }
     },
-    logTrace: (message: string) => {
+    logTrace: (message, ...optionalParams) => {
       if (configLevelNumber >= LogLevelNumber.trace) {
-        console.log(message);
+        console.log(message, ...optionalParams);
       }
     },
+    isTrace: () => configLevelNumber >= LogLevelNumber.trace,
   };
 };
