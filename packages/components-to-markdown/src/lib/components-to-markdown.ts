@@ -35,7 +35,7 @@ export async function componentsToMarkdown(options: ConfigOptions) {
 export function cli(argv: string[], version: string) {
   program
     .name('components-to-markdown')
-    .description('Convert React components to markdown.')
+    .description('Generate markdown documentation of React components.')
     .version(version)
     .argument('<sources...>', 'source directories for the React components')
     .option('-p, --patterns <patterns...>', 'file patterns to filter', [
