@@ -2,6 +2,7 @@
   "$schema": "./node_modules/nx/schemas/workspace-schema.json",
   "version": 2,
   "projects": {
-    "components-to-markdown": "packages/components-to-markdown"
+    "components-to-markdown": "packages/components-to-markdown",
+    "example-react-components": "packages/example-react-components"
   }
 }

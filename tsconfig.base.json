@@ -15,6 +15,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "example-react-components": [
+        "packages/example-react-components/src/index.ts"
+      ],
       "components-to-markdown": ["packages/components-to-markdown/src/index.ts"]
     }
   },

@@ -1,0 +1,45 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/example-react-components/src",
+  "projectType": "library",
+  "tags": ["ui"],
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:rollup",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/example-react-components",
+        "tsConfig": "packages/example-react-components/tsconfig.lib.json",
+        "project": "packages/example-react-components/package.json",
+        "entryFile": "packages/example-react-components/src/index.ts",
+        "external": ["react/jsx-runtime"],
+        "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
+        "compiler": "swc",
+        "assets": [
+          {
+            "glob": "packages/example-react-components/README.md",
+            "input": ".",
+            "output": "."
+          }
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "packages/example-react-components/**/*.{ts,tsx,js,jsx}"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/example-react-components"],
+      "options": {
+        "jestConfig": "packages/example-react-components/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  }
+}
