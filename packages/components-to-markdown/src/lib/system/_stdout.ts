@@ -11,4 +11,12 @@ export const DOCUMENTATION_NOTE = `  ${chalk.bold('Documentation:')}
 export const createConfigError = (message: string) =>
   new ValidationError(ERROR, `  ${message}`, DOCUMENTATION_NOTE);
 
+export const extractErrorMessage = (error: unknown) => {
+  let message = 'Unknown Error';
+
+  if (error instanceof Error) message = error.message;
+
+  return message;
+};
+
 export const bold = (str: string) => chalk.bold(str);

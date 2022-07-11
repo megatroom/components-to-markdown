@@ -8,6 +8,8 @@ const parseReactComp = (content: Buffer) => {
   });
 
   console.log({ doc });
+
+  return doc;
 };
 
 export default parseReactComp;

@@ -1,10 +1,14 @@
 import { program } from 'commander';
+import parseMarkdown from './markdown/parseMarkdown';
 import parseReactComp from './parses/parseReactComp';
 import getFiles from './system/getFiles';
+import getTemplate from './system/getTemplate';
 import { buildLogger } from './system/logger';
 import normalizeDir from './system/normalizeDir';
 import readFile from './system/readFile';
+import scriptDir from './system/scriptDir';
 import verifyDirectoryExists from './system/verifyDirectoryExists';
+import { extractErrorMessage } from './system/_stdout';
 import type { ConfigOptions } from './typings/ConfigOptions';
 import type { Logger } from './typings/Logger';
 
@@ -30,6 +34,7 @@ async function getAllFiles(
 
 export async function componentsToMarkdown(options: ConfigOptions) {
   const logger = buildLogger(options);
+  const scriptDirectory = scriptDir(__dirname);
   let files: string[] = [];
 
   logger.logDebug('Starting components-to-markdown...');
@@ -42,18 +47,29 @@ export async function componentsToMarkdown(options: ConfigOptions) {
   }
 
   logger.logDebug(`Found ${files.length} files on all sources.`);
+
+  logger.logDebug('Loading template....');
+  const template = await getTemplate(scriptDirectory, options.template);
+  logger.logDebug('Parsing template...');
+  const renderMarkdown = parseMarkdown(template);
+  logger.logDebug('Template loaded.');
+
   logger.logDebug('Parsing files...');
 
   for (let i = 0; i < files.length; i++) {
     readFile(files[i])
       .then((content) => {
         try {
-          parseReactComp(content);
+          const component = parseReactComp(content);
           logger.logTrace(`✔️ ${files[i]} parsed `);
+
+          const markdown = renderMarkdown('teste', component);
+
+          console.log({ markdown });
         } catch (error) {
-          let message = 'Unknown Error';
-          if (error instanceof Error) message = error.message;
-          logger.logTrace(`⚠️ ${files[i]} error: ${message}`);
+          logger.logTrace(
+            `⚠️ ${files[i]} error: ${extractErrorMessage(error)}`
+          );
         }
       })
       .catch((err) => {
@@ -75,6 +91,11 @@ export function cli(argv: string[], version: string) {
       '!**/*.{test,spec}.{js,jsx,ts,tsx}',
       '!**/*.d.ts',
     ])
+    .option(
+      '-t, --template <template>',
+      'path to template file',
+      'all-detailed'
+    )
     .option('-l, --loglevel <level>', 'log level', 'info')
     .action((sources, options) => {
       componentsToMarkdown({

@@ -10,7 +10,12 @@
         "outputPath": "dist/packages/components-to-markdown",
         "main": "packages/components-to-markdown/src/index.ts",
         "tsConfig": "packages/components-to-markdown/tsconfig.lib.json",
-        "assets": ["packages/components-to-markdown/*.md", "packages/components-to-markdown/bin/components-to-markdown"]
+        "assets": [
+          "LICENSE",
+          "packages/components-to-markdown/*.md",
+          "packages/components-to-markdown/bin/components-to-markdown",
+          "packages/components-to-markdown/templates/*.hbs"
+        ]
       }
     },
     "publish": {

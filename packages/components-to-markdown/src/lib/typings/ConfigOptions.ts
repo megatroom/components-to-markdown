@@ -13,4 +13,8 @@ export interface ConfigOptions {
    * Change the level of logging.
    */
   loglevel: LogLevel;
+  /**
+   * Path to the template file.
+   */
+  template: string;
 }
