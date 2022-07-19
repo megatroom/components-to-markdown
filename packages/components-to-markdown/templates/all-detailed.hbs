@@ -3,15 +3,29 @@ title: {{name}}
 ---
 
 # {{name}}
+{{#each components}}
 
-{{#each documentations}}
-## {{displayName}}
+## {{name}}
 
-{{#each tags}}
-{{#each deprecated}}<span style="border: 1px solid green;">Deprecated: {{description}}</span>{{/each}}
-{{/each}}
+{{#each modifiers}}{{name}} {{/each}}
 
 {{description}}
 
+{{#each tags}}
+
+## {{formatTagTitle name}}
+
+{{description}}
+{{/each}}
+{{#if params}}
+
+## Parameters
+
+| Name | Description |
+| ---- | ----------- |
+{{#each params}}
+| {{name}} | {{description}} |
+{{/each}}
+{{/if}}
 
 {{/each}}

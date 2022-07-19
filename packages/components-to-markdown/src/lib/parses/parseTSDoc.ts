@@ -151,6 +151,7 @@ function convertDocTreeToDocData(docTree: DocTreeAst): DocData {
     description: '',
     tags: [],
     params: [],
+    modifiers: [],
   };
 
   if (!docTree.children) return result;
@@ -161,8 +162,12 @@ function convertDocTreeToDocData(docTree: DocTreeAst): DocData {
         result.description = trimWhitespace(getContentRecursive(comments));
         break;
       case DocNodeKind.Block:
-      case DocNodeKind.BlockTag:
         result.tags = result.tags.concat(getBlockTagContent(comments));
+        break;
+      case DocNodeKind.BlockTag:
+        result.modifiers = result.modifiers.concat(
+          getBlockTagContent(comments)
+        );
         break;
       case DocNodeKind.ParamCollection:
         result.params = result.params.concat(getParamCollection(comments));

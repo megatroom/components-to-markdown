@@ -8,11 +8,29 @@ import getTemplate from './system/getTemplate';
 import { buildLogger } from './system/logger';
 import readFile from './system/readFile';
 import scriptDir from './system/scriptDir';
-import { colorSuccess, extractErrorMessage } from './system/_stdout';
-import type { ComponentData } from './typings/ComponentData';
+import {
+  colorCounter,
+  colorSuccess,
+  extractErrorMessage,
+} from './system/_stdout';
+import type { ComponentData, ComponentDoc } from './typings/ComponentData';
 import type { ConfigOptions } from './typings/ConfigOptions';
 import type { Logger } from './typings/Logger';
 import { formatComment, parseTSDoc } from './parses/parseTSDoc';
+import type { DocumentationObject } from 'react-docgen';
+
+function extractDocDataFromComponentData(
+  componentObj: DocumentationObject
+): ComponentDoc {
+  const descriptionDoc = parseTSDoc(
+    formatComment(componentObj.description || '')
+  );
+
+  return {
+    name: componentObj.displayName || 'Unknown Component',
+    ...descriptionDoc,
+  };
+}
 
 async function* processFiles(
   logger: Logger,
@@ -23,14 +41,11 @@ async function* processFiles(
       const content = await readFile(file);
       const componentData = parseReactComp(file, content);
 
-      logger.logTrace(`✔️ ${file} parsed as ${componentData.name}`);
-
-      // console.log(componentData);
-      // console.log(componentData.documentations[0].props);
-      const comment = formatComment(
-        componentData.documentations[0].description || ''
+      componentData.components = componentData.documentations.map(
+        (data: DocumentationObject) => extractDocDataFromComponentData(data)
       );
-      parseTSDoc(comment);
+
+      logger.logTrace(`✔️ ${file} parsed as ${componentData.name}`);
 
       yield componentData;
     } catch (error) {
@@ -38,6 +53,8 @@ async function* processFiles(
     }
   }
 }
+
+const countStep = (step: number) => colorCounter(`[${step}/3]`);
 
 export async function componentsToMarkdown(options: ConfigOptions) {
   const logger = buildLogger(options);
@@ -47,13 +64,13 @@ export async function componentsToMarkdown(options: ConfigOptions) {
 
   logger.logInfo('Starting components-to-markdown...');
 
-  logger.logDebug('\n[1/3] Loading template....');
+  logger.logInfo(`${countStep(1)} Loading template....`);
   const template = await getTemplate(scriptDirectory, options.template);
   logger.logDebug('- Parsing template...');
   const renderMarkdown = parseMarkdown(template);
   logger.logDebug('- Template loaded.');
 
-  logger.logDebug('\n[1/2] Discovering files...');
+  logger.logInfo(`${countStep(2)} Discovering files...`);
   for (let i = 0; i < options.sources.length; i++) {
     files = files.concat(
       await getAllFiles(logger, options.sources[i], options.patterns)
@@ -61,7 +78,7 @@ export async function componentsToMarkdown(options: ConfigOptions) {
   }
   logger.logDebug(`- Found ${files.length} files on all sources.`);
 
-  logger.logDebug('\n[3/3] Parsing files...');
+  logger.logInfo(`${countStep(3)} Parsing files...`);
   for await (const componentData of processFiles(logger, files)) {
     const markdown = renderMarkdown(componentData);
     writeMarkdown(outputDirectory, componentData.name, markdown);

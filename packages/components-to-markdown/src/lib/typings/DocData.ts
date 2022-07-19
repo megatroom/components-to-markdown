@@ -11,5 +11,6 @@ export interface DocDataParam {
 export interface DocData {
   description: string;
   tags: DocDataTag[];
+  modifiers: DocDataTag[];
   params: DocDataParam[];
 }
