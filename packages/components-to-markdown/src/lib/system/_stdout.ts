@@ -20,3 +20,5 @@ export const extractErrorMessage = (error: unknown) => {
 };
 
 export const bold = (str: string) => chalk.bold(str);
+
+export const colorSuccess = (str: string) => chalk.green(str);

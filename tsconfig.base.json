@@ -15,10 +15,12 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "components-to-markdown": [
+        "packages/components-to-markdown/src/index.ts"
+      ],
       "example-react-components": [
         "packages/example-react-components/src/index.ts"
-      ],
-      "components-to-markdown": ["packages/components-to-markdown/src/index.ts"]
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]

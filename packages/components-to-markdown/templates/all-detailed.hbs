@@ -1,3 +1,17 @@
 ---
 title: {{name}}
 ---
+
+# {{name}}
+
+{{#each documentations}}
+## {{displayName}}
+
+{{#each tags}}
+{{#each deprecated}}<span style="border: 1px solid green;">Deprecated: {{description}}</span>{{/each}}
+{{/each}}
+
+{{description}}
+
+
+{{/each}}

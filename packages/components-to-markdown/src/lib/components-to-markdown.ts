@@ -1,82 +1,73 @@
 import { program } from 'commander';
 import parseMarkdown from './markdown/parseMarkdown';
+import writeMarkdown from './markdown/writeMarkdown';
 import parseReactComp from './parses/parseReactComp';
-import getFiles from './system/getFiles';
+import getAllFiles from './system/getAllFiles';
+import getOutputDir from './system/getOutputDir';
 import getTemplate from './system/getTemplate';
 import { buildLogger } from './system/logger';
-import normalizeDir from './system/normalizeDir';
 import readFile from './system/readFile';
 import scriptDir from './system/scriptDir';
-import verifyDirectoryExists from './system/verifyDirectoryExists';
-import { extractErrorMessage } from './system/_stdout';
+import { colorSuccess, extractErrorMessage } from './system/_stdout';
+import type { ComponentData } from './typings/ComponentData';
 import type { ConfigOptions } from './typings/ConfigOptions';
 import type { Logger } from './typings/Logger';
+import { formatComment, parseTSDoc } from './parses/parseTSDoc';
 
-async function getAllFiles(
+async function* processFiles(
   logger: Logger,
-  source: string,
-  patterns: string[]
-): Promise<string[]> {
-  const sourceDir = normalizeDir(source);
+  files: string[]
+): AsyncIterableIterator<ComponentData> {
+  for (const file of files) {
+    try {
+      const content = await readFile(file);
+      const componentData = parseReactComp(file, content);
 
-  verifyDirectoryExists(sourceDir, 'sourceDir');
+      logger.logTrace(`✔️ ${file} parsed as ${componentData.name}`);
 
-  logger.logTrace(`Getting files from ${sourceDir}...`);
+      // console.log(componentData);
+      // console.log(componentData.documentations[0].props);
+      const comment = formatComment(
+        componentData.documentations[0].description || ''
+      );
+      parseTSDoc(comment);
 
-  const files = await getFiles(sourceDir, patterns);
-
-  if (logger.isTrace()) {
-    files.forEach((file) => logger.logTrace(file));
+      yield componentData;
+    } catch (error) {
+      logger.logTrace(`⚠️ ${file} error: ${extractErrorMessage(error)}`);
+    }
   }
-
-  return files;
 }
 
 export async function componentsToMarkdown(options: ConfigOptions) {
   const logger = buildLogger(options);
   const scriptDirectory = scriptDir(__dirname);
+  const outputDirectory = getOutputDir(options.output);
   let files: string[] = [];
 
-  logger.logDebug('Starting components-to-markdown...');
-  logger.logDebug('Discovering files...');
+  logger.logInfo('Starting components-to-markdown...');
 
+  logger.logDebug('\n[1/3] Loading template....');
+  const template = await getTemplate(scriptDirectory, options.template);
+  logger.logDebug('- Parsing template...');
+  const renderMarkdown = parseMarkdown(template);
+  logger.logDebug('- Template loaded.');
+
+  logger.logDebug('\n[1/2] Discovering files...');
   for (let i = 0; i < options.sources.length; i++) {
     files = files.concat(
       await getAllFiles(logger, options.sources[i], options.patterns)
     );
   }
+  logger.logDebug(`- Found ${files.length} files on all sources.`);
 
-  logger.logDebug(`Found ${files.length} files on all sources.`);
-
-  logger.logDebug('Loading template....');
-  const template = await getTemplate(scriptDirectory, options.template);
-  logger.logDebug('Parsing template...');
-  const renderMarkdown = parseMarkdown(template);
-  logger.logDebug('Template loaded.');
-
-  logger.logDebug('Parsing files...');
-
-  for (let i = 0; i < files.length; i++) {
-    readFile(files[i])
-      .then((content) => {
-        try {
-          const component = parseReactComp(content);
-          logger.logTrace(`✔️ ${files[i]} parsed `);
-
-          const markdown = renderMarkdown('teste', component);
-
-          console.log({ markdown });
-        } catch (error) {
-          logger.logTrace(
-            `⚠️ ${files[i]} error: ${extractErrorMessage(error)}`
-          );
-        }
-      })
-      .catch((err) => {
-        logger.logError(err);
-        process.exit(1);
-      });
+  logger.logDebug('\n[3/3] Parsing files...');
+  for await (const componentData of processFiles(logger, files)) {
+    const markdown = renderMarkdown(componentData);
+    writeMarkdown(outputDirectory, componentData.name, markdown);
   }
+
+  logger.logInfo(colorSuccess('Finished successfully.'));
 }
 
 export function cli(argv: string[], version: string) {
@@ -96,6 +87,7 @@ export function cli(argv: string[], version: string) {
       'path to template file',
       'all-detailed'
     )
+    .option('-o, --output <output>', 'path to output markdown files', '.')
     .option('-l, --loglevel <level>', 'log level', 'info')
     .action((sources, options) => {
       componentsToMarkdown({

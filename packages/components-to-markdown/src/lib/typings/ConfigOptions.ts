@@ -17,4 +17,8 @@ export interface ConfigOptions {
    * Path to the template file.
    */
   template: string;
+  /**
+   * Path to the output markdown files.
+   */
+  output: string;
 }

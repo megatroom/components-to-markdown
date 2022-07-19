@@ -1,19 +1,11 @@
 import { compile } from 'handlebars';
+import { ComponentData } from '../typings/ComponentData';
 
 const parseMarkdown = (template: Buffer) => {
   const render = compile(template.toString());
 
-  return function renderMarkdown(name: string, data: unknown) {
-    const parsedData = {
-      name,
-      data,
-      // propTitleIcons,
-      // headingId: function () {
-      //   return formatHeadingId(this.name);
-      // }
-    };
-
-    return render(parsedData);
+  return function renderMarkdown(componentData: ComponentData): string {
+    return render(componentData);
   };
 };
 
