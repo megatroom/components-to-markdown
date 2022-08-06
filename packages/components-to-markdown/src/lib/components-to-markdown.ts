@@ -8,11 +8,7 @@ import getTemplate from './system/getTemplate';
 import { buildLogger } from './system/logger';
 import readFile from './system/readFile';
 import scriptDir from './system/scriptDir';
-import {
-  colorCounter,
-  colorSuccess,
-  extractErrorMessage,
-} from './system/_stdout';
+import { colorFail, colorSuccess, extractErrorMessage } from './system/_stdout';
 import type { ComponentData, ComponentDoc } from './typings/ComponentData';
 import type { ConfigOptions } from './typings/ConfigOptions';
 import type { Logger } from './typings/Logger';
@@ -32,10 +28,33 @@ function extractDocDataFromComponentData(
   };
 }
 
-async function* processFiles(
+function logSummary(
   logger: Logger,
+  totalOfSuccess: number,
+  totalOfError: number
+) {
+  const failedMsg =
+    totalOfError > 0
+      ? colorFail(`${totalOfError} failed`)
+      : `${totalOfError} failed`;
+  const successMsg =
+    totalOfSuccess > 0
+      ? colorSuccess(`${totalOfSuccess} processed`)
+      : `${totalOfSuccess} processed`;
+  logger.logInfo(
+    `Files: ${failedMsg}, ${successMsg}, ${totalOfSuccess + totalOfError} total`
+  );
+}
+
+interface ProcessedFile {
+  file: string;
+  error?: string;
+  componentData?: ComponentData;
+}
+
+async function* processFiles(
   files: string[]
-): AsyncIterableIterator<ComponentData> {
+): AsyncIterableIterator<ProcessedFile> {
   for (const file of files) {
     try {
       const content = await readFile(file);
@@ -45,16 +64,12 @@ async function* processFiles(
         (data: DocumentationObject) => extractDocDataFromComponentData(data)
       );
 
-      logger.logTrace(`✔️ ${file} parsed as ${componentData.name}`);
-
-      yield componentData;
+      yield { file, componentData };
     } catch (error) {
-      logger.logTrace(`⚠️ ${file} error: ${extractErrorMessage(error)}`);
+      yield { file, error: extractErrorMessage(error) };
     }
   }
 }
-
-const countStep = (step: number) => colorCounter(`[${step}/3]`);
 
 export async function componentsToMarkdown(options: ConfigOptions) {
   const logger = buildLogger(options);
@@ -64,27 +79,42 @@ export async function componentsToMarkdown(options: ConfigOptions) {
 
   logger.logInfo('Starting components-to-markdown...');
 
-  logger.logInfo(`${countStep(1)} Loading template....`);
+  logger.logStep(1, '📗', 'Loading template...');
   const template = await getTemplate(scriptDirectory, options.template);
-  logger.logDebug('- Parsing template...');
+  logger.logDebug('Parsing template...');
   const renderMarkdown = parseMarkdown(template);
-  logger.logDebug('- Template loaded.');
+  logger.logDebug('Template loaded.');
 
-  logger.logInfo(`${countStep(2)} Discovering files...`);
+  logger.logStep(2, '📂', 'Discovering files...');
   for (let i = 0; i < options.sources.length; i++) {
     files = files.concat(
       await getAllFiles(logger, options.sources[i], options.patterns)
     );
   }
-  logger.logDebug(`- Found ${files.length} files on all sources.`);
+  logger.logDebug(`Found ${files.length} files on all sources.`);
 
-  logger.logInfo(`${countStep(3)} Parsing files...`);
-  for await (const componentData of processFiles(logger, files)) {
-    const markdown = renderMarkdown(componentData);
-    writeMarkdown(outputDirectory, componentData.name, markdown);
+  logger.logStep(3, '📝', 'Building markdowns...');
+  let totalOfSuccess = 0,
+    totalOfError = 0;
+  for await (const processedFile of processFiles(files)) {
+    const { error, file, componentData } = processedFile;
+
+    if (error) {
+      totalOfError += 1;
+      logger.logDebug(`⚠️ ${file} error: ${error}`);
+      continue;
+    }
+
+    if (componentData) {
+      totalOfSuccess += 1;
+      logger.logDebug(`✔️ ${file} parsed as ${componentData.name}`);
+      const markdown = renderMarkdown(componentData);
+      writeMarkdown(outputDirectory, componentData.name, markdown);
+    }
   }
+  logSummary(logger, totalOfSuccess, totalOfError);
 
-  logger.logInfo(colorSuccess('Finished successfully.'));
+  logger.logInfo('✨ Done.');
 }
 
 export function cli(argv: string[], version: string) {

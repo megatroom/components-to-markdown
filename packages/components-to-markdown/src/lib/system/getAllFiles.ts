@@ -12,7 +12,7 @@ const getAllFiles = async (
 
   verifyDirectoryExists(sourceDir, 'source');
 
-  logger.logTrace(`Getting files from ${sourceDir}...`);
+  logger.logDebug(`Getting files from ${sourceDir}`);
 
   const files = await getFiles(sourceDir, patterns);
 
