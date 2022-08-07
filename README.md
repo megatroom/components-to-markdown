@@ -42,14 +42,14 @@ And import it:
 import { componentsToMarkdown } from 'components-to-markdown';
 
 componentsToMarkdown({
-  sources: ["./components-path"],
-  output: "./output-path",
-  template: "./template-path",
+  sources: ['./components-path'],
+  output: './output-path',
+  template: './template-path',
   patterns: [
-    "**/*.{js,jsx,ts,tsx}",
-    "!**/__tests__/**",
-    "!**/*.{test,spec}.{js,jsx,ts,tsx}",
-    "!**/*.d.ts",
+    '**/*.{js,jsx,ts,tsx}',
+    '!**/__tests__/**',
+    '!**/*.{test,spec}.{js,jsx,ts,tsx}',
+    '!**/*.d.ts',
   ],
 });
 ```
@@ -80,7 +80,7 @@ Options:
 ### `componentsToMarkdown()`
 
 ```ts
-async function componentsToMarkdown(options: ConfigOptions)
+async function componentsToMarkdown(options: ConfigOptions);
 ```
 
 ### `ConfigOptions`
