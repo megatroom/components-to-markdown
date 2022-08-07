@@ -3,12 +3,16 @@ version: 2.1
 orbs:
   nx: nrwl/nx@1.5.1
 
+aliases:
+  - &docker_image
+    - image: cimg/node:lts-browsers
+
+  - &current_workspace
+    attach_workspace: { at: '.' }
+
 jobs:
-  main:
-    docker:
-      - image: cimg/node:lts-browsers
-    environment:
-      MAIN_BRANCH_NAME: main
+  install-dependencies:
+    docker: *docker_image
     steps:
       - checkout
       - run:
@@ -19,6 +23,11 @@ jobs:
           error-on-no-successful-workflow: true
           main-branch-name: main
           workflow-name: nx-pipeline
+  check:
+    docker: *docker_image
+    steps:
+      - checkout
+      - *current_workspace
       - run:
           name: Workspace Lint
           command: yarn nx workspace-lint
@@ -28,14 +37,49 @@ jobs:
       - run:
           name: Run Lint
           command: yarn nx affected --target=lint --base=$NX_BASE
+  test:
+    docker: *docker_image
+    steps:
+      - checkout
+      - *current_workspace
       - run:
           name: Run Unit Tests
           command: yarn nx affected --target=test --base=$NX_BASE
+  build:
+    docker: *docker_image
+    steps:
+      - checkout
+      - *current_workspace
       - run:
           name: Run Builds
           command: yarn nx affected --target=build --base=$NX_BASE
+  # publish-latest:
+  #   docker: *docker_image
+  #   steps:
+  #     - checkout
+  #     - *current_workspace
+  #     - run:
+  #         name: Publish latest version
+  #         command: yarn nx affected --target=publish --base=$NX_BASE --tag=latest --ver=???
 
 workflows:
   build:
     jobs:
-      - main
+      - install-dependencies
+      - check:
+          requires:
+            - install-dependencies
+      - test:
+          requires:
+            - install-dependencies
+      - build:
+          requires:
+            - install-dependencies
+      # - publish-latest:
+      #     filters:
+      #       branches:
+      #         only: main
+      #     requires:
+      #       - check
+      #       - test
+      #       - build
