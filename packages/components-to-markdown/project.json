@@ -1,0 +1,50 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/components-to-markdown/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/components-to-markdown",
+        "main": "packages/components-to-markdown/src/index.ts",
+        "tsConfig": "packages/components-to-markdown/tsconfig.lib.json",
+        "assets": [
+          "LICENSE",
+          "packages/components-to-markdown/*.md",
+          "packages/components-to-markdown/bin/components-to-markdown",
+          "packages/components-to-markdown/templates/*.hbs"
+        ]
+      }
+    },
+    "publish": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "command": "node tools/scripts/publish.mjs components-to-markdown {args.ver} {args.tag}"
+      },
+      "dependsOn": [
+        {
+          "projects": "self",
+          "target": "build"
+        }
+      ]
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/components-to-markdown/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/components-to-markdown"],
+      "options": {
+        "jestConfig": "packages/components-to-markdown/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["cli"]
+}

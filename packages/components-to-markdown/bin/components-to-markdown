@@ -1,0 +1,9 @@
+#!/usr/bin/env node
+
+var version = '0.0.0';
+try {
+  version = require('../package.json').version;
+} catch (e) {}
+
+require = require('esm')(module /*, options*/);
+require('../src/index').cli(process.argv, version);
