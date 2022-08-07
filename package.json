@@ -4,6 +4,7 @@
   "license": "MIT",
   "scripts": {
     "clear:cache": "nx clear-cache",
+    "build": "nx build",
     "test": "nx test",
     "test:all": "nx run-many --target=test --all",
     "format:check": "nx format:check",
