@@ -1,5 +1,7 @@
 # Components to Markdown
 
+[![CircleCI](https://img.shields.io/circleci/build/gh/megatroom/components-to-markdown)](https://circleci.com/gh/megatroom/components-to-markdown)
+
 Generate markdown documentation of React components.
 
 ## Usage
@@ -40,14 +42,14 @@ And import it:
 import { componentsToMarkdown } from 'components-to-markdown';
 
 componentsToMarkdown({
-  sources: ["./components-path"],
-  output: "./output-path",
-  template: "./template-path",
+  sources: ['./components-path'],
+  output: './output-path',
+  template: './template-path',
   patterns: [
-    "**/*.{js,jsx,ts,tsx}",
-    "!**/__tests__/**",
-    "!**/*.{test,spec}.{js,jsx,ts,tsx}",
-    "!**/*.d.ts",
+    '**/*.{js,jsx,ts,tsx}',
+    '!**/__tests__/**',
+    '!**/*.{test,spec}.{js,jsx,ts,tsx}',
+    '!**/*.d.ts',
   ],
 });
 ```
@@ -78,7 +80,7 @@ Options:
 ### `componentsToMarkdown()`
 
 ```ts
-async function componentsToMarkdown(options: ConfigOptions)
+async function componentsToMarkdown(options: ConfigOptions);
 ```
 
 ### `ConfigOptions`
