@@ -7,8 +7,7 @@ jobs:
   main:
     docker:
       - image: cimg/node:lts-browsers
-    steps:
-      environment:
+    environment:
       MAIN_BRANCH_NAME: main
     steps:
       - checkout
