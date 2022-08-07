@@ -10,6 +10,12 @@ Run `yarn nx build components-to-markdown` to build the library.
 
 Run `yarn nx test components-to-markdown` to execute the unit tests via [Jest](https://jestjs.io).
 
+## Publishing
+
+```bash
+yarn nx publish components-to-markdown --tag=latest --ver=???
+```
+
 ## Locally run the CLI
 
 You can build, install and run the CLI locally:

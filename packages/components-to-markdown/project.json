@@ -12,7 +12,7 @@
         "tsConfig": "packages/components-to-markdown/tsconfig.lib.json",
         "assets": [
           "LICENSE",
-          "packages/components-to-markdown/*.md",
+          "README.md",
           "packages/components-to-markdown/bin/components-to-markdown",
           "packages/components-to-markdown/templates/*.hbs"
         ]
