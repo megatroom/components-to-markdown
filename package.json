@@ -2,7 +2,13 @@
   "name": "components-to-markdown",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "clear:cache": "nx clear-cache",
+    "test": "nx test",
+    "test:all": "nx run-many --target=test --all",
+    "format:check": "nx format:check",
+    "format:write": "nx format:write"
+  },
   "private": true,
   "dependencies": {
     "@microsoft/tsdoc": "^0.14.1",

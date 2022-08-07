@@ -5,6 +5,10 @@ import { buildLogger } from './logger';
 const errorSpy = jest.spyOn(console, 'error').mockImplementation(jest.fn());
 const logSpy = jest.spyOn(console, 'log').mockImplementation(jest.fn());
 
+const defaultProps = {
+  watch: false,
+};
+
 afterEach(() => {
   jest.clearAllMocks();
 });
@@ -14,6 +18,7 @@ describe('When config level is "silent"', () => {
     'should log on log%s',
     (name) => {
       const logger = buildLogger({
+        ...defaultProps,
         loglevel: 'silent',
       });
 
@@ -34,6 +39,7 @@ describe.each([
 ])('When config level is "%s"', (loglevel, shouldLogOn, shouldNotLogOn) => {
   it.each(shouldLogOn)('should log on log%s', (name) => {
     const logger = buildLogger({
+      ...defaultProps,
       loglevel: loglevel as LogLevel,
     });
 
@@ -45,12 +51,13 @@ describe.each([
       expect(logSpy).not.toHaveBeenCalled();
     } else {
       expect(errorSpy).not.toHaveBeenCalled();
-      expect(logSpy).toHaveBeenCalledWith('test message');
+      expect(logSpy).toHaveBeenCalledTimes(1);
     }
   });
 
   it.each(shouldNotLogOn)('should not log on log%s', (name) => {
     const logger = buildLogger({
+      ...defaultProps,
       loglevel: loglevel as LogLevel,
     });
 
@@ -67,6 +74,7 @@ describe('When config level is "trace"', () => {
     'should log on log%s',
     (name) => {
       const logger = buildLogger({
+        ...defaultProps,
         loglevel: 'trace',
       });
 
@@ -78,7 +86,7 @@ describe('When config level is "trace"', () => {
         expect(logSpy).not.toHaveBeenCalled();
       } else {
         expect(errorSpy).not.toHaveBeenCalled();
-        expect(logSpy).toHaveBeenCalledWith('test message');
+        expect(logSpy).toHaveBeenCalledTimes(1);
       }
     }
   );
@@ -93,6 +101,7 @@ describe.each([
 ])('When level is "%s"', (level, isEqualValue) => {
   it(`isTrace() should be ${isEqualValue}`, () => {
     const logger = buildLogger({
+      ...defaultProps,
       loglevel: level as LogLevel,
     });
 

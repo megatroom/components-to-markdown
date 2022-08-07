@@ -4,6 +4,7 @@ import { parseTSDoc, formatComment } from './parseTSDoc';
 const defaultDocData: DocData = {
   description: '',
   tags: [],
+  modifiers: [],
   params: [],
 };
 
@@ -62,7 +63,7 @@ it('should parse @beta', () => {
   const expected = {
     ...defaultDocData,
     description: 'A beta component',
-    tags: [
+    modifiers: [
       {
         name: '@beta',
         description: '',
@@ -79,7 +80,7 @@ it('should parse @alpha', () => {
   const expected = {
     ...defaultDocData,
     description: 'A alpha component',
-    tags: [
+    modifiers: [
       {
         name: '@alpha',
         description: '',
