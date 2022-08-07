@@ -1,6 +1,6 @@
 # Components to Markdown
 
-[![CircleCI Status](https://circleci.com/gh/megatroom/components-to-markdown.svg?style=svg)](https://circleci.com/gh/megatroom/components-to-markdown)
+[![CircleCI](https://img.shields.io/circleci/build/gh/megatroom/components-to-markdown)](https://circleci.com/gh/megatroom/components-to-markdown)
 
 Generate markdown documentation of React components.
 
