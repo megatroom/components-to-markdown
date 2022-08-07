@@ -1,6 +1,6 @@
 import { ConfigOptions, LogLevel } from '../typings/ConfigOptions';
 import type { Logger } from '../typings/Logger';
-import { colorCounter, colorLogLevel } from './_stdout';
+import { colorCommand, colorCounter, colorLogLevel } from './_stdout';
 
 const LogLevelNumber: Record<LogLevel, number> = {
   silent: 0,
@@ -11,12 +11,11 @@ const LogLevelNumber: Record<LogLevel, number> = {
   trace: 5,
 };
 
-const TOTAL_OF_STEPS = 3;
-
 export const buildLogger = (
-  options: Pick<ConfigOptions, 'loglevel'>
+  options: Pick<ConfigOptions, 'loglevel' | 'watch'>
 ): Logger => {
   const configLevelNumber = LogLevelNumber[options.loglevel];
+  const totalOfSteps = options.watch ? 4 : 3;
 
   return {
     logError: (message, ...optionalParams) => {
@@ -47,8 +46,16 @@ export const buildLogger = (
     logStep: (step, emoji, description) => {
       if (configLevelNumber >= LogLevelNumber.info) {
         console.log(
-          colorCounter(`[${step}/${TOTAL_OF_STEPS}]`) +
-            ` ${emoji} ${description}`
+          colorCounter(`[${step}/${totalOfSteps}]`) + ` ${emoji} ${description}`
+        );
+      }
+    },
+    logShortcutUsage: (command, description) => {
+      if (configLevelNumber >= LogLevelNumber.info) {
+        console.log(
+          `${colorCommand(' \u203A Press ')}${command}${colorCommand(
+            ` ${description}.`
+          )}`
         );
       }
     },

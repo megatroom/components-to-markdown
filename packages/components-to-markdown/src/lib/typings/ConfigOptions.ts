@@ -21,4 +21,8 @@ export interface ConfigOptions {
    * Path to the output markdown files.
    */
   output: string;
+  /**
+   * Watch for changes and rebuild automatically.
+   */
+  watch: boolean;
 }

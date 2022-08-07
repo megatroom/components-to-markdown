@@ -6,6 +6,7 @@
   "private": true,
   "dependencies": {
     "@microsoft/tsdoc": "^0.14.1",
+    "chokidar": "^3.5.3",
     "commander": "^9.3.0",
     "graceful-fs": "^4.2.10",
     "handlebars": "^4.7.7",

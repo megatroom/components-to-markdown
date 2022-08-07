@@ -1,5 +1,6 @@
 import { program } from 'commander';
-import parseMarkdown from './markdown/parseMarkdown';
+import { relative } from 'path';
+import parseMarkdown, { RenderMarkdown } from './markdown/parseMarkdown';
 import writeMarkdown from './markdown/writeMarkdown';
 import parseReactComp from './parses/parseReactComp';
 import getAllFiles from './system/getAllFiles';
@@ -8,12 +9,18 @@ import getTemplate from './system/getTemplate';
 import { buildLogger } from './system/logger';
 import readFile from './system/readFile';
 import scriptDir from './system/scriptDir';
-import { colorFail, colorSuccess, extractErrorMessage } from './system/_stdout';
+import {
+  colorCommand,
+  colorFail,
+  colorSuccess,
+  extractErrorMessage,
+} from './system/_stdout';
 import type { ComponentData, ComponentDoc } from './typings/ComponentData';
 import type { ConfigOptions } from './typings/ConfigOptions';
 import type { Logger } from './typings/Logger';
 import { formatComment, parseTSDoc } from './parses/parseTSDoc';
 import type { DocumentationObject } from 'react-docgen';
+import { watcher } from './system/watcher';
 
 function extractDocDataFromComponentData(
   componentObj: DocumentationObject
@@ -71,6 +78,35 @@ async function* processFiles(
   }
 }
 
+async function buildMarkdown(
+  logger: Logger,
+  files: string[],
+  renderMarkdown: RenderMarkdown,
+  outputDirectory: string
+) {
+  let totalOfSuccess = 0,
+    totalOfError = 0;
+
+  for await (const processedFile of processFiles(files)) {
+    const { error, file, componentData } = processedFile;
+
+    if (error) {
+      totalOfError += 1;
+      logger.logDebug(`⚠️ ${file} error: ${error}`);
+      continue;
+    }
+
+    if (componentData) {
+      totalOfSuccess += 1;
+      logger.logDebug(`✔️ ${file} parsed as ${componentData.name}`);
+      const markdown = renderMarkdown(componentData);
+      writeMarkdown(outputDirectory, componentData.name, markdown);
+    }
+  }
+
+  return { totalOfSuccess, totalOfError };
+}
+
 export async function componentsToMarkdown(options: ConfigOptions) {
   const logger = buildLogger(options);
   const scriptDirectory = scriptDir(__dirname);
@@ -94,27 +130,36 @@ export async function componentsToMarkdown(options: ConfigOptions) {
   logger.logDebug(`Found ${files.length} files on all sources.`);
 
   logger.logStep(3, '📝', 'Building markdowns...');
-  let totalOfSuccess = 0,
-    totalOfError = 0;
-  for await (const processedFile of processFiles(files)) {
-    const { error, file, componentData } = processedFile;
+  const { totalOfSuccess, totalOfError } = await buildMarkdown(
+    logger,
+    files,
+    renderMarkdown,
+    outputDirectory
+  );
 
-    if (error) {
-      totalOfError += 1;
-      logger.logDebug(`⚠️ ${file} error: ${error}`);
-      continue;
-    }
+  if (options.watch) {
+    logger.logStep(4, '🔎', 'Watching for changes');
+    logger.logShortcutUsage('q', 'to quit watch mode');
 
-    if (componentData) {
-      totalOfSuccess += 1;
-      logger.logDebug(`✔️ ${file} parsed as ${componentData.name}`);
-      const markdown = renderMarkdown(componentData);
-      writeMarkdown(outputDirectory, componentData.name, markdown);
-    }
+    watcher({
+      sources: options.sources,
+      pattern: options.patterns,
+      scriptDirectory,
+      onChange: (filePath, event) => {
+        logger.logInfo(
+          colorCommand('->'),
+          `${event}: ${relative(scriptDirectory, filePath)}`
+        );
+        buildMarkdown(logger, [filePath], renderMarkdown, outputDirectory);
+      },
+      onExit: () => {
+        logger.logInfo('Bye! 👋');
+      },
+    });
+  } else {
+    logSummary(logger, totalOfSuccess, totalOfError);
+    logger.logInfo('✨ Done.');
   }
-  logSummary(logger, totalOfSuccess, totalOfError);
-
-  logger.logInfo('✨ Done.');
 }
 
 export function cli(argv: string[], version: string) {
@@ -135,6 +180,7 @@ export function cli(argv: string[], version: string) {
       'all-detailed'
     )
     .option('-o, --output <output>', 'path to output markdown files', '.')
+    .option('-w, --watch', 'watch for changes and rebuild automatically', false)
     .option('-l, --loglevel <level>', 'log level', 'info')
     .action((sources, options) => {
       componentsToMarkdown({

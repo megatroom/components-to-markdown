@@ -5,5 +5,6 @@ export interface Logger {
   logDebug: (message?: any, ...optionalParams: any[]) => void;
   logTrace: (message?: any, ...optionalParams: any[]) => void;
   logStep: (step: number, emoji: string, description: string) => void;
+  logShortcutUsage: (command: string, description: string) => void;
   isTrace: () => boolean;
 }

@@ -14,10 +14,13 @@ Handlebars.registerHelper(
   }
 );
 
-const parseMarkdown = (template: Buffer) => {
+export type RenderMarkdown = (componentData: ComponentData) => string;
+export type ParseMarkdown = (template: Buffer) => RenderMarkdown;
+
+const parseMarkdown: ParseMarkdown = (template) => {
   const render = Handlebars.compile(template.toString());
 
-  return function renderMarkdown(componentData: ComponentData): string {
+  return function renderMarkdown(componentData) {
     return render(componentData);
   };
 };

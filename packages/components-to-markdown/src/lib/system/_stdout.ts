@@ -24,4 +24,5 @@ export const bold = (str: string) => chalk.bold(str);
 export const colorSuccess = (str: string) => chalk.green(str);
 export const colorFail = (str: string) => chalk.red(str);
 export const colorCounter = (str: string) => chalk.dim(str);
+export const colorCommand = (str: string) => chalk.dim(str);
 export const colorLogLevel = (str: string) => chalk.magenta(str);
