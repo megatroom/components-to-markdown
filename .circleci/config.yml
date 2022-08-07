@@ -1,26 +1,42 @@
-# Use the latest 2.1 version of CircleCI pipeline process engine.
-# See: https://circleci.com/docs/2.0/configuration-reference
 version: 2.1
 
-# Define a job to be invoked later in a workflow.
-# See: https://circleci.com/docs/2.0/configuration-reference/#jobs
+orbs:
+  nx: nrwl/nx@1.5.1
+
 jobs:
-  say-hello:
-    # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
-    # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
+  main:
     docker:
-      - image: cimg/base:stable
-    # Add steps to the job
-    # See: https://circleci.com/docs/2.0/configuration-reference/#steps
+      - image: cimg/node:lts-browsers
+    steps:
+      environment:
+      MAIN_BRANCH_NAME: main
     steps:
       - checkout
       - run:
-          name: "Say hello"
-          command: "echo Hello, World!"
+          name: Install dependencies
+          command: yarn install --frozen-lockfile
+      - nx/set-shas:
+          allow-on-hold-workflow: true
+          error-on-no-successful-workflow: true
+          main-branch-name: main
+          workflow-name: nx-pipeline
+      - run:
+          name: Workspace Lint
+          command: yarn nx workspace-lint
+      - run:
+          name: Format Check
+          command: yarn nx format:check
+      - run:
+          name: Run Lint
+          command: yarn nx affected --target=lint --base=$NX_BASE
+      - run:
+          name: Run Unit Tests
+          command: yarn nx affected --target=test --base=$NX_BASE
+      - run:
+          name: Run Builds
+          command: yarn nx affected --target=build --base=$NX_BASE
 
-# Invoke jobs via workflows
-# See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
-  say-hello-workflow:
+  build:
     jobs:
-      - say-hello
+      - main
