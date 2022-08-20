@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   nx: nrwl/nx@1.5.1
+  codecov: codecov/codecov@3.2.3
 
 aliases:
   - &docker_image
@@ -47,8 +48,9 @@ jobs:
       - checkout
       - *current_workspace
       - run:
-          name: Run Unit Tests
-          command: yarn nx affected --target=test --base=$NX_BASE
+          name: Run Unit Tests with Coverage
+          command: yarn nx affected --target=test --base=$NX_BASE --codeCoverage --skip-nx-cache
+      - codecov/upload
   build:
     docker: *docker_image
     steps:
