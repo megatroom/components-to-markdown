@@ -61,7 +61,8 @@ jobs:
       - store_test_results:
           path: test-results
       - codecov/upload:
-          file: test-results/components-to-markdown/results.xml
+          file: coverage/packages/components-to-markdown/
+          flags: components-to-markdown
   build:
     docker: *docker_image
     steps:
