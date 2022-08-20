@@ -10,9 +10,11 @@
         "outputPath": "dist/packages/components-to-markdown",
         "main": "packages/components-to-markdown/src/index.ts",
         "tsConfig": "packages/components-to-markdown/tsconfig.lib.json",
+        "updateBuildableProjectDepsInPackageJson": true,
+        "buildableProjectDepsInPackageJsonType": "dependencies",
         "assets": [
           "LICENSE",
-          "packages/components-to-markdown/*.md",
+          "README.md",
           "packages/components-to-markdown/bin/components-to-markdown",
           "packages/components-to-markdown/templates/*.hbs"
         ]

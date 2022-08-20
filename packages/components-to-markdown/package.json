@@ -1,7 +1,15 @@
 {
   "name": "components-to-markdown",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "type": "commonjs",
+  "license": "MIT",
+  "repository": "git@github.com:megatroom/components-to-markdown.git",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "bin": {
+    "components-to-markdown": "bin/components-to-markdown"
+  },
   "dependencies": {
     "esm": "3.2.25"
   }
