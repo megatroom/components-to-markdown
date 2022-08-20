@@ -1,10 +1,11 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
 
-import Action from './Action';
+import { Action } from './Action';
 
 describe('Action', () => {
-  it('should render successfully', () => {
-    const { baseElement } = render(<Action />);
-    expect(baseElement).toBeTruthy();
+  it('should render children', () => {
+    render(<Action>My Text</Action>);
+    expect(screen.getByText('My Text')).toBeInTheDocument();
   });
 });

@@ -46,6 +46,17 @@
         "jestConfig": "packages/components-to-markdown/jest.config.ts",
         "passWithNoTests": true
       }
+    },
+    "cover": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/components-to-markdown"],
+      "options": {
+        "jestConfig": "packages/components-to-markdown/jest.config.ts",
+        "codeCoverage": true,
+        "passWithNoTests": true,
+        "reporters": ["default", "jest-junit"],
+        "coverageReporters": ["lcov", "text-summary"]
+      }
     }
   },
   "tags": ["cli"]

@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   nx: nrwl/nx@1.5.1
+  codecov: codecov/codecov@3.2.3
 
 aliases:
   - &docker_image
@@ -49,6 +50,19 @@ jobs:
       - run:
           name: Run Unit Tests
           command: yarn nx affected --target=test --base=$NX_BASE
+  coverage:
+    docker: *docker_image
+    steps:
+      - checkout
+      - *current_workspace
+      - run:
+          name: Run Coverage
+          command: JEST_JUNIT_OUTPUT_DIR="./test-results/components-to-markdown/" yarn nx cover components-to-markdown
+      - store_test_results:
+          path: test-results
+      - codecov/upload:
+          file: coverage/packages/components-to-markdown/lcov.info
+          flags: components-to-markdown
   build:
     docker: *docker_image
     steps:
@@ -84,6 +98,9 @@ workflows:
       - test:
           requires:
             - install-dependencies
+      - coverage:
+          requires:
+            - test
       - build:
           requires:
             - install-dependencies
