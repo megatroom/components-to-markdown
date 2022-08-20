@@ -54,7 +54,8 @@
         "jestConfig": "packages/components-to-markdown/jest.config.ts",
         "codeCoverage": true,
         "passWithNoTests": true,
-        "reporters": ["default", "jest-junit"]
+        "reporters": ["default", "jest-junit"],
+        "coverageReporters": ["lcov", "text-summary"]
       }
     }
   },

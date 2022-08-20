@@ -61,7 +61,7 @@ jobs:
       - store_test_results:
           path: test-results
       - codecov/upload:
-          file: coverage/packages/components-to-markdown/
+          file: coverage/packages/components-to-markdown/lcov.info
           flags: components-to-markdown
   build:
     docker: *docker_image
