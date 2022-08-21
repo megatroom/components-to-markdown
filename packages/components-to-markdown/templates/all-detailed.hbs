@@ -28,4 +28,45 @@ title: {{name}}
 {{/each}}
 {{/if}}
 
+## Properties
+
+{{#each properties}}
+
+### `{{name}}` {{#if required}}✳️{{/if}}
+
+<p>
+  {{#if required}}<span class="badge badge--primary">Required</span>{{/if}}
+  {{#if deprecated}}<span class="badge badge--primary">Deprecated</span>{{/if}}
+</p>
+
+{{description}}
+
+```tsx title="Type"
+{{type.raw}}
+```
+
+```tsx title="Default"
+-
+```
+
+{{#if params}}
+
+#### Parameters
+
+| Name | Description |
+| ---- | ----------- |
+{{#each params}}
+| {{name}} | {{description}} |
+{{/each}}
+{{/if}}
+
+{{#each tags}}
+
+#### {{formatTagTitle name}}
+
+{{description}}
+{{/each}}
+
+{{/each}}
+
 {{/each}}

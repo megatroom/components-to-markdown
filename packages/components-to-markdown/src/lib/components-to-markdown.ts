@@ -15,12 +15,38 @@ import {
   colorSuccess,
   extractErrorMessage,
 } from './system/_stdout';
-import type { ComponentData, ComponentDoc } from './typings/ComponentData';
+import type {
+  ComponentData,
+  ComponentDoc,
+  ComponentProp,
+} from './typings/ComponentData';
 import type { ConfigOptions } from './typings/ConfigOptions';
 import type { Logger } from './typings/Logger';
 import { formatComment, parseTSDoc } from './parses/parseTSDoc';
-import type { DocumentationObject } from 'react-docgen';
+import type { DocumentationObject, PropDescriptor } from 'react-docgen';
 import { watcher } from './system/watcher';
+
+function extractPropFromComponent(
+  name: string,
+  prop: PropDescriptor
+): ComponentProp {
+  const descriptionDoc = parseTSDoc(formatComment(prop.description || ''));
+  descriptionDoc.description = descriptionDoc.description.replace(
+    /\n\n/g,
+    '\n'
+  );
+
+  return {
+    ...descriptionDoc,
+    name,
+    required: prop.required || false,
+    requiredText: prop.required ? 'Yes' : 'No',
+    type: {
+      name: prop.tsType?.name,
+      raw: prop.tsType?.raw || prop.tsType?.name || 'unknown',
+    },
+  };
+}
 
 function extractDocDataFromComponentData(
   componentObj: DocumentationObject
@@ -31,6 +57,9 @@ function extractDocDataFromComponentData(
 
   return {
     name: componentObj.displayName || 'Unknown Component',
+    properties: Object.entries(componentObj.props || []).map(([name, prop]) =>
+      extractPropFromComponent(name, prop)
+    ),
     ...descriptionDoc,
   };
 }

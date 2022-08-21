@@ -3,6 +3,7 @@
   "version": 2,
   "projects": {
     "components-to-markdown": "packages/components-to-markdown",
+    "docusaurus-demo": "packages/docusaurus-demo",
     "example-react-components": "packages/example-react-components"
   }
 }

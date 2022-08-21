@@ -5,6 +5,7 @@
   "scripts": {
     "clear:cache": "nx clear-cache",
     "build": "nx build",
+    "serve": "nx serve",
     "test": "nx test",
     "test:all": "nx run-many --target=test --all",
     "format:check": "nx format:check",
@@ -12,12 +13,17 @@
   },
   "private": true,
   "dependencies": {
+    "@docusaurus/core": "2.0.0-beta.13",
+    "@docusaurus/preset-classic": "2.0.0-beta.13",
+    "@mdx-js/react": "^1.6.21",
     "@microsoft/tsdoc": "^0.14.1",
     "chokidar": "^3.5.3",
+    "clsx": "^1.1.1",
     "commander": "^9.3.0",
     "graceful-fs": "^4.2.10",
     "handlebars": "^4.7.7",
     "picomatch": "^2.3.1",
+    "prism-react-renderer": "^1.2.1",
     "react": "18.2.0",
     "react-docgen": "^5.4.2",
     "react-docgen-annotation-resolver": "^2.0.0",
@@ -29,6 +35,7 @@
     "tslib": "^2.3.0"
   },
   "devDependencies": {
+    "@docusaurus/module-type-aliases": "2.0.0-beta.13",
     "@nrwl/cli": "14.5.8",
     "@nrwl/eslint-plugin-nx": "14.5.8",
     "@nrwl/jest": "14.5.8",

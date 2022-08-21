@@ -5,6 +5,7 @@ const tagTitles = {
   '@remarks': 'Remarks',
   '@returns': 'Return Value',
   '@deprecated': 'Deprecated 🚨',
+  '@example': 'Example',
 };
 
 Handlebars.registerHelper(
@@ -18,7 +19,7 @@ export type RenderMarkdown = (componentData: ComponentData) => string;
 export type ParseMarkdown = (template: Buffer) => RenderMarkdown;
 
 const parseMarkdown: ParseMarkdown = (template) => {
-  const render = Handlebars.compile(template.toString());
+  const render = Handlebars.compile(template.toString(), { noEscape: true });
 
   return function renderMarkdown(componentData) {
     return render(componentData);

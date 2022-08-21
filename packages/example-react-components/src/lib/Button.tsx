@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import React, { ButtonHTMLAttributes, ReactNode } from 'react';
 import styled, { css } from 'styled-components';
 
 type Variant = 'default' | 'primary' | 'success' | 'danger';
@@ -20,6 +20,20 @@ export interface ButtonProps {
    * @default 'default'
    */
   variant?: Variant;
+  /**
+   * Button click event handler.
+   *
+   * @example
+   * ```tsx
+   * onClick={() => {
+   *  console.log('Button clicked');
+   * }}
+   * ```
+   *
+   * @param event The click event.
+   * @returns void
+   */
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 interface StyledProps {
@@ -58,13 +72,27 @@ const StyledButton = styled.button`
   ${({ $variant }: StyledProps) => variants[$variant]}
 `;
 
+/**
+ * Buttons allow users to take actions, and make choices, with a single tap.
+ *
+ * @remarks
+ * Buttons communicate actions that users can take. They are typically placed throughout your UI, in places like:
+ * - Dialogs
+ * - Modal windows
+ * - Forms
+ * - Cards
+ * -Toolbars
+ *
+ * @beta
+ */
 export function Button({
   children,
+  onClick,
   type = 'button',
   variant = 'default',
 }: ButtonProps) {
   return (
-    <StyledButton type={type} $variant={variant}>
+    <StyledButton type={type} $variant={variant} onClick={onClick}>
       {children}
     </StyledButton>
   );
