@@ -1,19 +1,19 @@
 import * as Handlebars from 'handlebars';
 import { ComponentData } from '../typings/ComponentData';
 
-const tagTitles = {
-  '@remarks': 'Remarks',
-  '@returns': 'Return Value',
-  '@deprecated': 'Deprecated 🚨',
-  '@example': 'Example',
-};
+// const tagTitles = {
+//   '@remarks': 'Remarks',
+//   '@returns': 'Return Value',
+//   '@deprecated': 'Deprecated 🚨',
+//   '@example': 'Example',
+// };
 
-Handlebars.registerHelper(
-  'formatTagTitle',
-  function (name: keyof typeof tagTitles) {
-    return tagTitles[name] || name;
-  }
-);
+// Handlebars.registerHelper(
+//   'formatTagTitle',
+//   function (name: keyof typeof tagTitles) {
+//     return tagTitles[name] || name;
+//   }
+// );
 
 export type RenderMarkdown = (componentData: ComponentData) => string;
 export type ParseMarkdown = (template: Buffer) => RenderMarkdown;

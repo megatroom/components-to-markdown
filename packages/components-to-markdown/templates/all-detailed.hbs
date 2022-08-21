@@ -5,18 +5,35 @@ title: {{name}}
 # {{name}}
 {{#each components}}
 
-## {{name}}
+## {{name}} {{#if deprecated}}⚠️{{/if}}
 
-{{#each modifiers}}{{name}} {{/each}}
+<p>
+  {{#if beta}}<span class="badge badge--warning">Beta</span>&nbsp;{{/if}}
+  {{#if public}}<span class="badge badge--primary">Public</span>&nbsp;{{/if}}
+  {{#if internal}}<span class="badge badge--primary">Internal</span>&nbsp;{{/if}}
+  {{#if virtual}}<span class="badge badge--primary">Virtual</span>&nbsp;{{/if}}
+  {{#if override}}<span class="badge badge--primary">Override</span>&nbsp;{{/if}}
+  {{#if sealed}}<span class="badge badge--primary">Sealed</span>&nbsp;{{/if}}
+</p>
+
+{{#if deprecated}}
+:::caution Deprecated
+
+{{deprecated.description}}
+
+:::
+{{/if}}
 
 {{description}}
 
-{{#each tags}}
+{{#if remarks}}
 
-## {{formatTagTitle name}}
+## Remarks
 
-{{description}}
-{{/each}}
+{{remarks.description}}
+
+{{/if}}
+
 {{#if params}}
 
 ## Parameters
@@ -24,7 +41,7 @@ title: {{name}}
 | Name | Description |
 | ---- | ----------- |
 {{#each params}}
-| {{name}} | {{description}} |
+| `{{name}}` | {{description}} |
 {{/each}}
 {{/if}}
 
@@ -32,12 +49,25 @@ title: {{name}}
 
 {{#each properties}}
 
-### `{{name}}` {{#if required}}✳️{{/if}}
+### `{{name}}` {{#if required}}✳️{{/if}} {{#if deprecated}}⚠️{{/if}}
 
 <p>
-  {{#if required}}<span class="badge badge--primary">Required</span>{{/if}}
-  {{#if deprecated}}<span class="badge badge--primary">Deprecated</span>{{/if}}
+  {{#if required}}<span class="badge badge--primary">Required</span>&nbsp;{{/if}}
+  {{#if beta}}<span class="badge badge--warning">Beta</span>&nbsp;{{/if}}
+  {{#if public}}<span class="badge badge--primary">Public</span>&nbsp;{{/if}}
+  {{#if internal}}<span class="badge badge--primary">Internal</span>&nbsp;{{/if}}
+  {{#if virtual}}<span class="badge badge--primary">Virtual</span>&nbsp;{{/if}}
+  {{#if override}}<span class="badge badge--primary">Override</span>&nbsp;{{/if}}
+  {{#if sealed}}<span class="badge badge--primary">Sealed</span>&nbsp;{{/if}}
 </p>
+
+{{#if deprecated}}
+:::caution Deprecated
+
+{{deprecated.description}}
+
+:::
+{{/if}}
 
 {{description}}
 
@@ -48,7 +78,13 @@ title: {{name}}
 ```tsx title="Default"
 -
 ```
+{{#if remarks}}
 
+#### Remarks
+
+{{remarks.description}}
+
+{{/if}}
 {{#if params}}
 
 #### Parameters
@@ -56,16 +92,15 @@ title: {{name}}
 | Name | Description |
 | ---- | ----------- |
 {{#each params}}
-| {{name}} | {{description}} |
+| `{{name}}` | {{description}} |
 {{/each}}
 {{/if}}
 
-{{#each tags}}
+{{#if returns}}
+#### Returns
 
-#### {{formatTagTitle name}}
-
-{{description}}
-{{/each}}
+{{returns.description}}
+{{/if}}
 
 {{/each}}
 

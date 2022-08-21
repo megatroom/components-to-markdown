@@ -3,8 +3,13 @@ import { parseTSDoc, formatComment } from './parseTSDoc';
 
 const defaultDocData: DocData = {
   description: '',
-  tags: [],
-  modifiers: [],
+  beta: false,
+  alpha: false,
+  public: false,
+  internal: false,
+  virtual: false,
+  override: false,
+  sealed: false,
   params: [],
 };
 
@@ -38,54 +43,22 @@ Set in the fictional world of Middle-earth, the films follow the hobbit Frodo Ba
   expect(parseTSDoc(formatComment(content))).toEqual(expected);
 });
 
-it('should parse @remarks', () => {
-  const content = `A fancy component
-
-@remarks
-This is a remark paragraph.`;
+it.each([
+  ['@alpha', 'alpha'],
+  ['@beta', 'beta'],
+  ['@experimental', 'beta'],
+  ['@public', 'public'],
+  ['@internal', 'internal'],
+  ['@virtual', 'virtual'],
+  ['@override', 'override'],
+  ['@sealed', 'sealed'],
+])('should parse %s as "%s: true"', (tagName, propName) => {
+  const content = `A component with modifier
+${tagName}`;
   const expected = {
     ...defaultDocData,
-    description: 'A fancy component',
-    tags: [
-      {
-        name: '@remarks',
-        description: 'This is a remark paragraph.',
-      },
-    ],
-  };
-
-  expect(parseTSDoc(formatComment(content))).toEqual(expected);
-});
-
-it('should parse @beta', () => {
-  const content = `A beta component
-@beta`;
-  const expected = {
-    ...defaultDocData,
-    description: 'A beta component',
-    modifiers: [
-      {
-        name: '@beta',
-        description: '',
-      },
-    ],
-  };
-
-  expect(parseTSDoc(formatComment(content))).toEqual(expected);
-});
-
-it('should parse @alpha', () => {
-  const content = `A alpha component
-@alpha`;
-  const expected = {
-    ...defaultDocData,
-    description: 'A alpha component',
-    modifiers: [
-      {
-        name: '@alpha',
-        description: '',
-      },
-    ],
+    description: 'A component with modifier',
+    [propName]: true,
   };
 
   expect(parseTSDoc(formatComment(content))).toEqual(expected);
@@ -98,12 +71,37 @@ it('should parse @deprecated', () => {
   const expected = {
     ...defaultDocData,
     description: 'The base class for controls that can be rendered.',
-    tags: [
-      {
-        name: '@deprecated',
-        description: 'Use the new {@link Control} base class instead.',
-      },
-    ],
+    deprecated: {
+      description: 'Use the new {@link Control} base class instead.',
+    },
+  };
+
+  expect(parseTSDoc(formatComment(content))).toEqual(expected);
+});
+
+it('should parse @remarks', () => {
+  const content = `A fancy component
+
+@remarks
+This is a remark paragraph.`;
+  const expected = {
+    ...defaultDocData,
+    description: 'A fancy component',
+    remarks: {
+      description: 'This is a remark paragraph.',
+    },
+  };
+
+  expect(parseTSDoc(formatComment(content))).toEqual(expected);
+});
+
+it('should parse @returns', () => {
+  const content = '@returns The arithmetic mean of `x` and `y`';
+  const expected = {
+    ...defaultDocData,
+    returns: {
+      description: 'The arithmetic mean of `x` and `y`',
+    },
   };
 
   expect(parseTSDoc(formatComment(content))).toEqual(expected);
@@ -124,21 +122,6 @@ it('should parse @param', () => {
       {
         name: 'y',
         description: 'The second input number',
-      },
-    ],
-  };
-
-  expect(parseTSDoc(formatComment(content))).toEqual(expected);
-});
-
-it('should parse @returns', () => {
-  const content = '@returns The arithmetic mean of `x` and `y`';
-  const expected = {
-    ...defaultDocData,
-    tags: [
-      {
-        name: '@returns',
-        description: 'The arithmetic mean of `x` and `y`',
       },
     ],
   };

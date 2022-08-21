@@ -84,6 +84,7 @@ const StyledButton = styled.button`
  * -Toolbars
  *
  * @beta
+ * @public
  */
 export function Button({
   children,
