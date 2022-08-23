@@ -1,19 +1,16 @@
 import * as Handlebars from 'handlebars';
+import GithubSlugger = require('github-slugger');
 import { ComponentData } from '../typings/ComponentData';
 
-// const tagTitles = {
-//   '@remarks': 'Remarks',
-//   '@returns': 'Return Value',
-//   '@deprecated': 'Deprecated 🚨',
-//   '@example': 'Example',
-// };
-
-// Handlebars.registerHelper(
-//   'formatTagTitle',
-//   function (name: keyof typeof tagTitles) {
-//     return tagTitles[name] || name;
-//   }
-// );
+Handlebars.registerHelper('headingId', function (text) {
+  try {
+    const githubSlugger = new GithubSlugger();
+    return `{#${githubSlugger.slug(text)}}`;
+  } catch (e) {
+    console.error(e);
+    return '';
+  }
+});
 
 export type RenderMarkdown = (componentData: ComponentData) => string;
 export type ParseMarkdown = (template: Buffer) => RenderMarkdown;

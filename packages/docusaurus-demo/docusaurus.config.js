@@ -7,7 +7,8 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'Components to Markdown',
-  tagline: 'Docusaurus Demo',
+  tagline:
+    'Highly customizable open source tool for generating component documentation.',
   url: 'https://your-docusaurus-test-site.com',
   baseUrl: '/',
   onBrokenLinks: 'throw',
@@ -22,20 +23,32 @@ const config = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
-          sidebarPath: require.resolve('./sidebars.js'),
-          // Please change this to your repo.
-          editUrl: 'https://github.com/facebook/docusaurus/edit/main/website/',
-        },
-        blog: {
-          showReadingTime: true,
-          // Please change this to your repo.
+          sidebarPath: require.resolve('./sidebarsDocs.js'),
           editUrl:
-            'https://github.com/facebook/docusaurus/edit/main/website/blog/',
+            'https://github.com/megatroom/components-to-markdown/edit/main/packages/website/',
         },
+        // blog: {
+        //   showReadingTime: true,
+        //   editUrl:
+        //     'https://github.com/megatroom/components-to-markdown/edit/main/packages/website/blog/',
+        // },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
         },
       }),
+    ],
+  ],
+
+  plugins: [
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'demo',
+        path: 'demo',
+        routeBasePath: 'demo',
+        sidebarPath: require.resolve('./sidebarsDemo.js'),
+        // ... other options
+      },
     ],
   ],
 
@@ -51,11 +64,18 @@ const config = {
         items: [
           {
             type: 'doc',
-            docId: 'intro',
+            docId: 'getting-started/introduction',
             position: 'left',
-            label: 'Tutorial',
+            label: 'Docs',
           },
-          { to: '/blog', label: 'Blog', position: 'left' },
+          {
+            type: 'doc',
+            docsPluginId: 'demo',
+            docId: 'brachiosaurus/overview',
+            position: 'left',
+            label: 'Demo',
+          },
+          // { to: '/blog', label: 'Blog', position: 'left' },
           {
             href: 'https://github.com/megatroom/components-to-markdown',
             label: 'GitHub',
@@ -71,7 +91,7 @@ const config = {
             items: [
               {
                 label: 'Tutorial',
-                to: '/docs/intro',
+                to: '/docs/getting-started/introduction',
               },
             ],
           },
@@ -106,7 +126,7 @@ const config = {
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} Component to Markdown, Inc. Built with Docusaurus.`,
       },
       prism: {
         theme: lightCodeTheme,

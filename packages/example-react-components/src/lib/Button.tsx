@@ -1,4 +1,4 @@
-import React, { ButtonHTMLAttributes, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import styled, { css } from 'styled-components';
 
 type Variant = 'default' | 'primary' | 'success' | 'danger';
@@ -11,19 +11,19 @@ export interface ButtonProps {
   /**
    * The button type.
    *
-   * @default 'button'
+   * @defaultValue 'button'
    */
   type?: 'button' | 'submit' | 'reset';
   /**
    * The button variant.
    *
-   * @default 'default'
+   * @defaultValue 'default'
    */
   variant?: Variant;
   /**
    * Button click event handler.
    *
-   * @example
+   * @example Logging the click event
    * ```tsx
    * onClick={() => {
    *  console.log('Button clicked');

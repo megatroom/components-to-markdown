@@ -10,32 +10,35 @@ type FeatureItem = {
 
 const FeatureList: FeatureItem[] = [
   {
-    title: 'Easy to Use',
-    image: '/img/undraw_docusaurus_mountain.svg',
+    title: 'Use Your Template',
+    image: '/img/undraw_prototyping_process_re_7a6p.svg',
     description: (
       <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
+        Choose one of the available templates or create your own with{' '}
+        <a href="https://handlebarsjs.com/" target="_blank">
+          Handlebars
+        </a>{' '}
+        and customize all the content.
       </>
     ),
   },
   {
-    title: 'Focus on What Matters',
+    title: 'Multi-Framework Support',
     image: '/img/undraw_docusaurus_tree.svg',
     description: (
       <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
+        Markdown is the language used by most frameworks, like Docusaurus and
+        Storybook for example.
       </>
     ),
   },
   {
-    title: 'Powered by React',
-    image: '/img/undraw_docusaurus_react.svg',
+    title: 'Use as a CLI or library',
+    image: '/img/undraw_static_assets_rpm6.svg',
     description: (
       <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
+        Generate all documentation with just one command, or extend its
+        functionality by importing it into your JavaScript/TypeScript code.
       </>
     ),
   },
