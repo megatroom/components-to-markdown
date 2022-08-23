@@ -42,24 +42,25 @@ declare module 'react-docgen' {
 
   export interface PropTypeDescriptor {
     name:
-      | 'arrayOf'
-      | 'custom'
-      | 'enum'
+      | 'any'
       | 'array'
+      | 'arrayOf'
       | 'bool'
+      | 'custom'
+      | 'element'
+      | 'elementType'
+      | 'enum'
+      | 'exact'
       | 'func'
+      | 'instanceOf'
+      | 'node'
       | 'number'
       | 'object'
-      | 'string'
-      | 'any'
-      | 'element'
-      | 'node'
-      | 'symbol'
       | 'objectOf'
       | 'shape'
-      | 'exact'
-      | 'instanceOf'
-      | 'elementType';
+      | 'string'
+      | 'symbol'
+      | 'union';
     value?: any;
     raw?: string;
     computed?: boolean;
@@ -69,9 +70,17 @@ declare module 'react-docgen' {
     required?: boolean;
   }
 
+  export type TypeDescriptor<T = FunctionSignatureType> =
+    | ElementsType<T>
+    | LiteralType
+    | ObjectSignatureType<T>
+    | SimpleType
+    | T;
+
   export interface PropDescriptor {
     name: string;
     type?: PropTypeDescriptor;
+    tsType?: TypeDescriptor<TSFunctionSignatureType>;
     required?: boolean;
     defaultValue?: any;
     description?: string;

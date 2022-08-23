@@ -8,7 +8,13 @@ import {
   TSDocTagDefinition,
   TSDocTagSyntaxKind,
 } from '@microsoft/tsdoc';
-import { DocData, DocDataParam, DocDataTag } from '../typings/DocData';
+import {
+  DocData,
+  DocDataModifier,
+  DocDataParam,
+  DocDataEntity,
+  DocDataBlockTag,
+} from '../typings/DocData';
 
 const buildConfiguration = () => {
   const customConfiguration = new TSDocConfiguration();
@@ -88,35 +94,101 @@ function getContentRecursive(docTree: DocTreeAst): string {
   return result;
 }
 
-function getBlockTagContentRecursive(
+function fillBlockTagContentRecursive(
   docTree: DocTreeAst,
-  entity: DocDataTag
-): DocDataTag {
-  if (docTree.excerptKind === ExcerptKind.BlockTag) {
+  entity: DocDataEntity
+): DocDataEntity {
+  if (!entity.hasSoftBreak && docTree.excerptKind === ExcerptKind.SoftBreak) {
+    entity.hasSoftBreak = true;
+  } else if (docTree.excerptKind === ExcerptKind.BlockTag) {
     entity.name = docTree.content || '';
   } else if (docTree.content) {
-    entity.description += docTree.content;
+    if (entity.hasSoftBreak) {
+      if (!entity.content) entity.content = '';
+      entity.content += docTree.content;
+    } else {
+      if (!entity.description) entity.description = '';
+      entity.description += docTree.content;
+    }
   }
 
   if (!docTree.children) return entity;
 
   for (const comment of docTree.children) {
-    getBlockTagContentRecursive(comment, entity);
+    fillBlockTagContentRecursive(comment, entity);
   }
 
   return entity;
 }
 
-function getBlockTagContent(docTree: DocTreeAst): DocDataTag {
-  const entity: DocDataTag = {
+function getBlockContent(
+  docTree: DocTreeAst,
+  currDocData: DocData
+): Partial<DocData> | null {
+  const entity: DocDataEntity = {
     name: '',
-    description: '',
   };
 
-  getBlockTagContentRecursive(docTree, entity);
-  entity.description = trimWhitespace(entity.description || '');
+  fillBlockTagContentRecursive(docTree, entity);
+  if (entity.description) {
+    entity.description = trimWhitespace(entity.description || '');
+  }
+  if (entity.content) {
+    entity.content = trimWhitespace(entity.content || '');
+  }
 
-  return entity;
+  const blockTag: DocDataBlockTag = {
+    description: entity.description,
+    content: entity.content,
+  };
+
+  switch (entity.name) {
+    case '@deprecated':
+      return { deprecated: blockTag };
+    case '@remarks':
+      return { remarks: blockTag };
+    case '@returns':
+      return { returns: blockTag };
+    case '@defaultValue':
+      return { defaultValue: blockTag };
+    case '@example':
+      return {
+        examples: ([] as DocDataBlockTag[]).concat(
+          (currDocData.examples as DocDataBlockTag[]) || [],
+          blockTag
+        ),
+      };
+    default:
+      return null;
+  }
+}
+
+function getBlockTagContent(docTree: DocTreeAst): DocDataModifier | null {
+  const entity: DocDataEntity = {
+    name: '',
+  };
+
+  fillBlockTagContentRecursive(docTree, entity);
+
+  switch (entity.name) {
+    case '@alpha':
+      return { alpha: true };
+    case '@beta':
+    case '@experimental':
+      return { beta: true };
+    case '@public':
+      return { public: true };
+    case '@internal':
+      return { internal: true };
+    case '@virtual':
+      return { virtual: true };
+    case '@override':
+      return { override: true };
+    case '@sealed':
+      return { sealed: true };
+    default:
+      return null;
+  }
 }
 
 function getParamCollection(docTree: DocTreeAst): DocDataParam[] {
@@ -147,11 +219,17 @@ function getParamCollection(docTree: DocTreeAst): DocDataParam[] {
 }
 
 function convertDocTreeToDocData(docTree: DocTreeAst): DocData {
-  const result: DocData = {
+  let result: DocData = {
     description: '',
-    tags: [],
+    hasModifiers: false,
+    beta: false,
+    alpha: false,
+    public: false,
+    internal: false,
+    virtual: false,
+    override: false,
+    sealed: false,
     params: [],
-    modifiers: [],
   };
 
   if (!docTree.children) return result;
@@ -162,12 +240,17 @@ function convertDocTreeToDocData(docTree: DocTreeAst): DocData {
         result.description = trimWhitespace(getContentRecursive(comments));
         break;
       case DocNodeKind.Block:
-        result.tags = result.tags.concat(getBlockTagContent(comments));
+        result = {
+          ...result,
+          ...getBlockContent(comments, result),
+        };
         break;
       case DocNodeKind.BlockTag:
-        result.modifiers = result.modifiers.concat(
-          getBlockTagContent(comments)
-        );
+        result = {
+          ...result,
+          ...getBlockTagContent(comments),
+          hasModifiers: true,
+        };
         break;
       case DocNodeKind.ParamCollection:
         result.params = result.params.concat(getParamCollection(comments));

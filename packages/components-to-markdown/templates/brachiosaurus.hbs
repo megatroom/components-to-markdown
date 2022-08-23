@@ -1,0 +1,107 @@
+---
+title: {{name}}
+---
+
+# {{name}}
+{{#each components}}
+
+## {{name}} {{#if deprecated}}⚠️{{/if}} {{headingId name}}
+
+{{#if hasModifiers}}<p>{{#if beta}}<span class="badge badge--warning">Beta</span>&nbsp;{{/if}}{{#if public}}<span class="badge badge--primary">Public</span>&nbsp;{{/if}}{{#if internal}}<span class="badge badge--primary">Internal</span>&nbsp;{{/if}}{{#if virtual}}<span class="badge badge--primary">Virtual</span>&nbsp;{{/if}}{{#if override}}<span class="badge badge--primary">Override</span>&nbsp;{{/if}}{{#if sealed}}<span class="badge badge--primary">Sealed</span>&nbsp;{{/if}}</p>{{/if}}
+
+{{#if deprecated}}
+:::caution Deprecated
+
+{{deprecated.description}} {{deprecated.content}}
+
+:::
+{{/if}}
+
+{{description}}
+
+{{#if remarks}}
+
+## Remarks
+
+{{remarks.description}}
+
+{{/if}}
+
+{{#if params}}
+
+## Parameters
+
+| Name | Description |
+| ---- | ----------- |
+{{#each params}}
+| `{{name}}` | {{description}} |
+{{/each}}
+{{/if}}
+
+## Properties
+
+{{#each properties}}
+
+### `{{name}}` {{#if required}}✳️{{/if}} {{#if deprecated}}⚠️{{/if}} {{headingId name}}
+
+{{#if hasModifiers}}<p>{{#if required}}<span class="badge badge--primary">Required</span>&nbsp;{{/if}}{{#if beta}}<span class="badge badge--warning">Beta</span>&nbsp;{{/if}}{{#if public}}<span class="badge badge--primary">Public</span>&nbsp;{{/if}}{{#if internal}}<span class="badge badge--primary">Internal</span>&nbsp;{{/if}}{{#if virtual}}<span class="badge badge--primary">Virtual</span>&nbsp;{{/if}}{{#if override}}<span class="badge badge--primary">Override</span>&nbsp;{{/if}}{{#if sealed}}<span class="badge badge--primary">Sealed</span>&nbsp;{{/if}}</p>{{/if}}
+
+{{#if deprecated}}
+:::caution Deprecated
+
+{{deprecated.description}}
+
+:::
+{{/if}}
+
+{{description}}
+
+```tsx title="Type"
+{{type.raw}}
+```
+
+{{#if defaultValue}}
+```tsx title="Default Value"
+{{defaultValue.description}}
+{{defaultValue.content}}
+```
+{{/if}}
+{{#if remarks}}
+
+#### Remarks
+
+{{remarks.description}}
+
+{{/if}}
+{{#if params}}
+
+#### Parameters
+
+| Name | Description |
+| ---- | ----------- |
+{{#each params}}
+| `{{name}}` | {{description}} |
+{{/each}}
+{{/if}}
+{{#if returns}}
+
+#### Returns
+
+{{returns.description}}
+{{returns.content}}
+{{/if}}
+{{#if examples}}
+
+#### Examples
+
+{{#each examples}}
+{{description}}
+
+{{content}}
+
+{{/each}}
+{{/if}}
+
+{{/each}}
+
+{{/each}}

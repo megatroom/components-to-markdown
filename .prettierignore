@@ -2,3 +2,10 @@
 
 /dist
 /coverage
+
+packages/components-to-markdown/templates
+
+.docusaurus/
+
+packages/website/demo/*/Action.md
+packages/website/demo/*/Button.md
