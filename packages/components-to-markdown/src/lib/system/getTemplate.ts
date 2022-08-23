@@ -4,7 +4,7 @@ import readFile from './readFile';
 import { createConfigError, extractErrorMessage } from './_stdout';
 import ValidationError from '../errors/ValidationError';
 
-const BUILTIN_TEMPLATES = ['all-detailed'];
+const BUILTIN_TEMPLATES = ['brachiosaurus'];
 
 const getTemplate = async (
   scriptDirectory: string,
