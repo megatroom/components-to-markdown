@@ -1,8 +1,16 @@
+---
+sidebar_position: 1
+---
+
 # Introduction
 
 ## What is it?
 
-TODO...
+**Components to Markdown** came up with the need to document the API of components automatically, as is done in [Storybook](https://storybook.js.org/) and [Styleguidist](https://react-styleguidist.js.org/), but that was **independent** and could be inserted anywhere, from the `README.md` of the project to frameworks, such as [Docusaurus](https://docusaurus.io/) for example.
+
+It was designed from the ground up to be **fully customizable**, but keeping **simplicity** in mind. You can start using the default settings and have a complete and beautiful documentation, and then customize as needed.
+
+Let's build amazing documentation?
 
 ## Usage
 
@@ -38,7 +46,7 @@ yarn add components-to-markdown --dev
 
 And import it:
 
-```js
+```js title="comp2mark.js"
 import { componentsToMarkdown } from 'components-to-markdown';
 
 componentsToMarkdown({
@@ -52,4 +60,10 @@ componentsToMarkdown({
     '!**/*.d.ts',
   ],
 });
+```
+
+Then just run your script:
+
+```bash
+node comp2mark.js
 ```

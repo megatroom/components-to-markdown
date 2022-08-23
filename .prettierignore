@@ -6,4 +6,6 @@
 packages/components-to-markdown/templates
 
 .docusaurus/
-packages/docusaurus-demo/docs/components/**/*.md
+
+packages/website/demo/*/Action.md
+packages/website/demo/*/Button.md

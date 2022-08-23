@@ -40,6 +40,8 @@ yarn add components-to-markdown --dev
 And import it:
 
 ```js
+// comp2mark.js
+
 import { componentsToMarkdown } from 'components-to-markdown';
 
 componentsToMarkdown({
@@ -53,6 +55,12 @@ componentsToMarkdown({
     '!**/*.d.ts',
   ],
 });
+```
+
+Then just run your script:
+
+```bash
+node comp2mark.js
 ```
 
 ## API
@@ -71,7 +79,7 @@ Options:
   -V, --version                 output the version number
   -p, --patterns <patterns...>  file patterns to filter (default:
                                 ["**/*.{js,jsx,ts,tsx}","!**/__tests__/**","!**/*.{test,spec}.{js,jsx,ts,tsx}","!**/*.d.ts"])
-  -t, --template <template>     path to template file (default: "all-detailed")
+  -t, --template <template>     path to template file (default: "brachiosaurus")
   -o, --output <output>         path to output markdown files (default: ".")
   -w, --watch                   watch for changes and rebuild automatically (default: false)
   -l, --loglevel <level>        log level (default: "info")

@@ -206,7 +206,7 @@ export function cli(argv: string[], version: string) {
     .option(
       '-t, --template <template>',
       'path to template file',
-      'all-detailed'
+      'brachiosaurus'
     )
     .option('-o, --output <output>', 'path to output markdown files', '.')
     .option('-w, --watch', 'watch for changes and rebuild automatically', false)

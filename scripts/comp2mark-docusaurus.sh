@@ -7,6 +7,6 @@ yarn
 cd -
 
 ./dist/packages/components-to-markdown/bin/components-to-markdown \
-  --output packages/docusaurus-demo/docs/components \
+  --output packages/website/demo/brachiosaurus \
   --loglevel debug \
   packages/example-react-components/src/lib

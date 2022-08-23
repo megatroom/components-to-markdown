@@ -71,7 +71,7 @@ const config = {
           {
             type: 'doc',
             docsPluginId: 'demo',
-            docId: 'brachiosaurus/overview',
+            docId: 'introduction',
             position: 'left',
             label: 'Demo',
           },
