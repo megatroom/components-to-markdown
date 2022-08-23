@@ -16,14 +16,14 @@ async function componentsToMarkdown(options: ConfigOptions);
 
 ### ConfigOptions
 
-| Property | Type     | Description                                           |
-| -------- | -------- | ----------------------------------------------------- |
-| sources  | string[] | Source directories for the React components           |
-| patterns | string[] | A glob pattern to filter the files in `sources`       |
-| output   | string   | Path to output markdown files                         |
-| template | string   | Path to template file                                 |
-| watch    | boolean  | Whether to watch the files for changes and regenerate |
-| loglevel | LogLevel | Log level (debug, info, warn, error)                  |
+| Property | Type                  | Description                                           |
+| -------- | --------------------- | ----------------------------------------------------- |
+| sources  | string[]              | Source directories for the React components           |
+| patterns | string[]              | A glob pattern to filter the files in `sources`       |
+| output   | string                | Path to output markdown files                         |
+| template | string                | Path to template file                                 |
+| watch    | boolean               | Whether to watch the files for changes and regenerate |
+| loglevel | [LogLevel](#loglevel) | Log level (debug, info, warn, error)                  |
 
 ### LogLevel
 

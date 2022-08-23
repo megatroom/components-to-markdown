@@ -2,6 +2,10 @@
 sidebar_position: 1
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import CodeBlock from '@theme/CodeBlock';
+
 # Introduction
 
 ## What is it?
@@ -24,25 +28,32 @@ You can use it directly from NPX:
 npx components-to-markdown --help
 ```
 
+Use `@latest` after the script to enforce the latest stable release, example:
+
+```bash
+npx components-to-markdown@latest --version
+```
+
 Example:
 
 ```bash
-npx components-to-markdown -w ./components-path -o ./output-path
+npx components-to-markdown -w -o ./output-path ./components-path
 ```
 
-See [API documentation](#api) for more details.
+See [API documentation](/docs/api/cli) for more details.
 
 ### Library Usage
 
 You can install it as a NPM package:
 
-```bash
-# with NPM:
-npm install components-to-markdown --save-dev
-
-# with Yarn:
-yarn add components-to-markdown --dev
-```
+<Tabs>
+  <TabItem value="npm" label="npm" default>
+    <CodeBlock language="bash">npm install components-to-markdown --save-dev</CodeBlock>
+  </TabItem>
+  <TabItem value="yarn" label="Yarn">
+    <CodeBlock language="bash">yarn add components-to-markdown --dev</CodeBlock>
+  </TabItem>
+</Tabs>
 
 And import it:
 
@@ -67,3 +78,5 @@ Then just run your script:
 ```bash
 node comp2mark.js
 ```
+
+See [API documentation](/docs/api/library) for more details.
