@@ -6,7 +6,7 @@ sidebar_position: 1
 
 ## What is it?
 
-**Components to Markdown** came up with the need to document the API of components automatically, as is done in [Storybook](https://storybook.js.org/) and [Styleguidist](https://react-styleguidist.js.org/), but that was **independent** and could be inserted anywhere, from the `README.md` of the project to frameworks, such as [Docusaurus](https://docusaurus.io/) for example.
+**Components to Markdown (C2M)** came up with the need to document the API of components automatically, as is done in [Storybook](https://storybook.js.org/) and [Styleguidist](https://react-styleguidist.js.org/), but that was **independent** and could be inserted anywhere, from the `README.md` of the project to frameworks, such as [Docusaurus](https://docusaurus.io/) for example.
 
 It was designed from the ground up to be **fully customizable**, but keeping **simplicity** in mind. You can start using the default settings and have a complete and beautiful documentation, and then customize as needed.
 

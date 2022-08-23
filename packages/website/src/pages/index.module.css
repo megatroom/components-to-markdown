@@ -21,3 +21,39 @@
   align-items: center;
   justify-content: center;
 }
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: 24px;
+}
+
+.buttons a:last-of-type {
+  margin: 0 36px;
+}
+
+.logo {
+  width: 100%;
+  max-width: 300px;
+  margin-bottom: 1rem;
+}
+
+@media only screen and (max-width: 768px) {
+  .heroBanner {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .heroTitle {
+    font-size: 2.8rem;
+  }
+
+  .buttons {
+    justify-content: center;
+  }
+
+  .buttons a:last-of-type {
+    margin-top: 20px;
+  }
+}
