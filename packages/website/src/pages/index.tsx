@@ -11,13 +11,15 @@ function HomepageHeader() {
   return (
     <header className={clsx('hero', styles.heroBanner)}>
       <div className="container">
-        <h1 className="hero__title">{siteConfig.title}</h1>
+        <img alt="C2M Logo" src="/img/c2m-logo.png" className={styles.logo} />
+        <h1 className={clsx('hero__title', styles.heroTitle)}>
+          {siteConfig.title}
+        </h1>
         <p className="hero__subtitle">{siteConfig.tagline}</p>
         <div className={styles.buttons}>
           <Link
             className="button button--secondary button--lg"
             to="/docs/getting-started/introduction"
-            style={{ marginRight: '1rem' }}
           >
             Get Started
           </Link>
@@ -34,12 +36,8 @@ function HomepageHeader() {
 }
 
 export default function Home(): JSX.Element {
-  const { siteConfig } = useDocusaurusContext();
   return (
-    <Layout
-      title={`Hello from ${siteConfig.title}`}
-      description="Description will go into a meta tag in <head />"
-    >
+    <Layout description="Highly customizable open source tool for generating component documentation.">
       <HomepageHeader />
       <main>
         <HomepageFeatures />

@@ -9,7 +9,7 @@ const config = {
   title: 'Components to Markdown',
   tagline:
     'Highly customizable open source tool for generating component documentation.',
-  url: 'https://your-docusaurus-test-site.com',
+  url: 'https://components-to-markdown.vercel.app',
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -56,10 +56,10 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       navbar: {
-        title: 'Components to Markdown',
+        title: 'C2M',
         logo: {
           alt: 'Components to Markdown Logo',
-          src: 'img/logo.svg',
+          src: 'img/c2m-logo.png',
         },
         items: [
           {
@@ -87,28 +87,32 @@ const config = {
         style: 'dark',
         links: [
           {
-            title: 'Docs',
+            title: 'Documentation',
             items: [
               {
-                label: 'Tutorial',
+                label: 'Introduction',
                 to: '/docs/getting-started/introduction',
+              },
+              {
+                label: 'CLI Usage',
+                to: '/docs/api/cli',
+              },
+              {
+                label: 'Library Usage',
+                to: '/docs/api/library',
               },
             ],
           },
           {
-            title: 'Community',
+            title: 'Demonstration',
             items: [
               {
-                label: 'Stack Overflow',
-                href: 'https://stackoverflow.com/questions/tagged/docusaurus',
+                label: 'Overview',
+                to: '/demo/introduction',
               },
               {
-                label: 'Discord',
-                href: 'https://discordapp.com/invite/docusaurus',
-              },
-              {
-                label: 'Twitter',
-                href: 'https://twitter.com/docusaurus',
+                label: 'Default Template',
+                to: '/demo/brachiosaurus/overview',
               },
             ],
           },
@@ -118,6 +122,10 @@ const config = {
               {
                 label: 'GitHub',
                 href: 'https://github.com/megatroom/components-to-markdown',
+              },
+              {
+                label: 'NPM',
+                href: 'https://www.npmjs.com/package/components-to-markdown',
               },
             ],
           },

@@ -10,15 +10,13 @@ type FeatureItem = {
 
 const FeatureList: FeatureItem[] = [
   {
-    title: 'Use Your Template',
+    title: 'Custom Templates',
     image: '/img/undraw_prototyping_process_re_7a6p.svg',
     description: (
       <>
-        Choose one of the available templates or create your own with{' '}
-        <a href="https://handlebarsjs.com/" target="_blank">
-          Handlebars
-        </a>{' '}
-        and customize all the content.
+        Create your own template and customize all the content. Or choose from
+        our templates, designed to be intuitive, responsive and with dark mode
+        support.
       </>
     ),
   },
@@ -28,12 +26,12 @@ const FeatureList: FeatureItem[] = [
     description: (
       <>
         Markdown is the language used by most frameworks, like Docusaurus and
-        Storybook for example.
+        Storybook for example. Or use it directly in your git repository.
       </>
     ),
   },
   {
-    title: 'Use as a CLI or library',
+    title: 'Use as CLI or library',
     image: '/img/undraw_static_assets_rpm6.svg',
     description: (
       <>
