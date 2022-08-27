@@ -1,9 +1,29 @@
-# Components to Markdown
+<div align="center">
+<h1>Components to Markdown</h1>
+
+<a href="https://www.emojione.com/emoji/1f410">
+  <img
+    height="124"
+    width="200"
+    alt="goat"
+    src="https://raw.githubusercontent.com/megatroom/components-to-markdown/main/packages/website/static/img/c2m-logo.png"
+  />
+</a>
+
+<p>Highly customizable open source tool for generating component documentation.</p>
+
+<br />
+
+[**Read The Docs**](http://components-to-markdown.vercel.app) |
+[Explore the Demo](https://components-to-markdown.vercel.app/demo/introduction)
+
+<br />
+</div>
+
+<hr />
 
 [![CircleCI](https://img.shields.io/circleci/build/github/megatroom/components-to-markdown?label=CircleCI)](https://circleci.com/gh/megatroom/components-to-markdown)
 [![codecov](https://codecov.io/gh/megatroom/components-to-markdown/branch/main/graph/badge.svg?token=RCNN1XMSN4)](https://codecov.io/gh/megatroom/components-to-markdown)
-
-Highly customizable open source tool for generating component documentation.
 
 ## Usage
 
@@ -17,13 +37,19 @@ You can use it directly from NPX:
 npx components-to-markdown --help
 ```
 
+Use `@latest` after the script to enforce the latest stable release, example:
+
+```bash
+npx components-to-markdown@latest --version
+```
+
 Example:
 
 ```bash
-npx components-to-markdown -w ./components-path -o ./output-path
+npx components-to-markdown -w -o ./output-path ./components-path
 ```
 
-See [API documentation](#api) for more details.
+See [API documentation](https://components-to-markdown.vercel.app/docs/api/cli) for more details.
 
 ### Library Usage
 
@@ -63,53 +89,8 @@ Then just run your script:
 node comp2mark.js
 ```
 
-## API
+See [API documentation](https://components-to-markdown.vercel.app/docs/api/library) for more details.
 
-### CLI
+## License
 
-```bash
-Usage: components-to-markdown [options] <sources...>
-
-Generate markdown documentation of React components.
-
-Arguments:
-  sources                       source directories for the React components
-
-Options:
-  -V, --version                 output the version number
-  -p, --patterns <patterns...>  file patterns to filter (default:
-                                ["**/*.{js,jsx,ts,tsx}","!**/__tests__/**","!**/*.{test,spec}.{js,jsx,ts,tsx}","!**/*.d.ts"])
-  -t, --template <template>     path to template file (default: "brachiosaurus")
-  -o, --output <output>         path to output markdown files (default: ".")
-  -w, --watch                   watch for changes and rebuild automatically (default: false)
-  -l, --loglevel <level>        log level (default: "info")
-  -h, --help                    display help for command
-```
-
-### `componentsToMarkdown()`
-
-```ts
-async function componentsToMarkdown(options: ConfigOptions);
-```
-
-### `ConfigOptions`
-
-| Property | Type     | Description                                           |
-| -------- | -------- | ----------------------------------------------------- |
-| sources  | string[] | Source directories for the React components           |
-| patterns | string[] | A glob pattern to filter the files in `sources`       |
-| output   | string   | Path to output markdown files                         |
-| template | string   | Path to template file                                 |
-| watch    | boolean  | Whether to watch the files for changes and regenerate |
-| loglevel | LogLevel | Log level (debug, info, warn, error)                  |
-
-### `LogLevel`
-
-| Priority | Level  | Description                        |
-| -------- | ------ | ---------------------------------- |
-| 0        | silent | No logs will be displayed          |
-| 1        | error  | Critical errors                    |
-| 2        | warn   | Alerts about possible issues       |
-| 3        | info   | Default log information            |
-| 4        | debug  | Details about file processing      |
-| 5        | trace  | Detailed information for each step |
+[MIT](https://github.com/megatroom/components-to-markdown/blob/main/LICENSE)
