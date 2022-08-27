@@ -26,6 +26,8 @@ const config = {
           sidebarPath: require.resolve('./sidebarsDocs.js'),
           editUrl:
             'https://github.com/megatroom/components-to-markdown/edit/main/packages/website/',
+          sidebarCollapsed: false,
+          sidebarCollapsible: false,
         },
         // blog: {
         //   showReadingTime: true,
@@ -47,7 +49,7 @@ const config = {
         path: 'demo',
         routeBasePath: 'demo',
         sidebarPath: require.resolve('./sidebarsDemo.js'),
-        // ... other options
+        sidebarCollapsed: false,
       },
     ],
   ],
