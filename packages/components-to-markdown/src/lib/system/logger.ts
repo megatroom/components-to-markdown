@@ -1,5 +1,4 @@
-import { DEFAULT_LOG_LEVEL } from '../config/constants';
-import { ConfigOptions, LogLevel } from '../typings/ConfigOptions';
+import type { ConfigValues, LogLevel } from '../typings/ConfigOptions';
 import type { Logger } from '../typings/Logger';
 import { colorCommand, colorCounter, colorLogLevel } from './_stdout';
 
@@ -13,11 +12,11 @@ const LogLevelNumber: Record<LogLevel, number> = {
 };
 
 export const buildLogger = (
-  options: Pick<ConfigOptions, 'loglevel' | 'watch'>
+  config: Pick<ConfigValues, 'loglevel' | 'watch'>
 ): Logger => {
-  const loglevel = options.loglevel || DEFAULT_LOG_LEVEL;
+  const loglevel = config.loglevel;
   const configLevelNumber = LogLevelNumber[loglevel];
-  const totalOfSteps = options.watch ? 4 : 3;
+  const totalOfSteps = config.watch ? 4 : 3;
 
   return {
     logError: (message, ...optionalParams) => {

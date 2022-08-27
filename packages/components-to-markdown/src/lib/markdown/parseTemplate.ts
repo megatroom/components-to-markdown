@@ -13,9 +13,9 @@ Handlebars.registerHelper('headingId', function (text) {
 });
 
 export type RenderMarkdown = (componentData: ComponentData) => string;
-export type ParseMarkdown = (template: Buffer) => RenderMarkdown;
+export type ParseTemplate = (template: Buffer) => RenderMarkdown;
 
-const parseMarkdown: ParseMarkdown = (template) => {
+const parseTemplate: ParseTemplate = (template) => {
   const render = Handlebars.compile(template.toString(), { noEscape: true });
 
   return function renderMarkdown(componentData) {
@@ -23,4 +23,4 @@ const parseMarkdown: ParseMarkdown = (template) => {
   };
 };
 
-export default parseMarkdown;
+export default parseTemplate;

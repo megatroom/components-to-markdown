@@ -1,5 +1,12 @@
 export type LogLevel = 'silent' | 'error' | 'warn' | 'info' | 'debug' | 'trace';
 
+export interface ConfigHook {
+  /**
+   * Format the output file name.
+   */
+  outputFileName: (fileName: string, fileExtension: string) => string;
+}
+
 export interface ConfigOptions {
   /**
    * List of directories with components files.
@@ -11,8 +18,10 @@ export interface ConfigOptions {
   patterns: string[];
   /**
    * Change the level of logging.
+   *
+   * @defaultValue `'info'`
    */
-  loglevel: LogLevel;
+  loglevel?: LogLevel;
   /**
    * Path to the template file.
    */
@@ -22,7 +31,24 @@ export interface ConfigOptions {
    */
   output: string;
   /**
-   * Watch for changes and rebuild automatically.
+   * Output file extension.
+   *
+   * @defaultValue `'md'`
    */
-  watch: boolean;
+  outputExtension?: string;
+  /**
+   * Watch for changes and rebuild automatically.
+   *
+   * @defaultValue `false`
+   */
+  watch?: boolean;
+  /**
+   * Hooks to change the default behavior.
+   */
+  hooks?: ConfigHook;
 }
+
+/**
+ * ConfigOptions with default values.
+ */
+export type ConfigValues = Required<ConfigOptions>;
