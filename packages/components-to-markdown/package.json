@@ -11,6 +11,14 @@
   "bin": {
     "components-to-markdown": "bin/components-to-markdown"
   },
+  "keywords": [
+    "components-to-markdown",
+    "markdown",
+    "components",
+    "docusaurus",
+    "react",
+    "cli"
+  ],
   "dependencies": {
     "esm": "3.2.25"
   }
