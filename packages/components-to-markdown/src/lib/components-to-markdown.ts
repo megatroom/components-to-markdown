@@ -25,6 +25,12 @@ import type { Logger } from './typings/Logger';
 import { formatComment, parseTSDoc } from './parses/parseTSDoc';
 import type { DocumentationObject, PropDescriptor } from 'react-docgen';
 import { watcher } from './system/watcher';
+import {
+  DEFAULT_LOG_LEVEL,
+  DEFAULT_PATTERNS,
+  DEFAULT_TEMPLATE,
+  DEFAULT_WATCH_MODE,
+} from './config/constants';
 
 function extractPropFromComponent(
   name: string,
@@ -197,20 +203,23 @@ export function cli(argv: string[], version: string) {
     .description('Generate markdown documentation of React components.')
     .version(version)
     .argument('<sources...>', 'source directories for the React components')
-    .option('-p, --patterns <patterns...>', 'file patterns to filter', [
-      '**/*.{js,jsx,ts,tsx}',
-      '!**/__tests__/**',
-      '!**/*.{test,spec}.{js,jsx,ts,tsx}',
-      '!**/*.d.ts',
-    ])
+    .option(
+      '-p, --patterns <patterns...>',
+      'file patterns to filter',
+      DEFAULT_PATTERNS
+    )
     .option(
       '-t, --template <template>',
       'path to template file',
-      'brachiosaurus'
+      DEFAULT_TEMPLATE
     )
     .option('-o, --output <output>', 'path to output markdown files', '.')
-    .option('-w, --watch', 'watch for changes and rebuild automatically', false)
-    .option('-l, --loglevel <level>', 'log level', 'info')
+    .option(
+      '-w, --watch',
+      'watch for changes and rebuild automatically',
+      DEFAULT_WATCH_MODE
+    )
+    .option('-l, --loglevel <level>', 'log level', DEFAULT_LOG_LEVEL)
     .action((sources, options) => {
       componentsToMarkdown({
         ...options,
