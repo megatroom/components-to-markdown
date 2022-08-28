@@ -1,13 +1,14 @@
 import { program } from 'commander';
 import { relative } from 'path';
 import parseMarkdown from './markdown/parseTemplate';
+import type { RenderMarkdown } from './markdown/parseTemplate';
 import getAllFiles from './system/getAllFiles';
 import getOutputDir from './system/getOutputDir';
 import getTemplate from './system/getTemplate';
 import { buildLogger } from './system/logger';
 import scriptDir from './system/scriptDir';
 import { colorCommand, colorFail, colorSuccess } from './system/_stdout';
-import type { ConfigOptions } from './typings/ConfigOptions';
+import type { ConfigOptions, ConfigValues } from './typings/ConfigOptions';
 import type { Logger } from './typings/Logger';
 import { watcher } from './system/watcher';
 import {
@@ -18,6 +19,8 @@ import {
 } from './config/constants';
 import buildConfig from './config/buildConfig';
 import buildMarkdownContent from './markdown/buildMarkdownContent';
+import processFile from './parses/processFile';
+import { ProcessedFile } from './typings/ProcessedFile';
 
 function logSummary(
   logger: Logger,
@@ -35,6 +38,50 @@ function logSummary(
   logger.logInfo(
     `Files: ${failedMsg}, ${successMsg}, ${totalOfSuccess + totalOfError} total`
   );
+}
+
+export async function* processSourceFiles(
+  files: string[]
+): AsyncIterableIterator<ProcessedFile> {
+  for (const file of files) {
+    yield processFile(file);
+  }
+}
+
+async function buildMarkdownFiles(
+  config: ConfigValues,
+  logger: Logger,
+  files: string[],
+  renderMarkdown: RenderMarkdown,
+  outputDirectory: string
+) {
+  let totalOfSuccess = 0;
+  let totalOfError = 0;
+
+  for await (const processedFile of processSourceFiles(files)) {
+    const { error, file, componentData } = processedFile;
+
+    if (error) {
+      totalOfError += 1;
+      logger.logDebug(`⚠️ ${file} error: ${error}`);
+      continue;
+    }
+
+    if (componentData) {
+      logger.logDebug(`✔️ ${file} parsed as ${componentData.name}`);
+      totalOfSuccess += 1;
+
+      buildMarkdownContent(
+        componentData,
+        renderMarkdown,
+        outputDirectory,
+        config.outputExtension,
+        config.hooks.outputFileName
+      );
+    }
+  }
+
+  return { totalOfSuccess, totalOfError };
 }
 
 export async function componentsToMarkdown(options: ConfigOptions) {
@@ -61,13 +108,12 @@ export async function componentsToMarkdown(options: ConfigOptions) {
   logger.logDebug(`Found ${files.length} files on all sources.`);
 
   logger.logStep(3, '📝', 'Building markdowns...');
-  const { totalOfSuccess, totalOfError } = await buildMarkdownContent(
+  const { totalOfSuccess, totalOfError } = await buildMarkdownFiles(
+    config,
     logger,
     files,
     renderMarkdown,
-    outputDirectory,
-    config.outputExtension,
-    config.hooks.outputFileName
+    outputDirectory
   );
 
   if (config.watch) {
@@ -83,13 +129,12 @@ export async function componentsToMarkdown(options: ConfigOptions) {
           colorCommand('->'),
           `${event}: ${relative(scriptDirectory, filePath)}`
         );
-        buildMarkdownContent(
+        buildMarkdownFiles(
+          config,
           logger,
           [filePath],
           renderMarkdown,
-          outputDirectory,
-          config.outputExtension,
-          config.hooks.outputFileName
+          outputDirectory
         );
       },
       onExit: () => {

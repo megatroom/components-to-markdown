@@ -46,8 +46,10 @@ The package follows the following source code structure:
 
 - `src/`: The source code.
   - `lib/`: The library code.
+    - `__tests__/`: Test helpers.
     - `config/`: Configuration files.
     - `errors/`: The errors that can be thrown by the package.
+    - `hooks/`: Default hooks.
     - `markdown/`: The logic to build markdown files.
     - `parses/`: The logic to parse the components.
     - `resolvers/`: The logic to resolve glob patterns.
