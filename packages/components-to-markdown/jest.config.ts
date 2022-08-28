@@ -13,5 +13,5 @@ export default {
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
   coverageDirectory: '../../coverage/packages/components-to-markdown',
-  collectCoverageFrom: ['src/lib/**/*.ts', '!**/*.d.ts'],
+  collectCoverageFrom: ['src/lib/**/*.ts', '!**/*.d.ts', '!**/*.fake.ts'],
 };
