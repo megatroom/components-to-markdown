@@ -24,7 +24,10 @@ Generated documentation:
 - [Action](/demo/brachiosaurus/Action)
 - [Button](/demo/brachiosaurus/Button)
 
-The source code of the components is in [this directory](https://github.com/megatroom/components-to-markdown/tree/main/packages/example-react-components/src/lib).
+## References
+
+- [Template file](https://github.com/megatroom/components-to-markdown/blob/main/packages/components-to-markdown/templates/brachiosaurus.hbs)
+- [Source code of the components](https://github.com/megatroom/components-to-markdown/tree/main/packages/example-react-components/src/lib).
 
 ## How to generate this doc?
 

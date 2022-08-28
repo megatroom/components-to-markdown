@@ -29,8 +29,8 @@ Default:
 ```bash
 [
   "**/*.{js,jsx,ts,tsx}",
-  "!**/__tests__/**","
-  !**/*.{test,spec}.{js,jsx,ts,tsx}",
+  "!**/__tests__/**",
+  "!**/*.{test,spec}.{js,jsx,ts,tsx}",
   "!**/*.d.ts"
 ]
 ```

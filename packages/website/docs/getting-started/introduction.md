@@ -55,21 +55,14 @@ You can install it as a NPM package:
   </TabItem>
 </Tabs>
 
-And import it:
+Import and use it:
 
 ```js title="comp2mark.js"
 import { componentsToMarkdown } from 'components-to-markdown';
 
 componentsToMarkdown({
   sources: ['./components-path'],
-  output: './output-path',
-  template: './template-path',
-  patterns: [
-    '**/*.{js,jsx,ts,tsx}',
-    '!**/__tests__/**',
-    '!**/*.{test,spec}.{js,jsx,ts,tsx}',
-    '!**/*.d.ts',
-  ],
+  output: './output-path'
 });
 ```
 

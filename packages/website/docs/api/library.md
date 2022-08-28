@@ -12,20 +12,82 @@ import { componentsToMarkdown } from 'components-to-markdown';
 async function componentsToMarkdown(options: ConfigOptions);
 ```
 
-## References
+## ConfigOptions
 
-### ConfigOptions
+### `sources`
 
-| Property | Type                  | Description                                           |
-| -------- | --------------------- | ----------------------------------------------------- |
-| sources  | string[]              | Source directories for the React components           |
-| patterns | string[]              | A glob pattern to filter the files in `sources`       |
-| output   | string                | Path to output markdown files                         |
-| template | string                | Path to template file                                 |
-| watch    | boolean               | Whether to watch the files for changes and regenerate |
-| loglevel | [LogLevel](#loglevel) | Log level (debug, info, warn, error)                  |
+```ts title="Type"
+string[]
+```
 
-### LogLevel
+Source directories for the React components.
+
+### `patterns`
+
+```ts title="Type"
+string[]
+```
+
+```ts title="Default"
+[
+  "**/*.{js,jsx,ts,tsx}",
+  "!**/__tests__/**",
+  "!**/*.{test,spec}.{js,jsx,ts,tsx}",
+  "!**/*.d.ts"
+]
+```
+
+A glob pattern to filter the files in `sources` .
+
+### `output`
+
+```ts title="Type"
+string
+```
+
+Path to output markdown files.
+
+### `template`
+
+```ts title="Type"
+string
+```
+
+```ts title="Default"
+'brachiosaurus'
+```
+
+Path to template file or the name of one of the builtin templates.
+
+### `watch`
+
+```ts title="Type"
+boolean
+```
+
+```ts title="Default"
+false
+```
+
+Whether to watch the files for changes and regenerate.
+
+### `loglevel`
+
+```ts title="Type"
+LogLevel
+```
+
+```ts title="Default"
+'info'
+```
+
+Log level. See [LogLevel](#loglevel-1) for more information.
+
+## LogLevel
+
+```ts
+type LogLevel = 'silent' | 'error' | 'warn' | 'info' | 'debug' | 'trace';
+```
 
 | Priority | Level  | Description                        |
 | -------- | ------ | ---------------------------------- |
