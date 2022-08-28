@@ -1,3 +1,5 @@
+import type { HelperDelegate } from 'handlebars';
+
 export type LogLevel = 'silent' | 'error' | 'warn' | 'info' | 'debug' | 'trace';
 
 export interface ConfigHook {
@@ -5,6 +7,11 @@ export interface ConfigHook {
    * Format the output file name.
    */
   outputFileName: (fileName: string, fileExtension: string) => string;
+}
+
+export interface TemplateHelper {
+  name: string;
+  helper: HelperDelegate;
 }
 
 export interface ConfigOptions {
@@ -46,6 +53,10 @@ export interface ConfigOptions {
    * Hooks to change the default behavior.
    */
   hooks?: ConfigHook;
+  /**
+   * Helpers to use in the template.
+   */
+  helpers?: TemplateHelper[];
 }
 
 /**

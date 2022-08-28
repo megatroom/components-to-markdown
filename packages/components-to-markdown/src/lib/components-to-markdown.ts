@@ -96,7 +96,7 @@ export async function componentsToMarkdown(options: ConfigOptions) {
   logger.logStep(1, '📗', 'Loading template...');
   const template = await getTemplate(scriptDirectory, config.template);
   logger.logDebug('Parsing template...');
-  const renderMarkdown = parseMarkdown(template);
+  const renderMarkdown = parseMarkdown(template, config.helpers);
   logger.logDebug('Template loaded.');
 
   logger.logStep(2, '📂', 'Discovering files...');

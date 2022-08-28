@@ -19,6 +19,7 @@ const buildConfig = (options: ConfigOptions): ConfigValues => {
     watch = DEFAULT_WATCH_MODE,
     patterns = DEFAULT_PATTERNS,
     outputExtension = DEFAULT_OUTPUT_EXTENSION,
+    helpers = [],
     sources,
     output,
   } = options;
@@ -35,6 +36,7 @@ const buildConfig = (options: ConfigOptions): ConfigValues => {
     outputExtension,
     watch,
     hooks,
+    helpers,
   };
 };
 

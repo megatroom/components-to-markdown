@@ -1,6 +1,7 @@
 import * as Handlebars from 'handlebars';
 import GithubSlugger = require('github-slugger');
-import { ComponentData } from '../typings/ComponentData';
+import type { ComponentData } from '../typings/ComponentData';
+import type { TemplateHelper } from '../typings/ConfigOptions';
 
 Handlebars.registerHelper('headingId', function (text) {
   try {
@@ -13,9 +14,16 @@ Handlebars.registerHelper('headingId', function (text) {
 });
 
 export type RenderMarkdown = (componentData: ComponentData) => string;
-export type ParseTemplate = (template: Buffer) => RenderMarkdown;
+export type ParseTemplate = (
+  template: Buffer,
+  helpers: TemplateHelper[]
+) => RenderMarkdown;
 
-const parseTemplate: ParseTemplate = (template) => {
+const parseTemplate: ParseTemplate = (template, helpers) => {
+  for (const helper of helpers) {
+    Handlebars.registerHelper(helper.name, helper.helper);
+  }
+
   const render = Handlebars.compile(template.toString(), { noEscape: true });
 
   return function renderMarkdown(componentData) {
