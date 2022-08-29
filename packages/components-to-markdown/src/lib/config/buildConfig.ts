@@ -1,3 +1,4 @@
+import moduleName from '../hooks/moduleName';
 import outputFileName from '../hooks/outputFileName';
 import type {
   ConfigHook,
@@ -28,6 +29,7 @@ const buildConfig = (options: ConfigOptions): ConfigValues => {
 
   const hooks: ConfigHook = options.hooks || ({} as ConfigHook);
   hooks.outputFileName = hooks.outputFileName || outputFileName;
+  hooks.moduleName = hooks.moduleName || moduleName;
 
   return {
     sources,

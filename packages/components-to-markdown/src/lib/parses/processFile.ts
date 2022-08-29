@@ -2,6 +2,7 @@ import type { DocumentationObject, PropDescriptor } from 'react-docgen';
 import readFile from '../system/readFile';
 import { extractErrorMessage } from '../system/_stdout';
 import type { ComponentDoc, ComponentProp } from '../typings/ComponentData';
+import type { ConfigHook } from '../typings/ConfigOptions';
 import type { ProcessedFile } from '../typings/ProcessedFile';
 import parseReactComp from './parseReactComp';
 import { formatComment, parseTSDoc } from './parseTSDoc';
@@ -41,11 +42,12 @@ function extractDocDataFromComponentData(
 }
 
 export default async function processFile(
-  file: string
+  file: string,
+  extractModuleName: ConfigHook['moduleName']
 ): Promise<ProcessedFile> {
   try {
     const content = await readFile(file);
-    const componentData = parseReactComp(file, content);
+    const componentData = parseReactComp(file, content, extractModuleName);
 
     componentData.components = componentData.documentations.map(
       (data: DocumentationObject) => extractDocDataFromComponentData(data)

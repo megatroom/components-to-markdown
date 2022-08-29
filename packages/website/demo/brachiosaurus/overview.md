@@ -23,6 +23,10 @@ Generated documentation:
 
 - [Action](/demo/brachiosaurus/Action)
 - [Button](/demo/brachiosaurus/Button)
+- [Card](/demo/brachiosaurus/Card)
+- [CardBody](/demo/brachiosaurus/CardBody)
+- [CardMedia](/demo/brachiosaurus/CardMedia)
+- [CardMediaDescription](/demo/brachiosaurus/CardMediaDescription)
 
 ## References
 

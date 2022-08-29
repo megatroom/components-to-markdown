@@ -83,6 +83,18 @@ LogLevel
 
 Log level. See [LogLevel](#loglevel-1) for more information.
 
+### `grouped`
+
+```ts title="Type"
+boolean
+```
+
+```ts title="Default"
+false
+```
+
+Components in the same file will be grouped in the same output file.
+
 ### `outputExtension`
 
 ```ts title="Type"
@@ -143,6 +155,46 @@ Used to format the name of output files.
 ```js title="Example"
 function outputFileName(fileName, fileExtension) {
   return `${fileName}.${fileExtension}`;
+}
+```
+
+It is possible to define directories to be concatenated with output dir. For example:
+
+```js
+const groups = {
+  Button: 'Inputs',
+  Select: 'Inputs',
+  Alert: 'Feedback',
+  Snackbar: 'Feedback',
+}
+
+/**
+ * Result:
+ * "Inputs/Button.md"
+ * "Inputs/Select.md"
+ * "Feedback/Alert.md"
+ * "Feedback/Snackbar.md"
+ */
+function outputFileName(fileName, fileExtension) {
+  return `${groups[filename]}/${fileName}.${fileExtension}`;
+}
+```
+
+### `moduleName`
+
+```ts
+(filePath: string, metadata: ModuleNameMetadata) => string;
+```
+
+Used to extract the module name. This function will populate the [ComponentData.name](/docs/api/template-params#componentdata) property.
+
+This name will be use as the output file name if [grouped](/docs/api/library#grouped) is `true`.
+
+```js title="Example"
+import { parse } from 'path';
+
+function moduleName(filePath) {
+  return parse(filePath).name;
 }
 ```
 

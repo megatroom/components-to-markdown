@@ -2,11 +2,18 @@ import type { HelperDelegate } from 'handlebars';
 
 export type LogLevel = 'silent' | 'error' | 'warn' | 'info' | 'debug' | 'trace';
 
+export interface ModuleNameMetadata {
+  componentsName: string[];
+}
 export interface ConfigHook {
   /**
    * Format the output file name.
    */
   outputFileName: (fileName: string, fileExtension: string) => string;
+  /**
+   * Format the module name.
+   */
+  moduleName: (filePath: string, metadata: ModuleNameMetadata) => string;
 }
 
 export interface TemplateHelper {

@@ -42,10 +42,11 @@ function logSummary(
 }
 
 export async function* processSourceFiles(
+  config: ConfigValues,
   files: string[]
 ): AsyncIterableIterator<ProcessedFile> {
   for (const file of files) {
-    yield processFile(file);
+    yield processFile(file, config.hooks.moduleName);
   }
 }
 
@@ -59,7 +60,7 @@ async function buildMarkdownFiles(
   let totalOfSuccess = 0;
   let totalOfError = 0;
 
-  for await (const processedFile of processSourceFiles(files)) {
+  for await (const processedFile of processSourceFiles(config, files)) {
     const { error, file, componentData } = processedFile;
 
     if (error) {

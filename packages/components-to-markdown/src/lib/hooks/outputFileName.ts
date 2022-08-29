@@ -1,4 +1,4 @@
-import { ConfigHook } from '../typings/ConfigOptions';
+import type { ConfigHook } from '../typings/ConfigOptions';
 
 const outputFileName: ConfigHook['outputFileName'] = (
   fileName,

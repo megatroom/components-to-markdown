@@ -18,6 +18,12 @@ components-to-markdown [options] <sources...>
 
 The `<sources...>` is a list of paths to directories or files to be processed.
 
+:::tip
+
+For full customization support, opt for [Library Usage](/docs/api/library), which has more options, like Hooks for example.
+
+:::
+
 ## Options
 
 ### `--patterns <patterns...>`
@@ -68,6 +74,12 @@ Alias: `-l`.
 Default: `"info"`.
 
 Logging level.
+
+### `--grouped`
+
+Default: `false`.
+
+Components in the same file will be grouped in the same output file.
 
 ### `--version`
 

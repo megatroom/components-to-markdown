@@ -14,6 +14,7 @@ it('should build config with default values', () => {
     helpers: [],
     hooks: {
       outputFileName: expect.any(Function),
+      moduleName: expect.any(Function),
     },
   });
 });

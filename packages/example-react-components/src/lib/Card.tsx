@@ -81,7 +81,7 @@ export const CardMediaDescription = ({
 const StyledCard = styled.div`
   background-color: #fff;
   border-radius: 4px;
-  border: 1px solid ${(props) => props.theme.colors.border};
+  border: 1px solid #e6e6e6;
   overflow: hidden;
 `;
 
@@ -89,6 +89,12 @@ interface CardProps {
   children: React.ReactNode;
 }
 
+/**
+ * Cards are surfaces that display content and actions on a single topic.
+ *
+ * @remarks
+ * They should be easy to scan for relevant and actionable information. Elements, like text and images, should be placed on them in a way that clearly indicates hierarchy.
+ */
 const Card = ({ children }: CardProps) => <StyledCard>{children}</StyledCard>;
 
 export default Card;
