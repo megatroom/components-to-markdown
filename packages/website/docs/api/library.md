@@ -57,7 +57,7 @@ string
 'brachiosaurus'
 ```
 
-Path to template file or the name of one of the builtin templates.
+Path to template file or the name of one of the built-in templates.
 
 ### `watch`
 
@@ -83,6 +83,38 @@ LogLevel
 
 Log level. See [LogLevel](#loglevel-1) for more information.
 
+### `outputExtension`
+
+```ts title="Type"
+string
+```
+
+```ts title="Default"
+'md'
+```
+
+Extension of output files.
+
+### `hooks`
+
+```ts title="Type"
+ConfigHook
+```
+
+Functions to customize the result. See [ConfigHook](#confighook) for more information.
+
+### `helpers`
+
+```ts title="Type"
+TemplateHelper
+```
+
+```ts title="Default"
+[]
+```
+
+Custom template helpers. See [TemplateHelper](#templatehelper) for more information.
+
 ## LogLevel
 
 ```ts
@@ -97,3 +129,30 @@ type LogLevel = 'silent' | 'error' | 'warn' | 'info' | 'debug' | 'trace';
 | 3        | info   | Default log information            |
 | 4        | debug  | Details about file processing      |
 | 5        | trace  | Detailed information for each step |
+
+## ConfigHook
+
+### `outputFileName`
+
+```ts
+(fileName: string, fileExtension: string) => string
+```
+
+Used to format the name of output files.
+
+```js title="Example"
+function outputFileName(fileName, fileExtension) {
+  return `${fileName}.${fileExtension}`;
+}
+```
+
+## TemplateHelper
+
+```ts
+import type { HelperDelegate } from 'handlebars';
+
+interface TemplateHelper {
+  name: string;
+  helper: HelperDelegate;
+}
+```
