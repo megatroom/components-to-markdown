@@ -1,6 +1,7 @@
 export const DEFAULT_LOG_LEVEL = 'info';
 export const DEFAULT_OUTPUT_EXTENSION = 'md';
 export const DEFAULT_WATCH_MODE = false;
+export const DEFAULT_GROUPED = false;
 export const DEFAULT_PATTERNS = [
   '**/*.{js,jsx,ts,tsx}',
   '!**/__tests__/**',

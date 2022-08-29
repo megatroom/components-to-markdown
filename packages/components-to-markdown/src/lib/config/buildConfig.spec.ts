@@ -10,6 +10,7 @@ it('should build config with default values', () => {
     watch: defaultValues.DEFAULT_WATCH_MODE,
     patterns: defaultValues.DEFAULT_PATTERNS,
     outputExtension: defaultValues.DEFAULT_OUTPUT_EXTENSION,
+    grouped: defaultValues.DEFAULT_GROUPED,
     helpers: [],
     hooks: {
       outputFileName: expect.any(Function),

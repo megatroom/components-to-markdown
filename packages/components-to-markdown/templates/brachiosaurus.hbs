@@ -2,10 +2,9 @@
 title: {{name}}
 ---
 
-# {{name}}
 {{#each components}}
 
-## {{name}} {{#if deprecated}}⚠️{{/if}} {{headingId name}}
+# {{name}} {{#if deprecated}}⚠️{{/if}} {{headingId name}}
 
 {{#if hasModifiers}}<p>{{#if beta}}<span class="badge badge--warning">Beta</span>&nbsp;{{/if}}{{#if public}}<span class="badge badge--primary">Public</span>&nbsp;{{/if}}{{#if internal}}<span class="badge badge--primary">Internal</span>&nbsp;{{/if}}{{#if virtual}}<span class="badge badge--primary">Virtual</span>&nbsp;{{/if}}{{#if override}}<span class="badge badge--primary">Override</span>&nbsp;{{/if}}{{#if sealed}}<span class="badge badge--primary">Sealed</span>&nbsp;{{/if}}</p>{{/if}}
 

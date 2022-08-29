@@ -2,9 +2,8 @@
 title: Button
 ---
 
-# Button
 
-## Button  {#button}
+# Button  {#button}
 
 <p><span class="badge badge--warning">Beta</span>&nbsp;<span class="badge badge--primary">Public</span>&nbsp;</p>
 

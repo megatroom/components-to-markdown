@@ -10,7 +10,13 @@ export interface ConfigHook {
 }
 
 export interface TemplateHelper {
+  /**
+   * Helper name.
+   */
   name: string;
+  /**
+   * Helper function delegate to Handlebars.
+   */
   helper: HelperDelegate;
 }
 
@@ -57,6 +63,10 @@ export interface ConfigOptions {
    * Helpers to use in the template.
    */
   helpers?: TemplateHelper[];
+  /**
+   * Components in the same file will be grouped in the same output file.
+   */
+  grouped?: boolean;
 }
 
 /**

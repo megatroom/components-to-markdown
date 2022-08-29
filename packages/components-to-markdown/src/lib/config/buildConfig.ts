@@ -5,6 +5,7 @@ import type {
   ConfigValues,
 } from '../typings/ConfigOptions';
 import {
+  DEFAULT_GROUPED,
   DEFAULT_LOG_LEVEL,
   DEFAULT_OUTPUT_EXTENSION,
   DEFAULT_PATTERNS,
@@ -19,6 +20,7 @@ const buildConfig = (options: ConfigOptions): ConfigValues => {
     watch = DEFAULT_WATCH_MODE,
     patterns = DEFAULT_PATTERNS,
     outputExtension = DEFAULT_OUTPUT_EXTENSION,
+    grouped = DEFAULT_GROUPED,
     helpers = [],
     sources,
     output,
@@ -37,6 +39,7 @@ const buildConfig = (options: ConfigOptions): ConfigValues => {
     watch,
     hooks,
     helpers,
+    grouped,
   };
 };
 

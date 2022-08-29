@@ -12,6 +12,7 @@ import type { ConfigOptions, ConfigValues } from './typings/ConfigOptions';
 import type { Logger } from './typings/Logger';
 import { watcher } from './system/watcher';
 import {
+  DEFAULT_GROUPED,
   DEFAULT_LOG_LEVEL,
   DEFAULT_PATTERNS,
   DEFAULT_TEMPLATE,
@@ -76,6 +77,7 @@ async function buildMarkdownFiles(
         renderMarkdown,
         outputDirectory,
         config.outputExtension,
+        config.grouped,
         config.hooks.outputFileName
       );
     }
@@ -170,6 +172,11 @@ export function cli(argv: string[], version: string) {
       DEFAULT_WATCH_MODE
     )
     .option('-l, --loglevel <level>', 'log level', DEFAULT_LOG_LEVEL)
+    .option(
+      '--grouped',
+      'components in the same file will be grouped in the same output file',
+      DEFAULT_GROUPED
+    )
     .action((sources, options) => {
       componentsToMarkdown({
         ...options,
