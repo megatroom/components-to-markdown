@@ -1,12 +1,10 @@
 import { parse, defaultHandlers, resolver } from 'react-docgen';
 import { createDisplayNameHandler } from 'react-docgen-displayname-handler';
 import annotationResolver = require('react-docgen-annotation-resolver');
-import { randomUUID } from 'crypto';
-import { ComponentData } from '../typings/ComponentData';
-import { NodePath } from 'ast-types/lib/node-path';
-import { ASTNode } from 'ast-types';
-
-const generateRandomName = () => `Unknown Component #${randomUUID()}`;
+import type { ComponentData } from '../typings/ComponentData';
+import type { NodePath } from 'ast-types/lib/node-path';
+import type { ASTNode } from 'ast-types';
+import type { ConfigHook } from '../typings/ConfigOptions';
 
 const allResolvers = (
   ast: ASTNode,
@@ -24,7 +22,11 @@ const allResolvers = (
   return annotatedComponents.concat(exportedComponents);
 };
 
-const parseReactComp = (filePath: string, content: Buffer): ComponentData => {
+const parseReactComp = (
+  filePath: string,
+  content: Buffer,
+  extractModuleName: ConfigHook['moduleName']
+): ComponentData => {
   const handlers = defaultHandlers.concat(createDisplayNameHandler(filePath));
 
   const doc = parse(content, allResolvers as any, handlers, {
@@ -37,8 +39,11 @@ const parseReactComp = (filePath: string, content: Buffer): ComponentData => {
     throw new Error('No component found');
   }
 
+  const componentsName: string[] =
+    documentations.map((doc) => doc.displayName || 'Unknown Component') || [];
+
   return {
-    name: documentations[0].displayName || generateRandomName(),
+    name: extractModuleName(filePath, { componentsName }),
     documentations,
   };
 };

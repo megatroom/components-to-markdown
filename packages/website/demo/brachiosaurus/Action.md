@@ -2,9 +2,8 @@
 title: Action
 ---
 
-# Action
 
-## Action ⚠️ {#action}
+# Action ⚠️ {#action}
 
 
 

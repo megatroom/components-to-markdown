@@ -1,68 +1,27 @@
 import { program } from 'commander';
 import { relative } from 'path';
-import parseMarkdown, { RenderMarkdown } from './markdown/parseMarkdown';
-import writeMarkdown from './markdown/writeMarkdown';
-import parseReactComp from './parses/parseReactComp';
+import parseMarkdown from './markdown/parseTemplate';
+import type { RenderMarkdown } from './markdown/parseTemplate';
 import getAllFiles from './system/getAllFiles';
 import getOutputDir from './system/getOutputDir';
 import getTemplate from './system/getTemplate';
 import { buildLogger } from './system/logger';
-import readFile from './system/readFile';
 import scriptDir from './system/scriptDir';
-import {
-  colorCommand,
-  colorFail,
-  colorSuccess,
-  extractErrorMessage,
-} from './system/_stdout';
-import type {
-  ComponentData,
-  ComponentDoc,
-  ComponentProp,
-} from './typings/ComponentData';
-import type { ConfigOptions } from './typings/ConfigOptions';
+import { colorCommand, colorFail, colorSuccess } from './system/_stdout';
+import type { ConfigOptions, ConfigValues } from './typings/ConfigOptions';
 import type { Logger } from './typings/Logger';
-import { formatComment, parseTSDoc } from './parses/parseTSDoc';
-import type { DocumentationObject, PropDescriptor } from 'react-docgen';
 import { watcher } from './system/watcher';
-
-function extractPropFromComponent(
-  name: string,
-  prop: PropDescriptor
-): ComponentProp {
-  const descriptionDoc = parseTSDoc(formatComment(prop.description || ''));
-  descriptionDoc.description = descriptionDoc.description.replace(
-    /\n\n/g,
-    '\n'
-  );
-
-  return {
-    ...descriptionDoc,
-    name,
-    required: prop.required || false,
-    requiredText: prop.required ? 'Yes' : 'No',
-    type: {
-      name: prop.tsType?.name,
-      raw: prop.tsType?.raw || prop.tsType?.name || 'unknown',
-    },
-  };
-}
-
-function extractDocDataFromComponentData(
-  componentObj: DocumentationObject
-): ComponentDoc {
-  const descriptionDoc = parseTSDoc(
-    formatComment(componentObj.description || '')
-  );
-
-  return {
-    name: componentObj.displayName || 'Unknown Component',
-    properties: Object.entries(componentObj.props || []).map(([name, prop]) =>
-      extractPropFromComponent(name, prop)
-    ),
-    ...descriptionDoc,
-  };
-}
+import {
+  DEFAULT_GROUPED,
+  DEFAULT_LOG_LEVEL,
+  DEFAULT_PATTERNS,
+  DEFAULT_TEMPLATE,
+  DEFAULT_WATCH_MODE,
+} from './config/constants';
+import buildConfig from './config/buildConfig';
+import buildMarkdownContent from './markdown/buildMarkdownContent';
+import processFile from './parses/processFile';
+import { ProcessedFile } from './typings/ProcessedFile';
 
 function logSummary(
   logger: Logger,
@@ -82,41 +41,26 @@ function logSummary(
   );
 }
 
-interface ProcessedFile {
-  file: string;
-  error?: string;
-  componentData?: ComponentData;
-}
-
-async function* processFiles(
+export async function* processSourceFiles(
+  config: ConfigValues,
   files: string[]
 ): AsyncIterableIterator<ProcessedFile> {
   for (const file of files) {
-    try {
-      const content = await readFile(file);
-      const componentData = parseReactComp(file, content);
-
-      componentData.components = componentData.documentations.map(
-        (data: DocumentationObject) => extractDocDataFromComponentData(data)
-      );
-
-      yield { file, componentData };
-    } catch (error) {
-      yield { file, error: extractErrorMessage(error) };
-    }
+    yield processFile(file, config.hooks.moduleName);
   }
 }
 
-async function buildMarkdown(
+async function buildMarkdownFiles(
+  config: ConfigValues,
   logger: Logger,
   files: string[],
   renderMarkdown: RenderMarkdown,
   outputDirectory: string
 ) {
-  let totalOfSuccess = 0,
-    totalOfError = 0;
+  let totalOfSuccess = 0;
+  let totalOfError = 0;
 
-  for await (const processedFile of processFiles(files)) {
+  for await (const processedFile of processSourceFiles(config, files)) {
     const { error, file, componentData } = processedFile;
 
     if (error) {
@@ -126,10 +70,17 @@ async function buildMarkdown(
     }
 
     if (componentData) {
-      totalOfSuccess += 1;
       logger.logDebug(`✔️ ${file} parsed as ${componentData.name}`);
-      const markdown = renderMarkdown(componentData);
-      writeMarkdown(outputDirectory, componentData.name, markdown);
+      totalOfSuccess += 1;
+
+      buildMarkdownContent(
+        componentData,
+        renderMarkdown,
+        outputDirectory,
+        config.outputExtension,
+        config.grouped,
+        config.hooks.outputFileName
+      );
     }
   }
 
@@ -137,49 +88,57 @@ async function buildMarkdown(
 }
 
 export async function componentsToMarkdown(options: ConfigOptions) {
-  const logger = buildLogger(options);
+  const config = buildConfig(options);
+  const logger = buildLogger(config);
   const scriptDirectory = scriptDir(__dirname);
-  const outputDirectory = getOutputDir(options.output);
+  const outputDirectory = getOutputDir(config.output);
   let files: string[] = [];
 
   logger.logInfo('Starting components-to-markdown...');
 
   logger.logStep(1, '📗', 'Loading template...');
-  const template = await getTemplate(scriptDirectory, options.template);
+  const template = await getTemplate(scriptDirectory, config.template);
   logger.logDebug('Parsing template...');
-  const renderMarkdown = parseMarkdown(template);
+  const renderMarkdown = parseMarkdown(template, config.helpers);
   logger.logDebug('Template loaded.');
 
   logger.logStep(2, '📂', 'Discovering files...');
-  for (let i = 0; i < options.sources.length; i++) {
+  for (let i = 0; i < config.sources.length; i++) {
     files = files.concat(
-      await getAllFiles(logger, options.sources[i], options.patterns)
+      await getAllFiles(logger, config.sources[i], config.patterns)
     );
   }
   logger.logDebug(`Found ${files.length} files on all sources.`);
 
   logger.logStep(3, '📝', 'Building markdowns...');
-  const { totalOfSuccess, totalOfError } = await buildMarkdown(
+  const { totalOfSuccess, totalOfError } = await buildMarkdownFiles(
+    config,
     logger,
     files,
     renderMarkdown,
     outputDirectory
   );
 
-  if (options.watch) {
+  if (config.watch) {
     logger.logStep(4, '🔎', 'Watching for changes');
     logger.logShortcutUsage('q', 'to quit watch mode');
 
     watcher({
-      sources: options.sources,
-      pattern: options.patterns,
+      sources: config.sources,
+      pattern: config.patterns,
       scriptDirectory,
       onChange: (filePath, event) => {
         logger.logInfo(
           colorCommand('->'),
           `${event}: ${relative(scriptDirectory, filePath)}`
         );
-        buildMarkdown(logger, [filePath], renderMarkdown, outputDirectory);
+        buildMarkdownFiles(
+          config,
+          logger,
+          [filePath],
+          renderMarkdown,
+          outputDirectory
+        );
       },
       onExit: () => {
         logger.logInfo('Bye! 👋');
@@ -197,20 +156,28 @@ export function cli(argv: string[], version: string) {
     .description('Generate markdown documentation of React components.')
     .version(version)
     .argument('<sources...>', 'source directories for the React components')
-    .option('-p, --patterns <patterns...>', 'file patterns to filter', [
-      '**/*.{js,jsx,ts,tsx}',
-      '!**/__tests__/**',
-      '!**/*.{test,spec}.{js,jsx,ts,tsx}',
-      '!**/*.d.ts',
-    ])
+    .option(
+      '-p, --patterns <patterns...>',
+      'file patterns to filter',
+      DEFAULT_PATTERNS
+    )
     .option(
       '-t, --template <template>',
       'path to template file',
-      'brachiosaurus'
+      DEFAULT_TEMPLATE
     )
     .option('-o, --output <output>', 'path to output markdown files', '.')
-    .option('-w, --watch', 'watch for changes and rebuild automatically', false)
-    .option('-l, --loglevel <level>', 'log level', 'info')
+    .option(
+      '-w, --watch',
+      'watch for changes and rebuild automatically',
+      DEFAULT_WATCH_MODE
+    )
+    .option('-l, --loglevel <level>', 'log level', DEFAULT_LOG_LEVEL)
+    .option(
+      '--grouped',
+      'components in the same file will be grouped in the same output file',
+      DEFAULT_GROUPED
+    )
     .action((sources, options) => {
       componentsToMarkdown({
         ...options,

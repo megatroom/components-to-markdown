@@ -1,6 +1,6 @@
 {
   "name": "components-to-markdown",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "type": "commonjs",
   "license": "MIT",
   "homepage": "https://components-to-markdown.vercel.app",
@@ -11,6 +11,14 @@
   "bin": {
     "components-to-markdown": "bin/components-to-markdown"
   },
+  "keywords": [
+    "components-to-markdown",
+    "markdown",
+    "components",
+    "docusaurus",
+    "react",
+    "cli"
+  ],
   "dependencies": {
     "esm": "3.2.25"
   }

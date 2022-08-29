@@ -3,7 +3,7 @@
   "version": 2,
   "projects": {
     "components-to-markdown": "packages/components-to-markdown",
-    "website": "packages/website",
-    "example-react-components": "packages/example-react-components"
+    "example-react-components": "packages/example-react-components",
+    "website": "packages/website"
   }
 }

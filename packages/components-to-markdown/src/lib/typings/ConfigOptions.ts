@@ -1,4 +1,31 @@
+import type { HelperDelegate } from 'handlebars';
+
 export type LogLevel = 'silent' | 'error' | 'warn' | 'info' | 'debug' | 'trace';
+
+export interface ModuleNameMetadata {
+  componentsName: string[];
+}
+export interface ConfigHook {
+  /**
+   * Format the output file name.
+   */
+  outputFileName: (fileName: string, fileExtension: string) => string;
+  /**
+   * Format the module name.
+   */
+  moduleName: (filePath: string, metadata: ModuleNameMetadata) => string;
+}
+
+export interface TemplateHelper {
+  /**
+   * Helper name.
+   */
+  name: string;
+  /**
+   * Helper function delegate to Handlebars.
+   */
+  helper: HelperDelegate;
+}
 
 export interface ConfigOptions {
   /**
@@ -11,8 +38,10 @@ export interface ConfigOptions {
   patterns: string[];
   /**
    * Change the level of logging.
+   *
+   * @defaultValue `'info'`
    */
-  loglevel: LogLevel;
+  loglevel?: LogLevel;
   /**
    * Path to the template file.
    */
@@ -22,7 +51,32 @@ export interface ConfigOptions {
    */
   output: string;
   /**
-   * Watch for changes and rebuild automatically.
+   * Output file extension.
+   *
+   * @defaultValue `'md'`
    */
-  watch: boolean;
+  outputExtension?: string;
+  /**
+   * Watch for changes and rebuild automatically.
+   *
+   * @defaultValue `false`
+   */
+  watch?: boolean;
+  /**
+   * Hooks to change the default behavior.
+   */
+  hooks?: ConfigHook;
+  /**
+   * Helpers to use in the template.
+   */
+  helpers?: TemplateHelper[];
+  /**
+   * Components in the same file will be grouped in the same output file.
+   */
+  grouped?: boolean;
 }
+
+/**
+ * ConfigOptions with default values.
+ */
+export type ConfigValues = Required<ConfigOptions>;

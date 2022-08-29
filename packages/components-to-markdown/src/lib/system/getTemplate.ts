@@ -3,8 +3,7 @@ import { statSync } from 'graceful-fs';
 import readFile from './readFile';
 import { createConfigError, extractErrorMessage } from './_stdout';
 import ValidationError from '../errors/ValidationError';
-
-const BUILTIN_TEMPLATES = ['brachiosaurus'];
+import { BUILTIN_TEMPLATES } from '../config/constants';
 
 const getTemplate = async (
   scriptDirectory: string,

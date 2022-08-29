@@ -2,9 +2,8 @@
 title: Button
 ---
 
-# Button
 
-## Button  {#button}
+# Button  {#button}
 
 <p><span class="badge badge--warning">Beta</span>&nbsp;<span class="badge badge--primary">Public</span>&nbsp;</p>
 
@@ -15,6 +14,12 @@ Buttons allow users to take actions, and make choices, with a single tap.
 ## Remarks
 
 
+Buttons communicate actions that users can take. They are typically placed throughout your UI, in places like:
+- Dialogs
+- Modal windows
+- Forms
+- Cards
+-Toolbars
 
 
 
