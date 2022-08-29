@@ -30,11 +30,11 @@ string[]
 
 ```ts title="Default"
 [
-  "**/*.{js,jsx,ts,tsx}",
-  "!**/__tests__/**",
-  "!**/*.{test,spec}.{js,jsx,ts,tsx}",
-  "!**/*.d.ts"
-]
+  '**/*.{js,jsx,ts,tsx}',
+  '!**/__tests__/**',
+  '!**/*.{test,spec}.{js,jsx,ts,tsx}',
+  '!**/*.d.ts',
+];
 ```
 
 A glob pattern to filter the files in `sources` .
@@ -42,7 +42,7 @@ A glob pattern to filter the files in `sources` .
 ### `output`
 
 ```ts title="Type"
-string
+string;
 ```
 
 Path to output markdown files.
@@ -50,11 +50,11 @@ Path to output markdown files.
 ### `template`
 
 ```ts title="Type"
-string
+string;
 ```
 
 ```ts title="Default"
-'brachiosaurus'
+'brachiosaurus';
 ```
 
 Path to template file or the name of one of the built-in templates.
@@ -62,11 +62,11 @@ Path to template file or the name of one of the built-in templates.
 ### `watch`
 
 ```ts title="Type"
-boolean
+boolean;
 ```
 
 ```ts title="Default"
-false
+false;
 ```
 
 Whether to watch the files for changes and regenerate.
@@ -74,11 +74,11 @@ Whether to watch the files for changes and regenerate.
 ### `loglevel`
 
 ```ts title="Type"
-LogLevel
+LogLevel;
 ```
 
 ```ts title="Default"
-'info'
+'info';
 ```
 
 Log level. See [LogLevel](#loglevel-1) for more information.
@@ -86,11 +86,11 @@ Log level. See [LogLevel](#loglevel-1) for more information.
 ### `grouped`
 
 ```ts title="Type"
-boolean
+boolean;
 ```
 
 ```ts title="Default"
-false
+false;
 ```
 
 Components in the same file will be grouped in the same output file.
@@ -98,11 +98,11 @@ Components in the same file will be grouped in the same output file.
 ### `outputExtension`
 
 ```ts title="Type"
-string
+string;
 ```
 
 ```ts title="Default"
-'md'
+'md';
 ```
 
 Extension of output files.
@@ -110,7 +110,7 @@ Extension of output files.
 ### `hooks`
 
 ```ts title="Type"
-ConfigHook
+ConfigHook;
 ```
 
 Functions to customize the result. See [ConfigHook](#confighook) for more information.
@@ -118,11 +118,11 @@ Functions to customize the result. See [ConfigHook](#confighook) for more inform
 ### `helpers`
 
 ```ts title="Type"
-TemplateHelper
+TemplateHelper;
 ```
 
 ```ts title="Default"
-[]
+[];
 ```
 
 Custom template helpers. See [TemplateHelper](#templatehelper) for more information.
@@ -147,7 +147,7 @@ type LogLevel = 'silent' | 'error' | 'warn' | 'info' | 'debug' | 'trace';
 ### `outputFileName`
 
 ```ts
-(fileName: string, fileExtension: string) => string
+(fileName: string, fileExtension: string) => string;
 ```
 
 Used to format the name of output files.
@@ -166,7 +166,7 @@ const groups = {
   Select: 'Inputs',
   Alert: 'Feedback',
   Snackbar: 'Feedback',
-}
+};
 
 /**
  * Result:

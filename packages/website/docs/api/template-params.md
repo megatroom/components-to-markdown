@@ -64,7 +64,7 @@ All the component properties data.
 | defaultValue | [DocDataBlockTag](#docdatablocktag)     | The default value for a field or property,           |
 | examples     | [DocDataBlockTag](#docdatablocktag)[]   | All the section presented as an example              |
 | params       | [DocDataParam](#docdataparam)[]         | Function parameters.                                 |
-  
+
 ## ComponentPropType
 
 | Property | Type   | Description    |

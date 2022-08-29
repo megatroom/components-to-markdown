@@ -50,15 +50,15 @@ componentsToMarkdown({
       helper: function (text) {
         return `${text.toUpperCase()}!`;
       },
-    }
-  ]
+    },
+  ],
 });
 ```
 
 In the template use it as a normal helper:
 
 ```handlebars title="template.hbs"
-## {{myCustomHelper "MyComponent"}}
+## {{myCustomHelper 'MyComponent'}}
 ```
 
 The result would be:

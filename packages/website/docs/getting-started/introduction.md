@@ -62,7 +62,7 @@ import { componentsToMarkdown } from 'components-to-markdown';
 
 componentsToMarkdown({
   sources: ['./components-path'],
-  output: './output-path'
+  output: './output-path',
 });
 ```
 

@@ -9,3 +9,7 @@ packages/components-to-markdown/templates
 
 packages/website/demo/*/Action.md
 packages/website/demo/*/Button.md
+packages/website/demo/*/Card.md
+packages/website/demo/*/CardBody.md
+packages/website/demo/*/CardMedia.md
+packages/website/demo/*/CardMediaDescription.md
