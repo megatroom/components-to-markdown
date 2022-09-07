@@ -129,6 +129,10 @@ const config = {
                 label: 'NPM',
                 href: 'https://www.npmjs.com/package/components-to-markdown',
               },
+              {
+                label: 'How to Contribute',
+                href: 'https://github.com/megatroom/components-to-markdown/blob/main/CONTRIBUTING.md#contributing',
+              },
             ],
           },
         ],
