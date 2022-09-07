@@ -1,16 +1,9 @@
 # =============================================================================
-# ======== Build the lib and run against the example-react-components =========
+# ========= Run only the builded lib with direct lint to the template =========
 # =============================================================================
-
-yarn build components-to-markdown
-
-cd dist/packages/components-to-markdown
-
-yarn
-
-cd -
 
 ./dist/packages/components-to-markdown/bin/components-to-markdown \
   --output packages/website/demo/brachiosaurus \
   --loglevel debug \
+  --template packages/components-to-markdown/templates/brachiosaurus.hbs \
   packages/example-react-components/src/lib
