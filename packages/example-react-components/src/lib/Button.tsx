@@ -44,6 +44,7 @@ const variants: Record<Variant, any> = {
   default: css`
     background-color: #fff;
     border-color: #ccc;
+    color: #212121;
   `,
   primary: css`
     color: #fff;
