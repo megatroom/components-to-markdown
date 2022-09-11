@@ -2,6 +2,8 @@ import type { HelperDelegate } from 'handlebars';
 
 export type LogLevel = 'silent' | 'error' | 'warn' | 'info' | 'debug' | 'trace';
 
+export type BuiltinTemplate = 'brachiosaurus' | 'stegosaurus';
+
 export interface ModuleNameMetadata {
   componentsName: string[];
 }
@@ -43,9 +45,9 @@ export interface ConfigOptions {
    */
   loglevel?: LogLevel;
   /**
-   * Path to the template file.
+   * Path to template file or the name of the built-in template.
    */
-  template: string;
+  template: BuiltinTemplate | string;
   /**
    * Path to the output markdown files.
    */

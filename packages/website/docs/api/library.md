@@ -50,14 +50,14 @@ Path to output markdown files.
 ### `template`
 
 ```ts title="Type"
-string;
+BuiltinTemplate | string;
 ```
 
 ```ts title="Default"
 'brachiosaurus';
 ```
 
-Path to template file or the name of one of the built-in templates.
+Path to template file or the name of the [built-in template](#builtintemplate).
 
 ### `watch`
 
@@ -126,6 +126,12 @@ TemplateHelper;
 ```
 
 Custom template helpers. See [TemplateHelper](#templatehelper) for more information.
+
+## BuiltinTemplate
+
+```ts
+type BuiltinTemplate = 'brachiosaurus' | 'stegosaurus';
+```
 
 ## LogLevel
 

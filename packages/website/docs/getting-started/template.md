@@ -36,6 +36,35 @@ The result:
 ## MyComponent {#mycomponent}
 ```
 
+### markdownToJSX
+
+The `markdownToJSX` helper converts a markdown string to JSX. It's useful when you want to include some text, like a component description for example, inside JSX (or HTML) elements.
+
+All markdown supports HTML, MDX in addition to HTML also supports JSX. However, you can't mix the two within the same block, so this helper will help to keep only one language in case you want to use HTML or MDX with a markdown formatted input.
+
+Example:
+
+```js title="Component doc"
+/**
+ * MyComponent with **bold** and *italic* text, and `inline code`.
+ */
+function MyComponent() {
+```
+
+```handlebars title="template.hbs"
+<div class="my-custom-element">
+  {{markdownToJSX description}}
+</div>
+```
+
+The result:
+
+```html title="MyComponent.md"
+<div class="my-custom-element">
+  MyComponent with <strong>bold</strong> and <em>italic</em> text, and <code>inline code</code>.
+</div>
+```
+
 ## Custom helpers
 
 You can define your own helpers using the [helpers](/docs/api/library#helpers) property of the configuration. For example:

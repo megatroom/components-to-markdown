@@ -7,7 +7,15 @@ export const DEFAULT_PATTERNS = [
   '!**/__tests__/**',
   '!**/*.{test,spec}.{js,jsx,ts,tsx}',
   '!**/*.d.ts',
+  '!**/*.stories.{js,jsx,ts,tsx}',
 ];
 
-export const DEFAULT_TEMPLATE = 'brachiosaurus';
-export const BUILTIN_TEMPLATES = [DEFAULT_TEMPLATE];
+/**
+ * Don't forget to add the new constant to the `BuiltinTemplate` type.
+ */
+export const BRACHIOSAURUS_TEMPLATE = 'brachiosaurus';
+export const STEGOSAURUS_TEMPLATE = 'stegosaurus';
+
+export const DEFAULT_TEMPLATE = BRACHIOSAURUS_TEMPLATE;
+
+export const BUILTIN_TEMPLATES = [BRACHIOSAURUS_TEMPLATE, STEGOSAURUS_TEMPLATE];

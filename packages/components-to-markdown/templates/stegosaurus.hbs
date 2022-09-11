@@ -1,0 +1,35 @@
+{{#each components}}
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each properties}}
+    <tr>
+      <td>
+        <b>{{name}}</b>
+        {{#if required}}<span title="required" style=\{{ color: 'var(--ifm-color-danger)' }}>*</span>{{/if}}
+        {{#if deprecated}}<span title="deprecated">⚠️</span>{{/if}}
+      </td>
+      <td>
+        {{#if deprecated.description}}<strong>Deprecated:</strong> {{{markdownToJSX deprecated.description}}}<br/>{{/if}}
+        {{#if since}}<strong>Since:</strong> {{{since}}}<br/>{{/if}}
+        {{#if description}}{{description}}<br/>{{/if}}
+        {{#if type}}<code>{{type.raw}}</code>{{/if}}
+        {{#if params}}
+        <br/>
+        {{#each params}}
+        <code>{{name}}</code> {{description}}
+        {{/each}}
+        {{/if}}
+      </td>
+      <td>{{#if defaultValue}}{{{markdownToJSX defaultValue.description}}}{{{markdownToJSX defaultValue.content}}}{{else}}-{{/if}}</td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+{{/each}}

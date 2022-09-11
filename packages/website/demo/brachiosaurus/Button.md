@@ -46,14 +46,13 @@ ReactNode
 
 The button type.
 
+**Default Value:** `'button'`
+
+
 ```tsx title="Type"
 'button' | 'submit' | 'reset'
 ```
 
-```tsx title="Default Value"
-'button'
-
-```
 
 
 ### `variant`   {#variant}
@@ -63,14 +62,15 @@ The button type.
 
 The button variant.
 
+**Since:** 1.1.0
+
+**Default Value:** `'default'`
+
+
 ```tsx title="Type"
 'default' | 'primary' | 'success' | 'danger'
 ```
 
-```tsx title="Default Value"
-'default'
-
-```
 
 
 ### `onClick`   {#onclick}

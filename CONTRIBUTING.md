@@ -49,6 +49,7 @@ The package follows the following source code structure:
     - `__tests__/`: Test helpers.
     - `config/`: Configuration files.
     - `errors/`: The errors that can be thrown by the package.
+    - `helpers/`: Template helper functions.
     - `hooks/`: Default hooks.
     - `markdown/`: The logic to build markdown files.
     - `parses/`: The logic to parse the components.
@@ -57,6 +58,16 @@ The package follows the following source code structure:
     - `typings/`: All the typings used by the package.
     - `components-to-markdown.ts`: The library and CLI entry point.
   - `index.ts`: The entry point for the package.
+
+## Running Documentation Website
+
+To run the documentation website, run:
+
+```bash
+yarn serve website
+```
+
+The browser will open automatically with the website.
 
 ## Committing and Pushing changes
 

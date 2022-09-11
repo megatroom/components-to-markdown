@@ -7,3 +7,9 @@
   --loglevel debug \
   --template packages/components-to-markdown/templates/brachiosaurus.hbs \
   packages/example-react-components/src/lib
+
+./dist/packages/components-to-markdown/bin/components-to-markdown \
+  --output packages/website/demo/stegosaurus \
+  --loglevel debug \
+  --template packages/components-to-markdown/templates/stegosaurus.hbs \
+  packages/example-react-components/src/lib

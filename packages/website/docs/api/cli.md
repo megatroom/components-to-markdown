@@ -49,7 +49,7 @@ Alias: `-t`.
 
 Default: `"brachiosaurus"`.
 
-Path to template file.
+Path to template file or the name of the [built-in template](/docs/api/library#builtintemplate).
 
 ### `--output <output>`
 

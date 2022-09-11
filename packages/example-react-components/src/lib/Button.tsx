@@ -11,13 +11,14 @@ export interface ButtonProps {
   /**
    * The button type.
    *
-   * @defaultValue 'button'
+   * @defaultValue `'button'`
    */
   type?: 'button' | 'submit' | 'reset';
   /**
    * The button variant.
    *
-   * @defaultValue 'default'
+   * @since 1.1.0
+   * @defaultValue `'default'`
    */
   variant?: Variant;
   /**
