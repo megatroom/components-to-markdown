@@ -26,6 +26,7 @@
     "handlebars": "^4.7.7",
     "picomatch": "^2.3.1",
     "prism-react-renderer": "^1.2.1",
+    "raw-loader": "^4.0.2",
     "react": "18.2.0",
     "react-docgen": "^5.4.2",
     "react-docgen-annotation-resolver": "^2.0.0",

@@ -1,0 +1,25 @@
+.previewTable {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-evenly;
+  width: 100%;
+  padding: 0 20px;
+}
+
+.previewBody {
+  width: 700px;
+}
+
+.section {
+  background-color: var(--ifm-color-emphasis-100);
+  padding: 72px 0;
+}
+
+@media screen and (max-width: 1460px) {
+  .previewTable {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+  }
+}
