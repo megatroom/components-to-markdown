@@ -95,3 +95,7 @@ The result would be:
 ```md title="MyComponent.md"
 ## MYCOMPONENT!
 ```
+
+## Hooks
+
+C2M also provides a feature called [hook](/docs/api/library#hooks), which are functions you can define to change its default behavior.

@@ -54,6 +54,7 @@ it('should write markdown file', async () => {
   expect(writeMarkdownFile).toHaveBeenCalledWith(
     './output/dir',
     'ComponentName.md',
+    'ComponentName',
     'markdown rendered'
   );
 });
@@ -98,12 +99,14 @@ it('should write one file for each component', async () => {
     1,
     './output/dir',
     'ComponentName1.md',
+    'ComponentName1',
     'markdown rendered'
   );
   expect(writeMarkdownFile).toHaveBeenNthCalledWith(
     2,
     './output/dir',
     'ComponentName2.md',
+    'ComponentName2',
     'markdown rendered'
   );
 });
@@ -140,6 +143,7 @@ describe('With grouped = true', () => {
       1,
       './output/dir',
       'ModuleName.md',
+      'ModuleName',
       'markdown rendered'
     );
   });
