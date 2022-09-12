@@ -21,7 +21,7 @@ const templateNames = [
   { value: 'stegosaurus', label: 'Stegosaurus (Properties Table)' },
 ];
 
-export default function HowItWorks(): JSX.Element {
+export default function HowItWorks() {
   const [template, setTemplate] = useState(templateNames[0]);
   const ButtonDoc = templates[template.value];
 
@@ -67,7 +67,7 @@ export default function HowItWorks(): JSX.Element {
                   </button>
                   <ul className="dropdown__menu">
                     {templateNames.map((option) => (
-                      <li>
+                      <li key={`template-${option.value}`}>
                         <a
                           className={clsx('dropdown__link', {
                             'dropdown__link--active':
