@@ -1,25 +1,25 @@
-.previewTable {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  justify-content: space-evenly;
-  width: 100%;
-  padding: 0 20px;
+.fullWidthContainer {
+  padding: 0 16px;
 }
 
-.previewBody {
-  width: 700px;
+.sectionTitle {
+  font-size: 2rem;
 }
 
 .section {
   background-color: var(--ifm-color-emphasis-100);
   padding: 72px 0;
+  width: 100%;
+}
+
+.howItWorkColumn {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 16px;
 }
 
 @media screen and (max-width: 1460px) {
-  .previewTable {
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
+  .howItWorkColumn {
+    padding: 0;
   }
 }
