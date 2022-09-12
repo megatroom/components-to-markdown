@@ -116,6 +116,10 @@ const config = {
                 label: 'Default Template',
                 to: '/demo/brachiosaurus/overview',
               },
+              {
+                label: 'Properties Table',
+                to: '/demo/stegosaurus/overview',
+              },
             ],
           },
           {
@@ -131,7 +135,7 @@ const config = {
               },
               {
                 label: 'How to Contribute',
-                href: 'https://github.com/megatroom/components-to-markdown/blob/main/CONTRIBUTING.md#contributing',
+                href: '/docs/contribute/how-to-contribute',
               },
             ],
           },
