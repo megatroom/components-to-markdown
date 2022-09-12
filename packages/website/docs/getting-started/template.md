@@ -25,7 +25,7 @@ After the template is ready, just define the path to your template:
   <TabItem value="cli" label="CLI Usage" default>
 
 ```bash {3}
-npx components-to-markdown -w
+npx components-to-markdown@latest -w
   -o ./output-path \
   --template ./my-template.hbs \
   ./components-path

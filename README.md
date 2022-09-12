@@ -46,7 +46,7 @@ npx components-to-markdown@latest --version
 Example:
 
 ```bash
-npx components-to-markdown -w -o ./output-path ./components-path
+npx components-to-markdown@latest -w -o ./output-path ./components-path
 ```
 
 See [API documentation](https://components-to-markdown.vercel.app/docs/api/cli) for more details.
