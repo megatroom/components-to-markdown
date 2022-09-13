@@ -28,7 +28,7 @@ jobs:
           root: '.'
           paths:
             - 'node_modules/*'
-  check:
+  static-validation:
     docker: *docker_image
     steps:
       - checkout
@@ -42,7 +42,7 @@ jobs:
       - run:
           name: Run Lint
           command: yarn nx affected --target=lint --base=$NX_BASE
-  test:
+  unit-test:
     docker: *docker_image
     steps:
       - checkout
@@ -79,36 +79,52 @@ jobs:
           root: '.'
           paths:
             - 'dist/*'
-  # publish-latest:
-  #   docker: *docker_image
-  #   steps:
-  #     - checkout
-  #     - *current_workspace
-  #     - run:
-  #         name: Publish latest version
-  #         command: yarn nx affected --target=publish --base=$NX_BASE --tag=latest --ver=???
+  pr-check:
+    docker: *docker_image
+    steps:
+      - checkout
+      - *current_workspace
+      - run:
+          name: Auto check PR
+          command: yarn auto pr-check --url $CIRCLE_BUILD_URL
+  publish-latest:
+    docker: *docker_image
+    steps:
+      - checkout
+      - *current_workspace
+      - run:
+          name: Publish latest version
+          command: ./scripts/bump-version.sh latest
 
 workflows:
   build:
     jobs:
       - install-dependencies
-      - check:
+      - static-validation:
           requires:
             - install-dependencies
-      - test:
+      - unit-test:
           requires:
             - install-dependencies
       - coverage:
           requires:
-            - test
+            - unit-test
       - build:
           requires:
             - install-dependencies
-      # - publish-latest:
-      #     filters:
-      #       branches:
-      #         only: main
-      #     requires:
-      #       - check
-      #       - test
-      #       - build
+      - pr-check:
+          filters:
+            branches:
+              ignore:
+                - main
+                - next
+          requires:
+            - install-dependencies
+      - publish-latest:
+          filters:
+            branches:
+              only: main
+          requires:
+            - static-validation
+            - unit-test
+            - build

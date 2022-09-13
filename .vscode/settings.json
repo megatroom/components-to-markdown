@@ -1,4 +1,7 @@
 {
   "editor.formatOnSave": true,
-  "cSpell.words": ["docgen", "loglevel"]
+  "cSpell.words": ["docgen", "loglevel"],
+  "files.associations": {
+    "*.md": "mdx"
+  }
 }

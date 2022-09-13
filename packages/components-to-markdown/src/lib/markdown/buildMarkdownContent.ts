@@ -33,6 +33,6 @@ export default async function buildMarkdownContent(
   for (const data of splitData) {
     const markdown = renderMarkdown(data);
     const outputFile = outputFileName(data.name, outputExtension);
-    writeMarkdownFile(outputDirectory, outputFile, markdown);
+    writeMarkdownFile(outputDirectory, outputFile, data.name, markdown);
   }
 }

@@ -11,13 +11,14 @@ export interface ButtonProps {
   /**
    * The button type.
    *
-   * @defaultValue 'button'
+   * @defaultValue `'button'`
    */
   type?: 'button' | 'submit' | 'reset';
   /**
    * The button variant.
    *
-   * @defaultValue 'default'
+   * @since 1.1.0
+   * @defaultValue `'default'`
    */
   variant?: Variant;
   /**
@@ -44,6 +45,7 @@ const variants: Record<Variant, any> = {
   default: css`
     background-color: #fff;
     border-color: #ccc;
+    color: #212121;
   `,
   primary: css`
     color: #fff;

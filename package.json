@@ -9,9 +9,75 @@
     "test": "nx test",
     "test:all": "nx run-many --target=test --all",
     "format:check": "nx format:check",
-    "format:write": "nx format:write"
+    "format:write": "nx format:write",
+    "storybook": "nx run example-react-components:storybook"
   },
   "private": true,
+  "auto": {
+    "plugins": [
+      "npm",
+      "first-time-contributor",
+      "released"
+    ],
+    "labels": [
+      {
+        "name": "version:major",
+        "changelogTitle": "💥 Breaking Change",
+        "description": "Increment the major version",
+        "releaseType": "major",
+        "color": "#C5000B",
+        "overwrite": true
+      },
+      {
+        "name": "version:minor",
+        "changelogTitle": "🚀 Enhancement",
+        "description": "Increment the minor version",
+        "releaseType": "minor",
+        "color": "#F1A60E",
+        "overwrite": true
+      },
+      {
+        "name": "version:patch",
+        "changelogTitle": "🐛 Bug Fix",
+        "description": "Increment the patch version",
+        "releaseType": "patch",
+        "color": "#870048",
+        "overwrite": true
+      },
+      {
+        "name": "version:performance",
+        "changelogTitle": "🏎 Performance",
+        "description": "Improve performance of an existing feature",
+        "releaseType": "patch",
+        "color": "#f4b2d8",
+        "overwrite": true
+      },
+      {
+        "name": "version:internal",
+        "changelogTitle": "🏠 Internal",
+        "description": "Changes only affect the internal API and it doesn't generate a new version",
+        "releaseType": "none",
+        "color": "#696969",
+        "overwrite": true
+      },
+      {
+        "name": "version:docs",
+        "changelogTitle": "📝 Documentation",
+        "description": "Changes only affect the documentation",
+        "releaseType": "none",
+        "color": "#cfd3d7",
+        "overwrite": true
+      },
+      {
+        "name": "version:dependencies",
+        "changelogTitle": "🔩 Dependency Updates",
+        "description": "Update one or more dependencies version",
+        "releaseType": "none",
+        "color": "#8732bc",
+        "overwrite": true
+      }
+    ]
+  },
   "dependencies": {
     "@docusaurus/core": "2.0.1",
     "@docusaurus/preset-classic": "2.0.1",
@@ -25,6 +91,7 @@
     "handlebars": "^4.7.7",
     "picomatch": "^2.3.1",
     "prism-react-renderer": "^1.2.1",
+    "raw-loader": "^4.0.2",
     "react": "18.2.0",
     "react-docgen": "^5.4.2",
     "react-docgen-annotation-resolver": "^2.0.0",
@@ -36,31 +103,43 @@
     "tslib": "^2.3.0"
   },
   "devDependencies": {
+    "@auto-it/first-time-contributor": "10.37.4",
+    "@babel/core": "7.12.13",
+    "@babel/preset-typescript": "7.12.13",
     "@docusaurus/module-type-aliases": "2.0.1",
-    "@nrwl/cli": "14.5.8",
-    "@nrwl/eslint-plugin-nx": "14.5.8",
-    "@nrwl/jest": "14.5.8",
-    "@nrwl/js": "14.5.8",
-    "@nrwl/linter": "14.5.8",
-    "@nrwl/react": "^14.5.8",
-    "@nrwl/web": "14.5.8",
-    "@nrwl/workspace": "14.5.8",
+    "@nrwl/cli": "14.7.5",
+    "@nrwl/eslint-plugin-nx": "14.7.5",
+    "@nrwl/jest": "14.7.5",
+    "@nrwl/js": "14.7.5",
+    "@nrwl/linter": "14.7.5",
+    "@nrwl/react": "14.7.5",
+    "@nrwl/storybook": "14.7.5",
+    "@nrwl/web": "14.7.5",
+    "@nrwl/workspace": "14.7.5",
     "@nx-plus/docusaurus": "^14.1.0",
+    "@storybook/addon-essentials": "~6.5.9",
+    "@storybook/builder-webpack5": "~6.5.9",
+    "@storybook/core-server": "~6.5.9",
+    "@storybook/manager-webpack5": "~6.5.9",
+    "@storybook/react": "~6.5.9",
+    "@svgr/webpack": "^5.4.0",
     "@swc/core": "^1.2.241",
     "@swc/jest": "0.2.22",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "13.3.0",
     "@types/graceful-fs": "^4.1.5",
-    "@types/jest": "28.1.7",
+    "@types/jest": "28.1.8",
     "@types/node": "^18.7.8",
     "@types/picomatch": "^2.3.0",
     "@types/react": "18.0.17",
     "@types/react-dom": "18.0.6",
     "@types/react-is": "17.0.3",
     "@types/styled-components": "5.1.26",
-    "@typescript-eslint/eslint-plugin": "~5.33.1",
-    "@typescript-eslint/parser": "~5.33.1",
+    "@typescript-eslint/eslint-plugin": "5.33.1",
+    "@typescript-eslint/parser": "5.33.1",
     "ast-types": "^0.14.2",
+    "auto": "10.37.4",
+    "babel-loader": "8.1.0",
     "babel-plugin-styled-components": "2.0.7",
     "doctrine": "^3.0.0",
     "eslint": "~8.22.0",
@@ -70,14 +149,16 @@
     "eslint-plugin-react": "7.30.1",
     "eslint-plugin-react-hooks": "4.6.0",
     "jest": "28.1.3",
-    "jest-environment-jsdom": "^28.1.3",
+    "jest-environment-jsdom": "28.1.3",
     "jest-junit": "^14.0.0",
-    "nx": "14.5.8",
+    "nx": "14.7.5",
     "prettier": "^2.6.2",
     "react-test-renderer": "18.2.0",
+    "storybook-addon-swc": "^1.1.7",
     "ts-jest": "28.0.8",
     "ts-node": "~10.9.1",
-    "typescript": "~4.7.2"
+    "typescript": "~4.7.2",
+    "url-loader": "^3.0.0"
   },
   "jest-junit": {
     "outputName": "results.xml"

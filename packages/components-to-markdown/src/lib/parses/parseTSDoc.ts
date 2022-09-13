@@ -14,6 +14,8 @@ import {
   DocDataParam,
   DocDataEntity,
   DocDataBlockTag,
+  DocDataSection,
+  DocDataSectionTag,
 } from '../typings/DocData';
 
 const buildConfiguration = () => {
@@ -89,6 +91,58 @@ function getContentRecursive(docTree: DocTreeAst): string {
 
   for (const child of docTree.children) {
     result += getContentRecursive(child);
+  }
+
+  return result;
+}
+
+function getBlockTagFromSection(
+  index: number,
+  parentDocTree: DocTreeAst
+): DocDataSectionTag {
+  const tagName = parentDocTree.children?.[index].children?.[0].content;
+  const description = parentDocTree.children?.[index + 1].children?.[0].content;
+
+  if (tagName === '@since' && description) {
+    return {
+      since: trimWhitespace(description),
+    };
+  }
+
+  return {};
+}
+
+function getSectionContentRecursive(
+  result: DocDataSection,
+  docTree: DocTreeAst
+): void {
+  result.description += docTree.content || '';
+
+  if (!docTree.children) return;
+
+  for (const [index, child] of docTree.children.entries()) {
+    if (child.kind === DocNodeKind.BlockTag) {
+      result.tags = {
+        ...result.tags,
+        ...getBlockTagFromSection(index, docTree),
+      };
+      break;
+    }
+
+    getSectionContentRecursive(result, child);
+  }
+}
+
+function getSectionContent(docTree: DocTreeAst): DocDataSection {
+  const result: DocDataSection = {
+    description: docTree.content || '',
+    tags: {},
+  };
+
+  if (!docTree.children) return result;
+
+  for (const child of docTree.children) {
+    getSectionContentRecursive(result, child);
   }
 
   return result;
@@ -236,9 +290,12 @@ function convertDocTreeToDocData(docTree: DocTreeAst): DocData {
 
   for (const comments of docTree.children) {
     switch (comments.kind) {
-      case DocNodeKind.Section:
-        result.description = trimWhitespace(getContentRecursive(comments));
+      case DocNodeKind.Section: {
+        const section = getSectionContent(comments);
+        result.description = trimWhitespace(section.description);
+        result = { ...result, ...section.tags };
         break;
+      }
       case DocNodeKind.Block:
         result = {
           ...result,

@@ -295,3 +295,58 @@ it('should parse @param', () => {
 
   expect(parseTSDoc(formatComment(content))).toEqual(expected);
 });
+
+describe('should parse @since', () => {
+  it('with version', () => {
+    const content = `Some component description.
+    @since 1.1.0`;
+    const expected = {
+      ...defaultDocData,
+      description: 'Some component description.',
+      since: '1.1.0',
+    };
+
+    expect(parseTSDoc(formatComment(content))).toEqual(expected);
+  });
+
+  it('with text', () => {
+    const content = `Some component description.
+    @since Some version text`;
+    const expected = {
+      ...defaultDocData,
+      description: 'Some component description.',
+      since: 'Some version text',
+    };
+
+    expect(parseTSDoc(formatComment(content))).toEqual(expected);
+  });
+
+  it('without description', () => {
+    const content = `Some component description.
+    @since`;
+    const expected = {
+      ...defaultDocData,
+      description: 'Some component description.',
+      since: '',
+    };
+
+    expect(parseTSDoc(formatComment(content))).toEqual(expected);
+  });
+
+  it.skip('should parse @since after @defaultValue', () => {
+    const content = `Some component description.
+    @defaultValue This is a description
+    @since 1.1.0
+    `;
+    const expected = {
+      ...defaultDocData,
+      description: 'Some component description.',
+      since: '1.1.0',
+      defaultValue: {
+        description: 'This is a description',
+      },
+    };
+
+    expect(parseTSDoc(formatComment(content))).toEqual(expected);
+  });
+});

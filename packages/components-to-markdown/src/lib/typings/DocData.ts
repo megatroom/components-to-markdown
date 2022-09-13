@@ -19,12 +19,22 @@ export interface DocDataModifier {
   override?: boolean;
   sealed?: boolean;
 }
+
+export interface DocDataSectionTag {
+  since?: string;
+}
+
+export interface DocDataSection {
+  description: string;
+  tags: DocDataSectionTag;
+}
+
 export interface DocDataParam {
   name: string;
   description?: string;
 }
 
-export interface DocData extends Required<DocDataModifier> {
+export interface DocData extends Required<DocDataModifier>, DocDataSectionTag {
   description: string;
   hasModifiers: boolean;
   deprecated?: DocDataBlockTag;

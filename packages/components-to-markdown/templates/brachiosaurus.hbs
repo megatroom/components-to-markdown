@@ -11,19 +11,19 @@ title: {{name}}
 {{#if deprecated}}
 :::caution Deprecated
 
-{{deprecated.description}} {{deprecated.content}}
+{{{deprecated.description}}} {{{deprecated.content}}}
 
 :::
 {{/if}}
 
-{{description}}
+{{{description}}}
 
 {{#if remarks}}
 
 ## Remarks
 
-{{remarks.description}}
-{{remarks.content}}
+{{{remarks.description}}}
+{{{remarks.content}}}
 
 {{/if}}
 
@@ -34,7 +34,7 @@ title: {{name}}
 | Name | Description |
 | ---- | ----------- |
 {{#each params}}
-| `{{name}}` | {{description}} |
+| `{{{name}}}` | {{{description}}} |
 {{/each}}
 {{/if}}
 
@@ -49,29 +49,32 @@ title: {{name}}
 {{#if deprecated}}
 :::caution Deprecated
 
-{{deprecated.description}}
+{{{deprecated.description}}}
 
 :::
 {{/if}}
 
-{{description}}
+{{{description}}}
+{{#if since}}
+
+**Since:** {{{since}}}
+{{/if}}
+{{#if defaultValue}}
+
+**Default Value:** {{{defaultValue.description}}}
+{{{defaultValue.content}}}
+{{/if}}
 
 ```tsx title="Type"
-{{type.raw}}
+{{{type.raw}}}
 ```
 
-{{#if defaultValue}}
-```tsx title="Default Value"
-{{defaultValue.description}}
-{{defaultValue.content}}
-```
-{{/if}}
 {{#if remarks}}
 
 #### Remarks
 
-{{remarks.description}}
-{{remarks.content}}
+{{{remarks.description}}}
+{{{remarks.content}}}
 
 {{/if}}
 {{#if params}}
@@ -81,7 +84,7 @@ title: {{name}}
 | Name | Description |
 | ---- | ----------- |
 {{#each params}}
-| `{{name}}` | {{description}} |
+| `{{{name}}}` | {{{description}}} |
 {{/each}}
 {{/if}}
 {{#if returns}}
@@ -96,9 +99,9 @@ title: {{name}}
 #### Examples
 
 {{#each examples}}
-{{description}}
+{{{description}}}
 
-{{content}}
+{{{content}}}
 
 {{/each}}
 {{/if}}

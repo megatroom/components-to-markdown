@@ -116,6 +116,10 @@ const config = {
                 label: 'Default Template',
                 to: '/demo/brachiosaurus/overview',
               },
+              {
+                label: 'Properties Table',
+                to: '/demo/stegosaurus/overview',
+              },
             ],
           },
           {
@@ -128,6 +132,10 @@ const config = {
               {
                 label: 'NPM',
                 href: 'https://www.npmjs.com/package/components-to-markdown',
+              },
+              {
+                label: 'How to Contribute',
+                href: '/docs/contribute/how-to-contribute',
               },
             ],
           },

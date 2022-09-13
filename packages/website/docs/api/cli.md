@@ -7,7 +7,7 @@ sidebar_position: 1
 The `components-to-markdown` command line runner has a number of useful options. You can use `npx` to run it directly from the terminal to view all available options:
 
 ```bash
-npx components-to-markdown --help
+npx components-to-markdown@latest --help
 ```
 
 ## Usage
@@ -49,7 +49,7 @@ Alias: `-t`.
 
 Default: `"brachiosaurus"`.
 
-Path to template file.
+Path to template file or the name of the [built-in template](/docs/api/library#builtintemplate).
 
 ### `--output <output>`
 

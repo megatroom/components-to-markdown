@@ -7,4 +7,5 @@ sidebar_position: 1
 
 List with the demonstration of documentation generated with different templates:
 
-- [Brachiosaurus (default)](/demo/brachiosaurus/overview)
+- [Brachiosaurus](/demo/brachiosaurus/overview) - Default template.
+- [Stegosaurus](/demo/stegosaurus/overview) - Properties table template.
