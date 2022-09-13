@@ -121,11 +121,10 @@ workflows:
           requires:
             - install-dependencies
       - publish-latest:
-          # filters:
-          #   branches:
-          #     only: main
+          filters:
+            branches:
+              only: main
           requires:
-            - pr-check
-            # - static-validation
-            # - unit-test
-            # - build
+            - static-validation
+            - unit-test
+            - build
