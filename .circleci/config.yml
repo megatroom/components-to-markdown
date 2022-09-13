@@ -125,6 +125,7 @@ workflows:
           #   branches:
           #     only: main
           requires:
-            - static-validation
-            - unit-test
-            - build
+            - pr-check
+            # - static-validation
+            # - unit-test
+            # - build
