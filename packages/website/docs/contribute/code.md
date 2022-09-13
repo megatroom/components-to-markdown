@@ -70,3 +70,23 @@ Please make sure to run the tests and lint before you commit your changes:
 yarn format:check
 yarn test:all
 ```
+
+## Releases
+
+This project uses [Auto](https://intuit.github.io/auto/) to automate changelog and release generation.
+
+The version is identified according to the label with the prefix `version:` informed in the Pull Request (PR). These labels are described in the table below:
+
+| Label                  | Type  | Changelog Title       | Description                                                                |
+| ---------------------- | ----- | --------------------- | -------------------------------------------------------------------------- |
+| `version:major`        | major | 💥 Breaking Change    | Increment the major version                                                |
+| `version:minor`        | minor | 🚀 Enhancement        | Increment the minor version                                                |
+| `version:patch`        | patch | 🐛 Bug Fix            | Increment the patch version                                                |
+| `version:performance`  | patch | 🏎 Performance         | Improve performance of an existing feature                                 |
+| `version:internal`     | none  | 🏠 Internal           | Changes only affect the internal API and it doesn't generate a new version |
+| `version:docs`         | none  | 📝 Documentation      | Changes only affect the documentation                                      |
+| `version:dependencies` | none  | 🔩 Dependency Updates | Update one or more dependencies version                                    |
+
+The `major`, `minor` and `patch` label types are to identify which version increment will be made according to the [semver](https://semver.org/) pattern. In case of multiple Pull Requests accumulated to generate the version, the highest hierarchy will be used for the new version.
+
+The release is generated if a PR that contains a version label is merged with the `main` branch.
