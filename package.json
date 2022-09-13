@@ -19,7 +19,6 @@
       "first-time-contributor",
       "released"
     ],
-    "onlyPublishWithReleaseLabel": true,
     "labels": [
       {
         "name": "version:major",
@@ -75,13 +74,6 @@
         "description": "Update one or more dependencies version",
         "releaseType": "none",
         "color": "#8732bc",
-        "overwrite": true
-      },
-      {
-        "name": "version:release",
-        "description": "Create a release when the PR is merged",
-        "releaseType": "release",
-        "color": "#007f70",
         "overwrite": true
       }
     ]
