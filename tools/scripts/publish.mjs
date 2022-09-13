@@ -9,7 +9,7 @@
 
 import { readCachedProjectGraph } from '@nrwl/devkit';
 import { execSync } from 'child_process';
-import { readFileSync, writeFileSync } from 'fs';
+// import { readFileSync, writeFileSync } from 'fs';
 import chalk from 'chalk';
 
 function invariant(condition, message) {
@@ -46,16 +46,17 @@ invariant(
 
 process.chdir(outputPath);
 
+// The version bump is done in the CI
 // Updating the version in "package.json" before publishing
-try {
-  const json = JSON.parse(readFileSync(`package.json`).toString());
-  json.version = version;
-  writeFileSync(`package.json`, JSON.stringify(json, null, 2));
-} catch (e) {
-  console.error(
-    chalk.bold.red(`Error reading package.json file from library build output.`)
-  );
-}
+// try {
+//   const json = JSON.parse(readFileSync(`package.json`).toString());
+//   json.version = version;
+//   writeFileSync(`package.json`, JSON.stringify(json, null, 2));
+// } catch (e) {
+//   console.error(
+//     chalk.bold.red(`Error reading package.json file from library build output.`)
+//   );
+// }
 
 // Execute "npm publish" to publish
 execSync(`npm publish --access public --tag ${tag}`);

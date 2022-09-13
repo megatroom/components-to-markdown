@@ -93,6 +93,9 @@ jobs:
       - checkout
       - *current_workspace
       - run:
+          name: Configure NPM credentials
+          command: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+      - run:
           name: Publish latest version
           command: ./scripts/bump-version.sh latest
 

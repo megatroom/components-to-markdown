@@ -26,7 +26,7 @@ if [ ! -z "$VERSION" ]; then
   echo ""
   echo "Creating GitHub Release..."
   git push --follow-tags --set-upstream origin ${CIRCLE_BRANCH}
-  yarn auto release
+  yarn auto release --use-version=$TAG_NAME
 
 else
 
