@@ -13,6 +13,79 @@
     "storybook": "nx run example-react-components:storybook"
   },
   "private": true,
+  "auto": {
+    "plugins": [
+      "npm",
+      "first-time-contributor",
+      "released"
+    ],
+    "onlyPublishWithReleaseLabel": true,
+    "labels": [
+      {
+        "name": "version:major",
+        "changelogTitle": "💥 Breaking Change",
+        "description": "Increment the major version",
+        "releaseType": "major",
+        "color": "#C5000B",
+        "overwrite": true
+      },
+      {
+        "name": "version:minor",
+        "changelogTitle": "🚀 Enhancement",
+        "description": "Increment the minor version",
+        "releaseType": "minor",
+        "color": "#F1A60E",
+        "overwrite": true
+      },
+      {
+        "name": "version:patch",
+        "changelogTitle": "🐛 Bug Fix",
+        "description": "Increment the patch version",
+        "releaseType": "patch",
+        "color": "#870048",
+        "overwrite": true
+      },
+      {
+        "name": "version:performance",
+        "changelogTitle": "🏎 Performance",
+        "description": "Improve performance of an existing feature",
+        "releaseType": "patch",
+        "color": "#f4b2d8",
+        "overwrite": true
+      },
+      {
+        "name": "version:internal",
+        "changelogTitle": "🏠 Internal",
+        "description": "Changes only affect the internal API and it doesn't generate a new version",
+        "releaseType": "none",
+        "color": "#696969",
+        "overwrite": true
+      },
+      {
+        "name": "version:docs",
+        "changelogTitle": "📝 Documentation",
+        "description": "Changes only affect the documentation",
+        "releaseType": "none",
+        "color": "#cfd3d7",
+        "overwrite": true
+      },
+      {
+        "name": "version:dependencies",
+        "changelogTitle": "🔩 Dependency Updates",
+        "description": "Update one or more dependencies version",
+        "releaseType": "none",
+        "color": "#8732bc",
+        "overwrite": true
+      },
+      {
+        "name": "version:release",
+        "description": "Create a release when the PR is merged",
+        "releaseType": "release",
+        "color": "#007f70",
+        "overwrite": true
+      }
+    ]
+  },
   "dependencies": {
     "@docusaurus/core": "2.0.1",
     "@docusaurus/preset-classic": "2.0.1",
@@ -38,6 +111,7 @@
     "tslib": "^2.3.0"
   },
   "devDependencies": {
+    "@auto-it/first-time-contributor": "10.37.4",
     "@babel/core": "7.12.13",
     "@babel/preset-typescript": "7.12.13",
     "@docusaurus/module-type-aliases": "2.0.1",
@@ -72,6 +146,7 @@
     "@typescript-eslint/eslint-plugin": "5.33.1",
     "@typescript-eslint/parser": "5.33.1",
     "ast-types": "^0.14.2",
+    "auto": "10.37.4",
     "babel-loader": "8.1.0",
     "babel-plugin-styled-components": "2.0.7",
     "doctrine": "^3.0.0",
