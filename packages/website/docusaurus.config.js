@@ -85,6 +85,14 @@ const config = {
           },
         ],
       },
+      algolia: {
+        appId: 'X75A1UGTLU',
+        apiKey: 'ada76f597aaf0a414f9ba80b8dd4c466',
+        indexName: 'components-to-markdown',
+        contextualSearch: true,
+        searchParameters: {},
+        searchPagePath: 'search',
+      },
       footer: {
         style: 'dark',
         links: [
