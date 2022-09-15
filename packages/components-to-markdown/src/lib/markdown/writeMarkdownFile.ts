@@ -2,8 +2,23 @@ import * as path from 'path';
 import readFile from '../system/readFile';
 import writeFile from '../system/writeFile';
 
-const BEGIN_SIMPLE_MARK = '[c2m]: # (begin)\n';
-const END_SIMPLE_MARK = '[c2m]: # (end)\n';
+const BEGIN_SIMPLE_MARK = '<!-- c2m:begin -->\n';
+const END_SIMPLE_MARK = '<!-- c2m:end -->\n';
+
+const getComponentMarkBegin = (componentName: string) =>
+  `<!-- c2m:begin:${componentName} -->\n`;
+const getComponentMarkEnd = (componentName: string) =>
+  `<!-- c2m:end:${componentName} -->\n`;
+
+const hasPartialMark = (
+  fileContent: string,
+  beginMark: string,
+  endMark: string
+) => {
+  const beginIndex = fileContent.indexOf(beginMark);
+  const endIndex = fileContent.indexOf(endMark);
+  return beginIndex > -1 && endIndex > -1;
+};
 
 const writeOnSimpleMark = (
   beginMark: string,
@@ -13,16 +28,9 @@ const writeOnSimpleMark = (
 ): string => {
   const beginIndex = fileContent.indexOf(beginMark);
   const endIndex = fileContent.indexOf(endMark);
-  if (beginIndex > -1 && endIndex > -1) {
-    const beforeContent = fileContent.substring(
-      0,
-      beginIndex + beginMark.length
-    );
-    const afterContent = fileContent.substring(endIndex);
-    return beforeContent + '\n' + writeContent + '\n' + afterContent;
-  }
-
-  return fileContent;
+  const beforeContent = fileContent.substring(0, beginIndex + beginMark.length);
+  const afterContent = fileContent.substring(endIndex);
+  return beforeContent + '\n' + writeContent + '\n' + afterContent;
 };
 
 const writeMarkdownFile = async (
@@ -33,23 +41,38 @@ const writeMarkdownFile = async (
 ) => {
   const filePath = path.join(outputDirectory, fileName);
   let resultContent = content;
+  let hasMark = false;
 
   try {
     let existingContent = (await readFile(filePath)).toString('utf-8');
     if (existingContent) {
-      existingContent = writeOnSimpleMark(
-        BEGIN_SIMPLE_MARK,
-        END_SIMPLE_MARK,
-        existingContent,
-        content
-      );
-      existingContent = writeOnSimpleMark(
-        `[c2m]: # (begin:${componentName})\n`,
-        `[c2m]: # (end:${componentName})\n`,
-        existingContent,
-        content
-      );
-      resultContent = existingContent;
+      if (hasPartialMark(existingContent, BEGIN_SIMPLE_MARK, END_SIMPLE_MARK)) {
+        hasMark = true;
+        existingContent = writeOnSimpleMark(
+          BEGIN_SIMPLE_MARK,
+          END_SIMPLE_MARK,
+          existingContent,
+          content
+        );
+      }
+
+      const componentMarkBegin = getComponentMarkBegin(componentName);
+      const componentMarkEnd = getComponentMarkEnd(componentName);
+      if (
+        hasPartialMark(existingContent, componentMarkBegin, componentMarkEnd)
+      ) {
+        hasMark = true;
+        existingContent = writeOnSimpleMark(
+          componentMarkBegin,
+          componentMarkEnd,
+          existingContent,
+          content
+        );
+      }
+
+      if (hasMark) {
+        resultContent = existingContent;
+      }
     }
   } catch (error) {
     // Do nothing
