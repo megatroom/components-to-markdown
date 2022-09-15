@@ -26,7 +26,7 @@ export default function HowItWorks() {
   const ButtonDoc = templates[template.value];
 
   return (
-    <section className={styles.section}>
+    <section className={styles.section} id="how-it-works">
       <div className="container">
         <h2
           className={clsx(
