@@ -137,6 +137,61 @@ console.log('Hello world!');
 
       expect(parseTSDoc(formatComment(content))).toEqual(expected);
     });
+
+    it('should handle markdown lists', () => {
+      const content = `Buttons communicate actions that users can take.
+They are typically placed throughout your UI, in places like:
+- Dialogs
+- Modal windows
+- Forms
+
+With separated paragraph:
+
+- Item 1
+- Item 2
+`;
+      const expected = {
+        ...defaultDocData,
+        description: `Buttons communicate actions that users can take. They are typically placed throughout your UI, in places like:
+- Dialogs
+- Modal windows
+- Forms
+
+With separated paragraph:
+
+- Item 1
+- Item 2`,
+      };
+
+      expect(parseTSDoc(formatComment(content))).toEqual(expected);
+    });
+
+    it('should handle markdown ordered lists', () => {
+      const content = `Simple ordered list:
+1. First item.
+2. Second item.
+3. Third item.
+
+With separated paragraph:
+
+116. First from 116.
+117. Another item.
+`;
+      const expected = {
+        ...defaultDocData,
+        description: `Simple ordered list:
+1. First item.
+2. Second item.
+3. Third item.
+
+With separated paragraph:
+
+116. First from 116.
+117. Another item.`,
+      };
+
+      expect(parseTSDoc(formatComment(content))).toEqual(expected);
+    });
   });
 
   /**
@@ -243,6 +298,40 @@ Soft break after.
 Soft break after. Soft break after. Hard break after.
 
 Soft break after. Soft break after.`,
+          },
+        };
+
+        expect(parseTSDoc(formatComment(content))).toEqual(expected);
+      });
+
+      it('should parse lists', () => {
+        const content = `A fancy component
+
+@remarks
+Unordered Lists:
+- First item
+- Second item
+- Third item
+
+Ordered Lists:
+1. First item
+2. Second item
+3. Third item
+`;
+
+        const expected = {
+          ...defaultDocData,
+          description: 'A fancy component',
+          remarks: {
+            content: `Unordered Lists:
+- First item
+- Second item
+- Third item
+
+Ordered Lists:
+1. First item
+2. Second item
+3. Third item`,
           },
         };
 

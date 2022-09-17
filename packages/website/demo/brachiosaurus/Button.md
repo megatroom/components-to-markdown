@@ -13,7 +13,11 @@ Buttons allow users to take actions, and make choices, with a single tap.
 
 ## Remarks
 
-Buttons communicate actions that users can take. They are typically placed throughout your UI, in places like: - Dialogs - Modal windows - Forms - Cards -Toolbars
+Buttons communicate actions that users can take. They are typically placed throughout your UI, in places like:
+- Dialogs
+- Modal windows
+- Forms
+- Cards -Toolbars
 
 
 ## Properties

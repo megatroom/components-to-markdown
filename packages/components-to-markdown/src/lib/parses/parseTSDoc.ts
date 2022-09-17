@@ -18,6 +18,16 @@ import {
   DocDataSectionTag,
 } from '../typings/DocData';
 
+const ORDERED_LIST_REGEX = /^(\d)+\.\B/;
+
+const isMarkdownList = (docTree: DocTreeAst): boolean => {
+  return (
+    docTree.excerptKind === ExcerptKind.PlainText &&
+    (docTree.content?.startsWith('- ') ||
+      ORDERED_LIST_REGEX.test(docTree.content || ''))
+  );
+};
+
 const buildConfiguration = () => {
   const customConfiguration = new TSDocConfiguration();
 
@@ -116,6 +126,10 @@ function getSectionContentRecursive(
   result: DocDataSection,
   docTree: DocTreeAst
 ): void {
+  if (isMarkdownList(docTree)) {
+    result.description = `${result.description.slice(0, -1)}\n`;
+  }
+
   result.description += docTree.content || '';
 
   if (!docTree.children) return;
@@ -161,6 +175,10 @@ function fillBlockTagContentRecursive(
   entity: DocDataEntity,
   docTree: DocTreeAst
 ): DocDataEntity {
+  if (isMarkdownList(docTree)) {
+    entity.content = `${entity.content?.slice(0, -1)}\n`;
+  }
+
   if (docTree.excerptKind === ExcerptKind.BlockTag) {
     entity.name = docTree.content || '';
   } else if (docTree.content) {
