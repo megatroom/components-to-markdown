@@ -87,6 +87,17 @@ jobs:
       - run:
           name: Auto check PR
           command: yarn auto pr-check --url $CIRCLE_BUILD_URL
+  docs-check:
+    docker: *docker_image
+    steps:
+      - checkout
+      - *current_workspace
+      - run:
+          name: Run the lib against the example to update the doc
+          command: ./scripts/comp-to-website.sh
+      - run:
+          name: Check if there are any changes that have not been committed
+          command: ./scripts/check-git-diff.sh
   publish-latest:
     docker: *docker_image
     steps:
@@ -115,6 +126,9 @@ workflows:
       - build:
           requires:
             - install-dependencies
+      - docs-check:
+          requires:
+            - install-dependencies
       - pr-check:
           filters:
             branches:
@@ -128,6 +142,5 @@ workflows:
             branches:
               only: main
           requires:
-            - static-validation
             - unit-test
             - build
