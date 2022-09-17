@@ -9,16 +9,9 @@
   <tbody>
     <tr>
       <td>
-        <b>children</b>
-        <span title="required" style={{ color: 'var(--ifm-color-danger)' }}>*</span>
-        
+        <b>children</b><span title="required" style={{ color: 'var(--ifm-color-danger)' }}>*</span>
       </td>
-      <td>
-        
-        
-        The content of the card body.<br/>
-        <code>node</code>
-      </td>
+      <td>The content of the card body.<br/><code>node</code></td>
       <td>-</td>
     </tr>
   </tbody>
