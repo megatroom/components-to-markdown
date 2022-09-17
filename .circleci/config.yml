@@ -96,8 +96,8 @@ jobs:
           name: Run the lib against the example to update the doc
           command: ./scripts/comp-to-website.sh
       - run:
-          name: Check if there are any changes that have not been committed
-          command: ./scripts/check-git-diff.sh
+          name: Check if there are any changes in Demo that have not been committed
+          command: ./scripts/check-git-diff.sh packages/website/demo
   publish-latest:
     docker: *docker_image
     steps:
