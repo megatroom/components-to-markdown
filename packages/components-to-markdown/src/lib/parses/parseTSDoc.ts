@@ -116,32 +116,29 @@ function getSectionContentRecursive(
   result: DocDataSection,
   docTree: DocTreeAst
 ): void {
-  if (docTree.kind === DocNodeKind.SoftBreak) {
-    if (result.hasSoftBreak) {
-      result.description = `${result.description.slice(0, -1)}\n\n`;
-      result.hasSoftBreak = false;
-    } else {
-      result.description += ' ';
-      result.hasSoftBreak = true;
-    }
-    return;
-  } else {
-    result.hasSoftBreak = false;
-    result.description += docTree.content || '';
-  }
+  result.description += docTree.content || '';
 
   if (!docTree.children) return;
 
-  for (const [index, child] of docTree.children.entries()) {
-    if (child.kind === DocNodeKind.BlockTag) {
+  for (let i = 0; i < docTree.children.length; i++) {
+    if (docTree.children[i].kind === DocNodeKind.SoftBreak && i > 0) {
+      result.description += ' ';
+      continue;
+    }
+
+    if (docTree.children[i].kind === DocNodeKind.BlockTag) {
       result.tags = {
         ...result.tags,
-        ...getBlockTagFromSection(index, docTree),
+        ...getBlockTagFromSection(i, docTree),
       };
       break;
     }
 
-    getSectionContentRecursive(result, child);
+    getSectionContentRecursive(result, docTree.children[i]);
+  }
+
+  if (docTree.kind === DocNodeKind.Paragraph) {
+    result.description = `${result.description.trim()}\n\n`;
   }
 }
 
@@ -153,35 +150,36 @@ function getSectionContent(docTree: DocTreeAst): DocDataSection {
 
   if (!docTree.children) return result;
 
-  for (const child of docTree.children) {
-    getSectionContentRecursive(result, child);
+  for (let i = 0; i < docTree.children.length; i++) {
+    getSectionContentRecursive(result, docTree.children[i] as DocTreeAst);
   }
 
   return result;
 }
 
 function fillBlockTagContentRecursive(
-  docTree: DocTreeAst,
-  entity: DocDataEntity
+  entity: DocDataEntity,
+  docTree: DocTreeAst
 ): DocDataEntity {
-  if (!entity.hasSoftBreak && docTree.excerptKind === ExcerptKind.SoftBreak) {
-    entity.hasSoftBreak = true;
-  } else if (docTree.excerptKind === ExcerptKind.BlockTag) {
+  if (docTree.excerptKind === ExcerptKind.BlockTag) {
     entity.name = docTree.content || '';
   } else if (docTree.content) {
-    if (entity.hasSoftBreak) {
-      if (!entity.content) entity.content = '';
-      entity.content += docTree.content;
-    } else {
-      if (!entity.description) entity.description = '';
-      entity.description += docTree.content;
-    }
+    entity.content += docTree.content;
   }
 
   if (!docTree.children) return entity;
 
-  for (const comment of docTree.children) {
-    fillBlockTagContentRecursive(comment, entity);
+  for (let i = 0; i < docTree.children.length; i++) {
+    if (docTree.children[i].kind === DocNodeKind.SoftBreak && i > 0) {
+      entity.content += ' ';
+      continue;
+    }
+
+    fillBlockTagContentRecursive(entity, docTree.children[i]);
+  }
+
+  if (docTree.kind === DocNodeKind.Paragraph) {
+    entity.content = `${entity.content?.trim()}\n\n`;
   }
 
   return entity;
@@ -193,18 +191,15 @@ function getBlockContent(
 ): Partial<DocData> | null {
   const entity: DocDataEntity = {
     name: '',
+    content: '',
   };
 
-  fillBlockTagContentRecursive(docTree, entity);
-  if (entity.description) {
-    entity.description = trimWhitespace(entity.description || '');
-  }
+  fillBlockTagContentRecursive(entity, docTree);
   if (entity.content) {
     entity.content = trimWhitespace(entity.content || '');
   }
 
   const blockTag: DocDataBlockTag = {
-    description: entity.description,
     content: entity.content,
   };
 
@@ -234,7 +229,7 @@ function getBlockTagContent(docTree: DocTreeAst): DocDataModifier | null {
     name: '',
   };
 
-  fillBlockTagContentRecursive(docTree, entity);
+  fillBlockTagContentRecursive(entity, docTree);
 
   switch (entity.name) {
     case '@alpha':

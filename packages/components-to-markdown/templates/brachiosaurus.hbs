@@ -11,7 +11,7 @@ title: {{name}}
 {{#if deprecated}}
 :::caution Deprecated
 
-{{{deprecated.description}}} {{{deprecated.content}}}
+{{{deprecated.content}}}
 
 :::
 {{/if}}
@@ -22,7 +22,6 @@ title: {{name}}
 
 ## Remarks
 
-{{{remarks.description}}}
 {{{remarks.content}}}
 
 {{/if}}
@@ -31,7 +30,6 @@ title: {{name}}
 ## Examples
 
 {{#each examples}}
-{{{description}}}
 {{{content}}}
 
 {{/each}}
@@ -58,7 +56,7 @@ title: {{name}}
 {{#if deprecated}}
 :::caution Deprecated
 
-{{{deprecated.description}}}
+{{{deprecated.content}}}
 
 :::
 {{/if}}
@@ -70,8 +68,7 @@ title: {{name}}
 {{/if}}
 {{#if defaultValue}}
 
-**Default Value:** {{{defaultValue.description}}}
-{{{defaultValue.content}}}
+**Default Value:** {{{defaultValue.content}}}
 {{/if}}
 
 ```tsx title="Type"
@@ -82,7 +79,6 @@ title: {{name}}
 
 #### Remarks
 
-{{{remarks.description}}}
 {{{remarks.content}}}
 
 {{/if}}
@@ -100,7 +96,6 @@ title: {{name}}
 
 #### Returns
 
-{{returns.description}}
 {{returns.content}}
 {{/if}}
 {{#if examples}}
@@ -108,7 +103,6 @@ title: {{name}}
 #### Examples
 
 {{#each examples}}
-{{{description}}}
 {{{content}}}
 
 {{/each}}

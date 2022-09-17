@@ -14,6 +14,7 @@ Description to be displayed on the card media.
 ## Examples
 
 Card with image only.
+
 ```jsx
 <Card>
   <CardMedia image={PlaceholderImage}>

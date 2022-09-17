@@ -16,7 +16,7 @@
         {{#if deprecated}}<span title="deprecated">⚠️</span>{{/if}}
       </td>
       <td>
-        {{#if deprecated.description}}<strong>Deprecated:</strong> {{{markdownToJSX deprecated.description}}}<br/>{{/if}}
+        {{#if deprecated.content}}<strong>Deprecated:</strong> {{{markdownToJSX deprecated.content}}}<br/>{{/if}}
         {{#if since}}<strong>Since:</strong> {{{since}}}<br/>{{/if}}
         {{#if description}}{{description}}<br/>{{/if}}
         {{#if type}}<code>{{type.raw}}</code>{{/if}}
@@ -27,7 +27,7 @@
         {{/each}}
         {{/if}}
       </td>
-      <td>{{#if defaultValue}}{{{markdownToJSX defaultValue.description}}}{{{markdownToJSX defaultValue.content}}}{{else}}-{{/if}}</td>
+      <td>{{#if defaultValue}}{{{markdownToJSX defaultValue.content}}}{{else}}-{{/if}}</td>
     </tr>
     {{/each}}
   </tbody>

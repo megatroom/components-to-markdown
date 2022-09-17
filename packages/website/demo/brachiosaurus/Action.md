@@ -9,7 +9,7 @@ title: Action
 
 :::caution Deprecated
 
-Use `Button` instead. 
+Use `Button` instead.
 
 :::
 

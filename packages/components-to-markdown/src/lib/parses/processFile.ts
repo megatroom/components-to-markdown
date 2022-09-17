@@ -52,7 +52,7 @@ function extractPropFromComponent(
 
   if (result.type.kind === 'prop-types' && prop.defaultValue) {
     result.defaultValue = {
-      description: `\`${prop.defaultValue.value}\``,
+      content: `\`${prop.defaultValue.value}\``,
     };
   }
 

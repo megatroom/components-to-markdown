@@ -47,7 +47,7 @@ Set in the fictional world of Middle-earth, the films follow the hobbit Frodo Ba
       expect(parseTSDoc(formatComment(content))).toEqual(expected);
     });
 
-    it('should handle soft line break to a single paragraph', () => {
+    it('should handle single paragraph with line breaks', () => {
       const content = `The Lord of the Rings is a series of three epic fantasy
 adventure films directed by Peter Jackson,
 based on the novel written by J. R. R. Tolkien.
@@ -63,7 +63,7 @@ The Two Towers (2002), and The Return of the King (2003).
       expect(parseTSDoc(formatComment(content))).toEqual(expected);
     });
 
-    it('should handle double line break to a single paragraph', () => {
+    it('should handle many paragraphs', () => {
       const content = `Line 1.a.
 Line 1.b.
 Line 1.c.
@@ -83,6 +83,56 @@ Line 3.c.
 Line 2.a. Line 2.b. Line 2.c.
 
 Line 3.a. Line 3.b. Line 3.c.`,
+      };
+
+      expect(parseTSDoc(formatComment(content))).toEqual(expected);
+    });
+
+    it('should handle inline tags', () => {
+      const content = `With \`inline code\` and {@link https://site.com|link} and **bold text**
+and a line break.
+
+And some more text.
+`;
+      const expected = {
+        ...defaultDocData,
+        description: `With \`inline code\` and {@link https://site.com|link} and **bold text** and a line break.
+
+And some more text.`,
+      };
+
+      expect(parseTSDoc(formatComment(content))).toEqual(expected);
+    });
+
+    it('should handle code block', () => {
+      const content = `Here some code:
+\`\`\`jsx
+const a = 1;
+const b = 2;
+console.log(a + b);
+\`\`\`
+
+Here two line breaks after this paragraph:
+
+\`\`\`
+console.log('Hello world!');
+\`\`\`
+`;
+      const expected = {
+        ...defaultDocData,
+        description: `Here some code:
+
+\`\`\`jsx
+const a = 1;
+const b = 2;
+console.log(a + b);
+\`\`\`
+
+Here two line breaks after this paragraph:
+
+\`\`\`
+console.log('Hello world!');
+\`\`\``,
       };
 
       expect(parseTSDoc(formatComment(content))).toEqual(expected);
@@ -144,27 +194,60 @@ Line 3.a. Line 3.b. Line 3.c.`,
         ...defaultDocData,
         description: 'The base class for controls that can be rendered.',
         deprecated: {
-          description: 'Use the new {@link Control} base class instead.',
+          content: 'Use the new {@link Control} base class instead.',
         },
       };
 
       expect(parseTSDoc(formatComment(content))).toEqual(expected);
     });
 
-    it('should parse @remarks', () => {
-      const content = `A fancy component
+    describe('With @remarks', () => {
+      it('should parse single paragraph', () => {
+        const content = `A fancy component
 
-  @remarks
-  This is a remark paragraph.`;
-      const expected = {
-        ...defaultDocData,
-        description: 'A fancy component',
-        remarks: {
-          content: 'This is a remark paragraph.',
-        },
-      };
+    @remarks
+    This is a remark paragraph.`;
+        const expected = {
+          ...defaultDocData,
+          description: 'A fancy component',
+          remarks: {
+            content: 'This is a remark paragraph.',
+          },
+        };
 
-      expect(parseTSDoc(formatComment(content))).toEqual(expected);
+        expect(parseTSDoc(formatComment(content))).toEqual(expected);
+      });
+
+      it('should parse many paragraphs', () => {
+        const content = `A fancy component
+
+@remarks
+Soft break after.
+Soft break after.
+Hard break after.
+
+Soft break after.
+Soft break after.
+Hard break after.
+
+Soft break after.
+Soft break after.
+`;
+
+        const expected = {
+          ...defaultDocData,
+          description: 'A fancy component',
+          remarks: {
+            content: `Soft break after. Soft break after. Hard break after.
+
+Soft break after. Soft break after. Hard break after.
+
+Soft break after. Soft break after.`,
+          },
+        };
+
+        expect(parseTSDoc(formatComment(content))).toEqual(expected);
+      });
     });
 
     it('should parse @returns', () => {
@@ -172,7 +255,7 @@ Line 3.a. Line 3.b. Line 3.c.`,
       const expected = {
         ...defaultDocData,
         returns: {
-          description: 'The arithmetic mean of `x` and `y`',
+          content: 'The arithmetic mean of `x` and `y`',
         },
       };
 
@@ -185,7 +268,7 @@ Line 3.a. Line 3.b. Line 3.c.`,
         const expected = {
           ...defaultDocData,
           defaultValue: {
-            description: '`WarningStyle.DialogBox`',
+            content: '`WarningStyle.DialogBox`',
           },
         };
 
@@ -197,7 +280,7 @@ Line 3.a. Line 3.b. Line 3.c.`,
         const expected = {
           ...defaultDocData,
           defaultValue: {
-            description: 'This is a description',
+            content: 'This is a description',
           },
         };
 
@@ -214,7 +297,7 @@ The default is \`true\` unless
           ...defaultDocData,
           defaultValue: {
             content:
-              'The default is `true` unless\n `WarningStyle.StatusMessage` was requested.',
+              'The default is `true` unless  `WarningStyle.StatusMessage` was requested.',
           },
         };
 
@@ -230,9 +313,8 @@ The default is \`true\` unless
         const expected = {
           ...defaultDocData,
           defaultValue: {
-            description: 'Warning cancellable with `boolean` type.',
             content:
-              'The default is `true` unless\n `WarningStyle.StatusMessage` was requested.',
+              'Warning cancellable with `boolean` type. The default is `true` unless  `WarningStyle.StatusMessage` was requested.',
           },
         };
 
@@ -247,7 +329,7 @@ The default is \`true\` unless
           ...defaultDocData,
           examples: [
             {
-              description: 'This is a description',
+              content: 'This is a description',
             },
           ],
         };
@@ -267,8 +349,9 @@ console.log(add(1,1));
           ...defaultDocData,
           examples: [
             {
-              description: "Here's a simple example",
-              content: `\`\`\`
+              content: `Here's a simple example
+
+\`\`\`
 // Prints "2":
 console.log(add(1,1));
 \`\`\``,
@@ -299,6 +382,7 @@ console.log(add(1,-1));
           examples: [
             {
               content: `Here's a simple example:
+
 \`\`\`
 // Prints "2":
 console.log(add(1,1));
@@ -306,6 +390,7 @@ console.log(add(1,1));
             },
             {
               content: `Here's an example with negative numbers:
+
 \`\`\`js
 // Prints "0":
 console.log(add(1,-1));
@@ -388,7 +473,7 @@ console.log(add(1,-1));
         description: 'Some component description.',
         since: '1.1.0',
         defaultValue: {
-          description: 'This is a description',
+          content: 'This is a description',
         },
       };
 

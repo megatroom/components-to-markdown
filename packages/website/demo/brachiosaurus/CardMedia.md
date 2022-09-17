@@ -23,7 +23,6 @@ The image to display.
 
 **Default Value:** `undefined`
 
-
 ```tsx title="Type"
 string
 ```
@@ -38,7 +37,6 @@ string
 The content of the card media.
 
 **Default Value:** `undefined`
-
 
 ```tsx title="Type"
 node

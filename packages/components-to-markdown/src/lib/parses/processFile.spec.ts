@@ -164,8 +164,7 @@ describe('extractDocDataFromComponentData()', () => {
             sealed: false,
             params: [],
             defaultValue: {
-              description: "`'button'`",
-              content: undefined,
+              content: "`'button'`",
             },
             name: 'type',
             required: false,
@@ -189,8 +188,7 @@ describe('extractDocDataFromComponentData()', () => {
             params: [],
             since: '1.1.0',
             defaultValue: {
-              description: "`'default'`",
-              content: undefined,
+              content: "`'default'`",
             },
             name: 'variant',
             required: false,
@@ -218,13 +216,12 @@ describe('extractDocDataFromComponentData()', () => {
               },
             ],
             returns: {
-              description: 'void',
+              content: 'void',
             },
             examples: [
               {
-                description: 'Logging the click event',
                 content:
-                  "```tsx\nonClick={() => {\n console.log('Button clicked');\n}}\n```",
+                  "Logging the click event\n\n```tsx\nonClick={() => {\n console.log('Button clicked');\n}}\n```",
               },
             ],
             name: 'onClick',
@@ -317,7 +314,7 @@ describe('extractDocDataFromComponentData()', () => {
               raw: 'bool',
             },
             defaultValue: {
-              description: '`false`',
+              content: '`false`',
             },
             params: [],
             hasModifiers: false,

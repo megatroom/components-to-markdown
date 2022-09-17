@@ -13,15 +13,13 @@ Cards are surfaces that display content and actions on a single topic.
 
 ## Remarks
 
-
-They should be easy to scan for relevant and actionable information.
-Elements, like text and images, should be placed on them in a way that clearly indicates hierarchy.
+They should be easy to scan for relevant and actionable information. Elements, like text and images, should be placed on them in a way that clearly indicates hierarchy.
 
 
 ## Examples
 
-
 Basic usage:
+
 ```jsx
 <Card>
   <CardBody>
@@ -38,8 +36,8 @@ Basic usage:
 </Card>
 ```
 
-
 With media:
+
 ```jsx
 <Card>
   <CardMedia image={PlaceholderImage} />
@@ -82,7 +80,6 @@ node
 The elevation of the card.
 
 **Default Value:** `false`
-
 
 ```tsx title="Type"
 bool
