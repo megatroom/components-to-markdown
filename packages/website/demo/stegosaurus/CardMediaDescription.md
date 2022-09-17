@@ -16,8 +16,8 @@
       <td>
         
         
-        
-        <code>React.ReactNode</code>
+        The content of the card media description.<br/>
+        <code>node</code>
       </td>
       <td>-</td>
     </tr>

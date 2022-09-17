@@ -71,6 +71,13 @@ yarn format:check
 yarn test:all
 ```
 
+If you made changes in built-in templates or in the examples, please run the following command to update the documentation:
+
+```bash
+./scripts/comp-to-website.sh
+# Any changes in the documentation must be committed
+```
+
 ## Releases
 
 This project uses [Auto](https://intuit.github.io/auto/) to automate changelog and release generation.

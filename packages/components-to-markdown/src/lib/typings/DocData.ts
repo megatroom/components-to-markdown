@@ -25,6 +25,7 @@ export interface DocDataSectionTag {
 }
 
 export interface DocDataSection {
+  hasSoftBreak?: boolean;
   description: string;
   tags: DocDataSectionTag;
 }

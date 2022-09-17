@@ -8,8 +8,7 @@ title: CardBody
 
 
 
-
-
+The body of the card.
 
 
 ## Properties
@@ -20,10 +19,10 @@ title: CardBody
 
 
 
-
+The content of the card body.
 
 ```tsx title="Type"
-React.ReactNode
+node
 ```
 
 

@@ -78,7 +78,7 @@ declare module 'react-docgen' {
     | T;
 
   export interface PropDescriptor {
-    name: string;
+    name?: string;
     type?: PropTypeDescriptor;
     tsType?: TypeDescriptor<TSFunctionSignatureType>;
     required?: boolean;

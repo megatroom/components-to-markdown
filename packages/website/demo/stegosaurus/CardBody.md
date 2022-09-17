@@ -16,8 +16,8 @@
       <td>
         
         
-        
-        <code>React.ReactNode</code>
+        The content of the card body.<br/>
+        <code>node</code>
       </td>
       <td>-</td>
     </tr>

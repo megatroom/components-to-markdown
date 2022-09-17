@@ -16,7 +16,6 @@ Use `Button` instead.
 Action button.
 
 
-
 ## Properties
 
 

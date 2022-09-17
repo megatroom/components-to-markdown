@@ -116,7 +116,19 @@ function getSectionContentRecursive(
   result: DocDataSection,
   docTree: DocTreeAst
 ): void {
-  result.description += docTree.content || '';
+  if (docTree.kind === DocNodeKind.SoftBreak) {
+    if (result.hasSoftBreak) {
+      result.description = `${result.description.slice(0, -1)}\n\n`;
+      result.hasSoftBreak = false;
+    } else {
+      result.description += ' ';
+      result.hasSoftBreak = true;
+    }
+    return;
+  } else {
+    result.hasSoftBreak = false;
+    result.description += docTree.content || '';
+  }
 
   if (!docTree.children) return;
 

@@ -25,24 +25,68 @@ describe('parseTSDoc()', () => {
     expect(parseTSDoc(formatComment(content))).toEqual(expected);
   });
 
-  it('should parse long description', () => {
-    const content = `Lord of the Rings: The Fellowship of the Ring
+  describe('When has description', () => {
+    it('should parse long description', () => {
+      const content = `Lord of the Rings: The Fellowship of the Ring
 
 The Lord of the Rings is a series of three epic fantasy adventure films directed by Peter Jackson, based on the novel written by J. R. R. Tolkien. The films are subtitled The Fellowship of the Ring (2001), The Two Towers (2002), and The Return of the King (2003). Produced and distributed by New Line Cinema with the co-production of WingNut Films, the series is an international venture between New Zealand and the United States.
+
 The films feature an ensemble cast including Elijah Wood, Ian McKellen, Liv Tyler, Viggo Mortensen, Sean Astin, Cate Blanchett, John Rhys-Davies, Christopher Lee, Billy Boyd, Dominic Monaghan, Orlando Bloom, Hugo Weaving, Andy Serkis and Sean Bean.
 
 Set in the fictional world of Middle-earth, the films follow the hobbit Frodo Baggins as he and the Fellowship embark on a quest to destroy the One Ring, to ensure the destruction of its maker, the Dark Lord Sauron. The Fellowship eventually splits up and Frodo continues the quest with his loyal companion Sam and the treacherous Gollum. Meanwhile, Aragorn, heir in exile to the throne of Gondor, along with Legolas, Gimli, Boromir, Merry, Pippin and the wizard Gandalf, unite to save the Free Peoples of Middle-earth from the forces of Sauron and rally them in the War of the Ring to aid Frodo by distracting Sauron's attention.
 `;
-    const expected = {
-      ...defaultDocData,
-      description:
-        'Lord of the Rings: The Fellowship of the Ring\n\n' +
-        'The Lord of the Rings is a series of three epic fantasy adventure films directed by Peter Jackson, based on the novel written by J. R. R. Tolkien. The films are subtitled The Fellowship of the Ring (2001), The Two Towers (2002), and The Return of the King (2003). Produced and distributed by New Line Cinema with the co-production of WingNut Films, the series is an international venture between New Zealand and the United States.\n' +
-        'The films feature an ensemble cast including Elijah Wood, Ian McKellen, Liv Tyler, Viggo Mortensen, Sean Astin, Cate Blanchett, John Rhys-Davies, Christopher Lee, Billy Boyd, Dominic Monaghan, Orlando Bloom, Hugo Weaving, Andy Serkis and Sean Bean.\n\n' +
-        "Set in the fictional world of Middle-earth, the films follow the hobbit Frodo Baggins as he and the Fellowship embark on a quest to destroy the One Ring, to ensure the destruction of its maker, the Dark Lord Sauron. The Fellowship eventually splits up and Frodo continues the quest with his loyal companion Sam and the treacherous Gollum. Meanwhile, Aragorn, heir in exile to the throne of Gondor, along with Legolas, Gimli, Boromir, Merry, Pippin and the wizard Gandalf, unite to save the Free Peoples of Middle-earth from the forces of Sauron and rally them in the War of the Ring to aid Frodo by distracting Sauron's attention.",
-    };
+      const expected = {
+        ...defaultDocData,
+        description:
+          'Lord of the Rings: The Fellowship of the Ring\n\n' +
+          'The Lord of the Rings is a series of three epic fantasy adventure films directed by Peter Jackson, based on the novel written by J. R. R. Tolkien. The films are subtitled The Fellowship of the Ring (2001), The Two Towers (2002), and The Return of the King (2003). Produced and distributed by New Line Cinema with the co-production of WingNut Films, the series is an international venture between New Zealand and the United States.\n\n' +
+          'The films feature an ensemble cast including Elijah Wood, Ian McKellen, Liv Tyler, Viggo Mortensen, Sean Astin, Cate Blanchett, John Rhys-Davies, Christopher Lee, Billy Boyd, Dominic Monaghan, Orlando Bloom, Hugo Weaving, Andy Serkis and Sean Bean.\n\n' +
+          "Set in the fictional world of Middle-earth, the films follow the hobbit Frodo Baggins as he and the Fellowship embark on a quest to destroy the One Ring, to ensure the destruction of its maker, the Dark Lord Sauron. The Fellowship eventually splits up and Frodo continues the quest with his loyal companion Sam and the treacherous Gollum. Meanwhile, Aragorn, heir in exile to the throne of Gondor, along with Legolas, Gimli, Boromir, Merry, Pippin and the wizard Gandalf, unite to save the Free Peoples of Middle-earth from the forces of Sauron and rally them in the War of the Ring to aid Frodo by distracting Sauron's attention.",
+      };
 
-    expect(parseTSDoc(formatComment(content))).toEqual(expected);
+      expect(parseTSDoc(formatComment(content))).toEqual(expected);
+    });
+
+    it('should handle soft line break to a single paragraph', () => {
+      const content = `The Lord of the Rings is a series of three epic fantasy
+adventure films directed by Peter Jackson,
+based on the novel written by J. R. R. Tolkien.
+The films are subtitled The Fellowship of the Ring (2001),
+The Two Towers (2002), and The Return of the King (2003).
+`;
+      const expected = {
+        ...defaultDocData,
+        description:
+          'The Lord of the Rings is a series of three epic fantasy adventure films directed by Peter Jackson, based on the novel written by J. R. R. Tolkien. The films are subtitled The Fellowship of the Ring (2001), The Two Towers (2002), and The Return of the King (2003).',
+      };
+
+      expect(parseTSDoc(formatComment(content))).toEqual(expected);
+    });
+
+    it('should handle double line break to a single paragraph', () => {
+      const content = `Line 1.a.
+Line 1.b.
+Line 1.c.
+
+Line 2.a.
+Line 2.b.
+Line 2.c.
+
+Line 3.a.
+Line 3.b.
+Line 3.c.
+`;
+      const expected = {
+        ...defaultDocData,
+        description: `Line 1.a. Line 1.b. Line 1.c.
+
+Line 2.a. Line 2.b. Line 2.c.
+
+Line 3.a. Line 3.b. Line 3.c.`,
+      };
+
+      expect(parseTSDoc(formatComment(content))).toEqual(expected);
+    });
   });
 
   /**

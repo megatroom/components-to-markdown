@@ -16,10 +16,24 @@
       <td>
         
         
-        
-        <code>React.ReactNode</code>
+        The content of the card.<br/>
+        <code>node</code>
       </td>
       <td>-</td>
+    </tr>
+    <tr>
+      <td>
+        <b>raised</b>
+        
+        
+      </td>
+      <td>
+        
+        
+        The elevation of the card.<br/>
+        <code>bool</code>
+      </td>
+      <td><code>false</code></td>
     </tr>
   </tbody>
 </table>

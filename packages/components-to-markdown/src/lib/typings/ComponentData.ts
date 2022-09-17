@@ -1,8 +1,9 @@
 import type { DocumentationObject, PropTypeDescriptor } from 'react-docgen';
 import type { DocData } from './DocData';
 
-interface ComponentPropType {
-  name: PropTypeDescriptor['name'];
+export interface ComponentPropType {
+  kind: 'typescript' | 'prop-types' | 'unknown';
+  name: PropTypeDescriptor['name'] | 'unknown';
   raw?: string;
 }
 export interface ComponentProp extends DocData {
@@ -15,6 +16,8 @@ export interface ComponentProp extends DocData {
 export interface ComponentDoc extends DocData {
   name: string;
   properties: ComponentProp[];
+  isTypeScript: boolean;
+  isPropType: boolean;
 }
 
 export interface ComponentData {
