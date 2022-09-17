@@ -76,10 +76,11 @@ All the component properties data.
 
 ## DocDataBlockTag
 
-| Property    | Type   | Description                     |
-| ----------- | ------ | ------------------------------- |
-| description | string | The first line of description.  |
-| content     | string | The other lines of description. |
+All text following a block tag, up until the start of the next block tag or modifier tag, is considered to be the block tag's **tag content**. The content may include Markdown elements and inline tags.
+
+| Property | Type   | Description      |
+| -------- | ------ | ---------------- |
+| content  | string | The tag content. |
 
 ## DocDataParam
 
