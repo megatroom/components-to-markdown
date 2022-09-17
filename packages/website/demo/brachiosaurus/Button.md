@@ -22,7 +22,6 @@ Buttons communicate actions that users can take. They are typically placed throu
 -Toolbars
 
 
-
 ## Properties
 
 
@@ -99,7 +98,6 @@ void
 #### Examples
 
 Logging the click event
-
 ```tsx
 onClick={() => {
  console.log('Button clicked');
