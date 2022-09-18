@@ -5,9 +5,10 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 
 import BrowserWindow from '../BrowserWindow';
 
-import ComponentExample from '!!raw-loader!./ComponentExample';
-import brachiosaurus from './brachiosaurus.md';
-import stegosaurus from './stegosaurus.md';
+import TypeScriptExample from '!!raw-loader!./examples/TypeScriptExample';
+import PropTypeExample from '!!raw-loader!./examples/PropTypeExample';
+import brachiosaurus from './templates/brachiosaurus.md';
+import stegosaurus from './templates/stegosaurus.md';
 
 import styles from './styles.module.css';
 
@@ -21,7 +22,18 @@ const templateNames = [
   { value: 'stegosaurus', label: 'Stegosaurus (Properties Table)' },
 ];
 
+const typeExample = {
+  typescript: TypeScriptExample,
+  'prop-types': PropTypeExample,
+};
+
+const typeOptions = [
+  { value: 'typescript', label: 'TypeScript', fileName: 'Button.tsx' },
+  { value: 'prop-types', label: 'PropTypes', fileName: 'Button.jsx' },
+];
+
 export default function HowItWorks() {
+  const [selectedType, setSelectedType] = useState(typeOptions[0]);
   const [template, setTemplate] = useState(templateNames[0]);
   const ButtonDoc = templates[template.value];
 
@@ -45,8 +57,22 @@ export default function HowItWorks() {
               <p>
                 You will develop your code in the conventional way using types:
               </p>
-              <CodeBlock language="tsx" title="Button.tsx">
-                {ComponentExample}
+              <p>
+                {typeOptions.map((option) => (
+                  <label className={styles.radioLabel}>
+                    <input
+                      key={`type-option-${option.value}`}
+                      type="radio"
+                      value={option.value}
+                      checked={selectedType.value === option.value}
+                      onChange={() => setSelectedType(option)}
+                    />
+                    {option.label}
+                  </label>
+                ))}
+              </p>
+              <CodeBlock language="tsx" title={selectedType.fileName}>
+                {typeExample[selectedType.value]}
               </CodeBlock>
             </div>
           </div>
