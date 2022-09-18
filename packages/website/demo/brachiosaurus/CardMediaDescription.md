@@ -2,14 +2,9 @@
 title: CardMediaDescription
 ---
 
-
 # CardMediaDescription  {#cardmediadescription}
 
-
-
-
 Description to be displayed on the card media.
-
 
 ## Examples
 
@@ -28,17 +23,10 @@ Card with image only.
 
 ## Properties
 
-
 ### `children` ✳️  {#children}
-
-
-
 
 The content of the card media description.
 
 ```tsx title="Type"
 node
 ```
-
-
-

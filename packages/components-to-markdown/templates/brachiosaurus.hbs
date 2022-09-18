@@ -1,29 +1,27 @@
 ---
 title: {{name}}
 ---
-
 {{#each components}}
 
 # {{name}} {{#if deprecated}}⚠️{{/if}} {{headingId name}}
 
-{{#if hasModifiers}}<p>{{#if beta}}<span class="badge badge--warning">Beta</span>&nbsp;{{/if}}{{#if public}}<span class="badge badge--primary">Public</span>&nbsp;{{/if}}{{#if internal}}<span class="badge badge--primary">Internal</span>&nbsp;{{/if}}{{#if virtual}}<span class="badge badge--primary">Virtual</span>&nbsp;{{/if}}{{#if override}}<span class="badge badge--primary">Override</span>&nbsp;{{/if}}{{#if sealed}}<span class="badge badge--primary">Sealed</span>&nbsp;{{/if}}</p>{{/if}}
+{{#if hasModifiers}}<p>{{#if beta}}<span class="badge badge--warning">Beta</span>&nbsp;{{/if}}{{#if public}}<span class="badge badge--primary">Public</span>&nbsp;{{/if}}{{#if internal}}<span class="badge badge--primary">Internal</span>&nbsp;{{/if}}{{#if virtual}}<span class="badge badge--primary">Virtual</span>&nbsp;{{/if}}{{#if override}}<span class="badge badge--primary">Override</span>&nbsp;{{/if}}{{#if sealed}}<span class="badge badge--primary">Sealed</span>&nbsp;{{/if}}</p>
 
-{{#if deprecated}}
+{{/if}}
+{{~#if deprecated}}
 :::caution Deprecated
 
 {{{deprecated.content}}}
 
 :::
+
 {{/if}}
-
 {{{description}}}
-
 {{#if remarks}}
 
 ## Remarks
 
 {{{remarks.content}}}
-
 {{/if}}
 {{#if examples}}
 
@@ -46,43 +44,46 @@ title: {{name}}
 {{/if}}
 
 ## Properties
-
 {{#each properties}}
 
 ### `{{name}}` {{#if required}}✳️{{/if}} {{#if deprecated}}⚠️{{/if}} {{headingId name}}
 
-{{#if hasModifiers}}<p>{{#if required}}<span class="badge badge--primary">Required</span>&nbsp;{{/if}}{{#if beta}}<span class="badge badge--warning">Beta</span>&nbsp;{{/if}}{{#if public}}<span class="badge badge--primary">Public</span>&nbsp;{{/if}}{{#if internal}}<span class="badge badge--primary">Internal</span>&nbsp;{{/if}}{{#if virtual}}<span class="badge badge--primary">Virtual</span>&nbsp;{{/if}}{{#if override}}<span class="badge badge--primary">Override</span>&nbsp;{{/if}}{{#if sealed}}<span class="badge badge--primary">Sealed</span>&nbsp;{{/if}}</p>{{/if}}
+{{#if hasModifiers}}<p>{{#if required}}<span class="badge badge--primary">Required</span>&nbsp;{{/if}}{{#if beta}}<span class="badge badge--warning">Beta</span>&nbsp;{{/if}}{{#if public}}<span class="badge badge--primary">Public</span>&nbsp;{{/if}}{{#if internal}}<span class="badge badge--primary">Internal</span>&nbsp;{{/if}}{{#if virtual}}<span class="badge badge--primary">Virtual</span>&nbsp;{{/if}}{{#if override}}<span class="badge badge--primary">Override</span>&nbsp;{{/if}}{{#if sealed}}<span class="badge badge--primary">Sealed</span>&nbsp;{{/if}}</p>
 
-{{#if deprecated}}
+{{/if}}
+{{~#if deprecated}}
 :::caution Deprecated
 
 {{{deprecated.content}}}
 
 :::
-{{/if}}
 
+{{/if}}
+{{#if description}}
 {{{description}}}
-{{#if since}}
+{{/if}}
+{{~#if since}}
 
 **Since:** {{{since}}}
 {{/if}}
-{{#if defaultValue}}
+{{~#if defaultValue}}
 
 **Default Value:** {{{defaultValue.content}}}
 {{/if}}
+{{~#if type}}
 
 ```tsx title="Type"
 {{{type.raw}}}
 ```
-
-{{#if remarks}}
+{{/if}}
+{{~#if remarks}}
 
 #### Remarks
 
 {{{remarks.content}}}
 
 {{/if}}
-{{#if params}}
+{{~#if params}}
 
 #### Parameters
 
@@ -92,13 +93,13 @@ title: {{name}}
 | `{{{name}}}` | {{{description}}} |
 {{/each}}
 {{/if}}
-{{#if returns}}
+{{~#if returns}}
 
 #### Returns
 
 {{returns.content}}
 {{/if}}
-{{#if examples}}
+{{~#if examples}}
 
 #### Examples
 
@@ -107,7 +108,5 @@ title: {{name}}
 
 {{/each}}
 {{/if}}
-
 {{/each}}
-
 {{/each}}

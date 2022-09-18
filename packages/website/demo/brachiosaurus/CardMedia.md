@@ -2,22 +2,13 @@
 title: CardMedia
 ---
 
-
 # CardMedia  {#cardmedia}
-
-
-
 
 Add an image to the card to reinforce the content.
 
-
 ## Properties
 
-
 ### `image`   {#image}
-
-
-
 
 The image to display.
 
@@ -27,12 +18,7 @@ The image to display.
 string
 ```
 
-
-
 ### `children`   {#children}
-
-
-
 
 The content of the card media.
 
@@ -41,6 +27,3 @@ The content of the card media.
 ```tsx title="Type"
 node
 ```
-
-
-

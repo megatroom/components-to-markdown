@@ -2,19 +2,13 @@
 title: Card
 ---
 
-
 # Card  {#card}
 
-
-
-
 Cards are surfaces that display content and actions on a single topic.
-
 
 ## Remarks
 
 They should be easy to scan for relevant and actionable information. Elements, like text and images, should be placed on them in a way that clearly indicates hierarchy.
-
 
 ## Examples
 
@@ -58,11 +52,7 @@ With media:
 
 ## Properties
 
-
 ### `children` ✳️  {#children}
-
-
-
 
 The content of the card.
 
@@ -70,12 +60,7 @@ The content of the card.
 node
 ```
 
-
-
 ### `raised`   {#raised}
-
-
-
 
 The elevation of the card.
 
@@ -84,6 +69,3 @@ The elevation of the card.
 ```tsx title="Type"
 bool
 ```
-
-
-
