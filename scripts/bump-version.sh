@@ -1,3 +1,5 @@
+set -e
+
 export PATH=$(npm bin):$PATH
 
 DIST_TAG=$1
