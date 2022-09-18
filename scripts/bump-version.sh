@@ -1,9 +1,16 @@
 export PATH=$(npm bin):$PATH
 
 DIST_TAG=$1
-VERSION=`yarn -s auto version`
 
 echo ""
+
+if [ -z "$DIST_TAG" ]; then
+  echo "Error: You must specify a dist-tag."
+  echo ""
+  exit 1
+fi
+
+VERSION=`yarn -s auto version`
 
 if [ ! -z "$VERSION" ]; then
   echo "Updating changelog..."

@@ -18,6 +18,8 @@ const defaultComponentData: ComponentDoc = {
   virtual: false,
   override: false,
   sealed: false,
+  isTypeScript: false,
+  isPropType: false,
 };
 
 afterEach(() => {

@@ -1,7 +1,7 @@
-# example-react-components
+# Example React Components
 
-This library was generated with [Nx](https://nx.dev).
+This project contains components typed with TypeScript to serve as an example and demonstration on the website.
 
 ## Running unit tests
 
-Run `nx test example-react-components` to execute the unit tests via [Jest](https://jestjs.io).
+Run `yarn test example-react-components` to execute the unit tests via [Jest](https://jestjs.io).

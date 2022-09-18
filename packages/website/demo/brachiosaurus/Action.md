@@ -2,28 +2,19 @@
 title: Action
 ---
 
-
 # Action ⚠️ {#action}
-
-
 
 :::caution Deprecated
 
-Use `Button` instead. 
+Use `Button` instead.
 
 :::
 
 Action button.
 
-
-
 ## Properties
 
-
 ### `children` ✳️  {#children}
-
-
-
 
 The text to display in the button.
 
@@ -31,11 +22,7 @@ The text to display in the button.
 React.ReactNode
 ```
 
-
-
 ### `text` ✳️ ⚠️ {#text}
-
-
 
 :::caution Deprecated
 
@@ -48,6 +35,3 @@ The text to display in the button.
 ```tsx title="Type"
 string | ReactElement
 ```
-
-
-

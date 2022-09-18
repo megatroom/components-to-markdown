@@ -1,12 +1,10 @@
 export interface DocDataEntity {
   name: string;
   hasSoftBreak?: boolean;
-  description?: string;
   content?: string;
 }
 
 export interface DocDataBlockTag {
-  description?: string;
   content?: string;
 }
 

@@ -18,6 +18,11 @@
   padding: 0 16px;
 }
 
+.radioLabel {
+  margin-right: 16px;
+  cursor: pointer;
+}
+
 @media screen and (max-width: 1460px) {
   .howItWorkColumn {
     padding: 0;
