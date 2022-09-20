@@ -1,3 +1,19 @@
+# v0.3.0 (Tue Sep 20 2022)
+
+#### 🚀 Enhancement
+
+- ✨ Add markers support [#16](https://github.com/megatroom/components-to-markdown/pull/16) ([@megatroom](https://github.com/megatroom))
+
+#### 🏠 Internal
+
+- 🔨 Fix CircleCI config [#17](https://github.com/megatroom/components-to-markdown/pull/17) ([@megatroom](https://github.com/megatroom))
+
+#### Authors: 1
+
+- Bruno Nardini ([@megatroom](https://github.com/megatroom))
+
+---
+
 # v0.2.0 (Sun Sep 18 2022)
 
 #### 🚀 Enhancement
