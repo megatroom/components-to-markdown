@@ -21,17 +21,19 @@ You can use this template for projects other than Docusaurus, but maybe some fun
 
 Generated documentation:
 
-- [Action](/demo/brachiosaurus/Action)
-- [Button](/demo/brachiosaurus/Button)
-- [Card](/demo/brachiosaurus/Card)
-- [CardBody](/demo/brachiosaurus/CardBody)
-- [CardMedia](/demo/brachiosaurus/CardMedia)
-- [CardMediaDescription](/demo/brachiosaurus/CardMediaDescription)
+- [Action](/demo/brachiosaurus/demonstration/Action)
+- [Button](/demo/brachiosaurus/demonstration/Button)
+- [Card](/demo/brachiosaurus/demonstration/Card)
+- [CardBody](/demo/brachiosaurus/demonstration/CardBody)
+- [CardMedia](/demo/brachiosaurus/demonstration/CardMedia)
+- [CardMediaDescription](/demo/brachiosaurus/demonstration/CardMediaDescription)
 
 ## References
 
-- [Template file](https://github.com/megatroom/components-to-markdown/blob/main/packages/components-to-markdown/templates/brachiosaurus.hbs)
-- [Source code of the components](https://github.com/megatroom/components-to-markdown/tree/main/packages/example-react-components/src/lib).
+- [Template source file](https://github.com/megatroom/components-to-markdown/blob/main/packages/components-to-markdown/templates/brachiosaurus.hbs)
+- Source code of the components:
+  - [Components with TypeScript](https://github.com/megatroom/components-to-markdown/tree/main/packages/example-react-components/src/lib)
+  - [Components with PropTypes](https://github.com/megatroom/components-to-markdown/tree/main/packages/example-prop-types/src/lib)
 
 ## How to generate this doc?
 
@@ -41,11 +43,11 @@ At the root of the [repository](https://github.com/megatroom/components-to-markd
 
 ```bash
 npx components-to-markdown@latest \
-  --output packages/website/demo/brachiosaurus \
+  --output packages/website/demo/brachiosaurus/demonstration \
   --loglevel debug \
-  packages/example-react-components/src/lib
+  packages/example-react-components/src/lib packages/example-prop-types/src/lib
 ```
 
 Change the output directory to an empty one if you want to see the file being created from scratch.
 
-The `packages/example-react-components` is an example project that has components that will be documented.
+The `packages/example-*` are example projects that have components that will be documented.
