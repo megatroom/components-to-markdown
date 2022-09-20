@@ -30,6 +30,7 @@ if [ ! -z "$VERSION" ]; then
 
   echo ""
   echo "Commiting changes..."
+  git add packages/components-to-markdown/package.json
   git commit -m "[skip ci] Bump version to: %s"
   git tag -a $TAG_NAME -m "Version $VERSION_NUMBER"
 
