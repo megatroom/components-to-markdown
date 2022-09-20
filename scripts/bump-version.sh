@@ -25,7 +25,6 @@ if [ ! -z "$VERSION" ]; then
   VERSION_NUMBER=$(echo "$TAG_NAME" | cut -c2-)
   echo "New tag: $TAG_NAME"
   echo "New version: $VERSION_NUMBER"
-  npm pkg get name version
   cd -
 
   echo ""
@@ -37,14 +36,13 @@ if [ ! -z "$VERSION" ]; then
   echo ""
   echo "Publishing package..."
   echo "NPM dist tag: $DIST_TAG"
-  # yarn nx publish components-to-markdown --tag=$DIST_TAG --ver=$VERSION_NUMBER
+  yarn nx publish components-to-markdown --tag=$DIST_TAG --ver=$VERSION_NUMBER
 
   echo ""
   echo "Creating GitHub Release..."
   echo "Branch: $CIRCLE_BRANCH"
-  git --no-pager log --name-status -p -3
-  # git push --follow-tags --set-upstream origin $CIRCLE_BRANCH
-  # yarn auto release --use-version=$TAG_NAME
+  git push --follow-tags --set-upstream origin $CIRCLE_BRANCH
+  yarn auto release --use-version=$TAG_NAME
 
 else
 

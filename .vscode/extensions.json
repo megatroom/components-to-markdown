@@ -6,6 +6,7 @@
     "firsttris.vscode-jest-runner",
     "unifiedjs.vscode-mdx",
     "editorconfig.editorconfig",
-    "streetsidesoftware.code-spell-checker"
+    "streetsidesoftware.code-spell-checker",
+    "xyc.vscode-mdx-preview"
   ]
 }
