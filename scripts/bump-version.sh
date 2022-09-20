@@ -16,16 +16,22 @@ VERSION=`yarn -s auto version`
 
 if [ ! -z "$VERSION" ]; then
   echo "Updating changelog..."
-  yarn auto changelog
+  yarn auto changelog -m "[skip ci] Update CHANGELOG.md"
 
   echo ""
   echo "Bumping $VERSION version..."
   cd packages/components-to-markdown
-  TAG_NAME=$(npm version $VERSION -m "[skip ci] Bump version to: %s")
-  echo "New tag: $TAG_NAME"
+  TAG_NAME=$(npm --no-git-tag-version version $VERSION)
   VERSION_NUMBER=$(echo "$TAG_NAME" | cut -c2-)
-  cd -
+  echo "New tag: $TAG_NAME"
   echo "New version: $VERSION_NUMBER"
+  cd -
+
+  echo ""
+  echo "Commiting changes..."
+  git add packages/components-to-markdown/package.json
+  git commit -m "[skip ci] Bump version to: $VERSION_NUMBER"
+  git tag -a $TAG_NAME -m "Version $VERSION_NUMBER"
 
   echo ""
   echo "Publishing package..."
@@ -34,7 +40,8 @@ if [ ! -z "$VERSION" ]; then
 
   echo ""
   echo "Creating GitHub Release..."
-  git push --follow-tags --set-upstream origin ${CIRCLE_BRANCH}
+  echo "Branch: $CIRCLE_BRANCH"
+  git push --follow-tags --set-upstream origin $CIRCLE_BRANCH
   yarn auto release --use-version=$TAG_NAME
 
 else
