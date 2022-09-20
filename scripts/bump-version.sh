@@ -21,7 +21,7 @@ if [ ! -z "$VERSION" ]; then
   echo ""
   echo "Bumping $VERSION version..."
   cd packages/components-to-markdown
-  TAG_NAME=$(npm version $VERSION -m "[skip ci] Bump version to: %s")
+  TAG_NAME=$(npm version $VERSION --force -m "[skip ci] Bump version to: %s")
   VERSION_NUMBER=$(echo "$TAG_NAME" | cut -c2-)
   echo "New tag: $TAG_NAME"
   echo "New version: $VERSION_NUMBER"
