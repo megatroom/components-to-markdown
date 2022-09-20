@@ -156,7 +156,7 @@ Using [Stegosaurus](/demo/stegosaurus/overview) template, the result will be:
   <h1>Button</h1>
   <p>This is a fixed text in the <code>Button.md</code> file.</p>
   <Tabs>
-    <TabItem value="code" label="Code">
+    <TabItem value="code" label="Code" default>
       <h2>Properties</h2>
       <span data-c2m="template:begin" />
       <table>
@@ -200,7 +200,7 @@ Using [Stegosaurus](/demo/stegosaurus/overview) template, the result will be:
       </table>
       <span data-c2m="template:end" />
     </TabItem>
-    <TabItem value="examples" label="Examples" default>
+    <TabItem value="examples" label="Examples">
       Component examples go here...
     </TabItem>
     <TabItem value="usage" label="Usage">
