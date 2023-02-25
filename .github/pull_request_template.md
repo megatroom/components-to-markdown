@@ -15,6 +15,20 @@
 <!-- to check an item, place an "x" in the box like so: "- [x] Documentation" -->
 
 - [ ] I read the [contribution guide](https://components-to-markdown.vercel.app/docs/contribute/how-to-contribute);
-- [ ] A `version:*` label has been added to this PR;
 - [ ] Documentation added;
-- [ ] Tests;
+- [ ] All changes were covered with testing;
+
+## Change Type
+
+Indicate the type of change your pull request is:
+
+<!-- Choose only ONE option -->
+
+- [ ] documentation
+- [ ] major
+- [ ] minor
+- [ ] patch
+- [ ] performance
+- [ ] internal
+
+All types are described in the [Releases](https://components-to-markdown.vercel.app/docs/contribute/code#releases) topic.
