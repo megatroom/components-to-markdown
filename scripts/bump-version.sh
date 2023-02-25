@@ -16,7 +16,7 @@ VERSION=`yarn -s auto version`
 
 if [ ! -z "$VERSION" ]; then
   echo "Updating changelog..."
-  yarn auto changelog -m "[skip ci] Update CHANGELOG.md"
+  yarn auto changelog --no-git-commit -m "[skip ci] Update CHANGELOG.md"
 
   echo ""
   echo "Bumping $VERSION version..."
@@ -29,7 +29,7 @@ if [ ! -z "$VERSION" ]; then
 
   echo ""
   echo "Commiting changes..."
-  git add packages/components-to-markdown/package.json
+  git add CHANGELOG.md packages/components-to-markdown/package.json
   git commit -m "[skip ci] Bump version to: $VERSION_NUMBER"
   git tag -a $TAG_NAME -m "Version $VERSION_NUMBER"
 

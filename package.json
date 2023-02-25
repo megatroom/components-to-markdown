@@ -140,7 +140,7 @@
     "@typescript-eslint/eslint-plugin": "5.33.1",
     "@typescript-eslint/parser": "5.33.1",
     "ast-types": "^0.14.2",
-    "auto": "10.37.4",
+    "auto": "10.42.2",
     "babel-jest": "28.1.1",
     "babel-loader": "8.1.0",
     "babel-plugin-styled-components": "2.0.7",
